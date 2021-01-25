@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+        android:id="@+id/menu_find"
+        android:icon="@drawable/ic_baseline_slideshow_24"
+        app:showAsAction="ifRoom"
+        android:title="@string/menu_find" />
+
+    <item
+        android:id="@+id/menu_conn"
+        android:icon="@android:drawable/stat_sys_data_bluetooth"
+        app:showAsAction="always"
+        android:title="@string/menu_bl_conn"/>
+
+    <item
+        android:id="@+id/menu_bar_settings"
+        android:orderInCategory="200"
+        android:title="@string/label_settings"
+        app:showAsAction="never" />
+
+    <item
+        android:id="@+id/menu_bar_about"
+        android:orderInCategory="300"
+        android:title="@string/label_about"
+        app:showAsAction="never" />
+
+</menu>

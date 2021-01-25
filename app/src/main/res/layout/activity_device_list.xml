@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:background="@drawable/listview_border">
+
+    <TextView
+        android:id="@+id/status_devices"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding ="10dp"
+        android:text="@string/select_device"
+        android:background="@color/colorPrimary"
+        android:textColor="@color/colorAccent"
+        android:fontFamily="@font/roboto_bold"
+        android:textSize="20sp"/>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:padding="5dp">
+
+            <TextView
+                android:id="@+id/title_paired_devices"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:padding ="5dp"
+                android:text="@string/title_paired_devices"
+                android:textColor="@android:color/black"
+                android:fontFamily="@font/roboto_light"
+                android:textSize="14sp"
+                android:visibility="gone"/>
+
+            <ListView
+                android:id="@+id/paired_devices"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:stackFromBottom="true"/>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="25dp"
+                android:paddingBottom="3dp"
+                android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/title_new_devices"
+                android:layout_width="wrap_content"
+                android:layout_height="35dp"
+                android:fontFamily="sans-serif-light"
+                android:padding="5dp"
+                android:text="@string/title_other_devices"
+                android:textColor="@android:color/black"
+                android:textSize="14sp"
+                android:visibility="gone" />
+
+            <ProgressBar
+                android:id="@+id/progressBar"
+                android:layout_width="20dp"
+                android:layout_height="25dp"
+                android:visibility="gone"
+                android:layout_gravity="right"
+                android:indeterminateOnly="true"
+                tools:ignore="RtlHardcoded" />
+        </LinearLayout>
+
+
+        <ListView
+            android:id="@+id/new_devices"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="2"
+            android:paddingTop="2dp"
+            android:stackFromBottom="true"/>
+
+        <Button
+            android:id="@+id/button_scan"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/button"
+            android:textColor="@color/colorAccent"
+            android:fontFamily="@font/roboto_bold"
+            android:text="@string/button_scan"/>
+    </LinearLayout>
+</LinearLayout>

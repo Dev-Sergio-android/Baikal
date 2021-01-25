@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".SettingsActivity">
+
+    <TextView
+        android:id="@+id/s_time1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="50dp"
+        android:textSize="@dimen/settings_header_size"
+        android:fontFamily="@font/roboto_light"
+        android:text="@string/settings_time_1"/>
+
+    <TextView
+        android:id="@+id/s_time2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="20dp"
+        android:layout_below="@+id/s_time1"
+        android:layout_marginTop="30dp"
+        android:textSize="@dimen/settings_header_size"
+        android:fontFamily="@font/roboto_light"
+        android:text="@string/settings_time_2"/>
+
+    <TextView
+        android:id="@+id/s_time3"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="30dp"
+        android:layout_below="@+id/s_time2"
+        android:textSize="@dimen/settings_header_size"
+        android:fontFamily="@font/roboto_light"
+        android:text="@string/settings_time_3"/>
+
+    <TextView
+        android:id="@+id/val_time1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentEnd="true"
+        android:layout_marginEnd="30dp"
+        android:layout_marginTop="50dp"
+        android:textSize="16sp"
+        android:fontFamily="@font/roboto_light"
+        android:text="@string/start_val_settings_time"/>
+
+    <TextView
+        android:id="@+id/val_time2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentEnd="true"
+        android:layout_marginEnd="30dp"
+        android:layout_below="@+id/s_time1"
+        android:layout_marginTop="30dp"
+        android:textSize="16sp"
+        android:fontFamily="@font/roboto_light"
+        android:text="@string/start_val_settings_time"/>
+
+    <TextView
+        android:id="@+id/val_time3"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/s_time2"
+        android:layout_alignParentEnd="true"
+        android:layout_marginEnd="30dp"
+        android:layout_marginTop="30dp"
+        android:fontFamily="@font/roboto_light"
+        android:text="@string/start_val_settings_time"
+        android:textSize="16sp" />
+
+        <TextView
+        android:id="@+id/s_mode"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="30dp"
+        android:layout_below="@+id/s_time3"
+        android:textSize="@dimen/settings_header_size"
+        android:fontFamily="@font/roboto_light"
+        android:text="@string/settings_mode"/>
+
+    <CheckBox
+        android:id="@+id/s_mode_check"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBaseline="@+id/s_mode"
+        android:theme="@style/RadioButtonStyle"
+        android:layout_alignParentEnd="true"
+        android:layout_marginEnd="30dp" />
+
+    <Button
+        android:id="@+id/buttonSave"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:paddingStart="20dp"
+        android:paddingEnd="20dp"
+        android:layout_alignParentBottom="true"
+        android:layout_marginBottom="35dp"
+        android:layout_centerHorizontal="true"
+        android:text="@string/button_save_Rus"
+        android:fontFamily="@font/roboto_bold"
+        android:textColor="@color/white"
+        android:background="@drawable/button"/>
+
+</RelativeLayout>

@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent" android:layout_height="match_parent">
+
+    <TextView
+        android:id="@+id/item_grade"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="130dp"
+        android:layout_marginEnd="20dp"
+        android:fontFamily="@font/rubik_regular"
+        android:padding="10dp"
+        android:textAppearance="?android:attr/textAppearance"
+        android:textSize="@dimen/oske_font_size" />
+
+    <RadioGroup
+        android:id="@+id/rg_yes_no"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_centerHorizontal="true"
+        android:layout_alignParentBottom="true"
+        android:layout_marginBottom="100dp">
+
+        <RadioButton
+            android:id="@+id/rb_yes"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="90dp"
+            android:theme="@style/RadioButtonStyle"
+            android:fontFamily="@font/rubik_regular"
+            android:textSize="16sp"
+            android:text="@string/oske_yes"/>
+
+        <RadioButton
+            android:id="@+id/rb_no"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="100dp"
+            android:theme="@style/RadioButtonStyle"
+            android:fontFamily="@font/rubik_regular"
+            android:textSize="16sp"
+            android:text="@string/oske_no" />
+
+    </RadioGroup>
+
+</RelativeLayout>

@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+
+    <NumberPicker
+        android:id="@+id/MinutePicker"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_marginTop="40dp"
+        android:layout_marginEnd="10dp"
+        android:layout_toStartOf="@+id/colon_2"
+        android:divider="@color/colorPrimary" />
+
+    <NumberPicker
+        android:id="@+id/SecondPicker"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignTop="@+id/MinutePicker"
+        android:layout_marginTop="0dp"
+        android:layout_toEndOf="@+id/colon_2"
+        android:layout_marginStart="10dp"/>
+
+
+    <TextView
+        android:id="@+id/colon_2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignTop="@+id/MinutePicker"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="80dp"
+        android:text="@string/colon" />
+
+    <!--TextView
+        android:id="@+id/hintMinute"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/MinutePicker"
+        android:layout_alignEnd="@+id/MinutePicker"
+        android:layout_marginTop="10dp"
+        android:layout_marginEnd="5dp"
+        android:layout_marginBottom="10dp"
+        android:text="@string/hint_minute" /-->
+
+    <TextView
+        android:id="@+id/hintSecond"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/SecondPicker"
+        android:layout_alignStart="@+id/SecondPicker"
+        android:layout_marginStart="2dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginBottom="2dp"
+        android:text="@string/hint_second" />
+
+    <TextView
+        android:id="@+id/hintMinute"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignTop="@+id/hintSecond"
+        android:layout_alignStart="@+id/MinutePicker"
+        android:layout_marginStart="5dp"
+        android:layout_marginBottom="0dp"
+        android:text="@string/hint_minute" />
+
+</RelativeLayout>

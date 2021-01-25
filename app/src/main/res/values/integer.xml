@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <integer name="first_column_weight">5</integer>
+    <integer name="second_column_weight">10</integer>
+    <integer name="last_column_weight">3</integer>
+    <integer name="toast_duration">100</integer>
+
+    <integer name="oske_first_column_weight">6</integer>
+    <integer name="oske_second_column_weight">9</integer>
+
+</resources>

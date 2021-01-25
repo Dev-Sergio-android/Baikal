@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent" android:layout_height="match_parent">
+
+    <androidx.appcompat.widget.AppCompatImageView
+        android:id="@+id/about_logo"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="30dp"
+        android:src="@drawable/logo2"/>
+
+    <TextView
+        android:id="@+id/about_version_title"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/about_logo"
+        android:layout_marginTop="5dp"
+        android:layout_centerHorizontal="true"
+        android:text="@string/about_version_title"
+        android:textColor="@color/text_color"
+        android:gravity="center"/>
+
+    <TextView
+        android:id="@+id/about_version"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/about_version_title"
+        android:layout_marginTop="2dp"
+        android:layout_centerHorizontal="true"
+        android:text="@string/about_version"
+        android:fontFamily="@font/roboto_regular"
+        android:textColor="@android:color/darker_gray"
+        android:gravity="center"/>
+
+    <TextView
+        android:id="@+id/about_build_title"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/about_version"
+        android:layout_marginTop="2dp"
+        android:layout_centerHorizontal="true"
+        android:text="@string/about_build"
+        android:textColor="@color/text_color"
+        android:gravity="center"/>
+
+    <TextView
+        android:id="@+id/about_build"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/about_build_title"
+        android:layout_marginTop="2dp"
+        android:layout_centerHorizontal="true"
+        android:text="@string/about_build_number"
+        android:fontFamily="@font/roboto_regular"
+        android:textColor="@android:color/darker_gray"
+        android:gravity="center"/>
+
+    <TextView
+        android:id="@+id/about_footer"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_marginBottom="15dp"
+        android:layout_centerHorizontal="true"
+        android:text="@string/about_footer"
+        android:textColor="@color/text_color"
+        android:gravity="center"/>
+
+    <TextView
+        android:id="@+id/about_footer_site"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:autoLink="web"
+        android:layout_above="@+id/about_footer"
+        android:layout_marginBottom="10dp"
+        android:layout_centerHorizontal="true"
+        android:textColorLink="@color/text_color"
+        android:gravity="center"
+        android:drawablePadding="@dimen/kroot_padding_5dp"
+        app:drawableStartCompat="@drawable/ic_globe" />
+
+</RelativeLayout>

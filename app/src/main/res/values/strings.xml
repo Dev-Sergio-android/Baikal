@@ -1,0 +1,409 @@
+<resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
+    <string name="app_name">ХКС-Байкал</string>
+
+    <string name="menu_find">FIND</string>
+    <string name="menu_bl_conn">CONN</string>
+    <string name="menu_option">OPT</string>
+
+
+    <string name="tab_text_1">FIND</string>
+    <string name="tab_text_2">SEND</string>
+    <string name="tab_text_3">CHECK LIST</string>
+    <string name="tab_text_1_Rus">СОЕДИНЕНИЕ</string>
+    <string name="tab_text_2_Rus">УПРАВЛЕНИЕ</string>
+    <string name="tab_text_3_Rus">ОТЧЕТ</string>
+
+    <string name="tab_find_Rus">СВЯЗЬ</string>
+    <string name="tab_send_Rus">УПРАВЛЕНИЕ</string>
+    <string name="tab_check_Rus">ОТЧЕТ</string>
+
+    <string name="tvFindList"> FIND DEVICES LIST </string>
+    <string name="tvPairList"> PAIRED DEVICES LIST </string>
+    <string name="tvFindListRus"> НАЙДЕННЫЕ УСТРОЙСТВА </string>
+    <string name="tvPairListRus"> СОПРЯЖЕННЫЕ УСТРОЙСТВА </string>
+    <string name="button_start_find">FIND</string>
+    <string name="button_stop_find">STOP</string>
+    <string name="button_stop">STOP</string>
+    <string name="button_pause">PAUSE</string>
+    <string name="button_mute">MUTE</string>
+
+    <string name="button_start_find_Rus">ПОИСК</string>
+    <string name="button_stop_find_Rus">СТОП</string>
+    <string name="button_stop_Rus">СТОП</string>
+    <string name="button_pause_Rus">ПАУЗА</string>
+    <string name="button_mute_Rus">ЗВУК</string>
+    <string name="button_send_Rus">УСТАНОВИТЬ</string>
+    <string name="button_save_Rus">СОХРАНИТЬ</string>
+
+
+    <string name="none_paired">Нет сопряженных устройств</string>
+    <string name="scanning">Поиск устройств…</string>
+    <string name="select_device">Выберите устройство</string>
+    <string name="none_found">Устройств не найдено</string>
+
+    <string name="title_paired_devices"><u>Сопряженные устройства</u></string>
+    <string name="title_other_devices"><u>Найденные устройства</u></string>
+    <string name="button_scan">Поиск устройств</string>
+
+    <string name="label_settings">Настройки</string>
+    <string name="label_about">О программе</string>
+
+
+    <string name="settings_time_1">Лимит выполнения 1 этапа</string>
+    <string name="settings_time_2">Лимит выполнения 2 этапа</string>
+    <string name="settings_time_3">Лимит выполнения 3 этапа</string>
+    <string name="start_val_settings_time">00:10</string>
+    <string name="def_val_settings_time">00:00</string>
+    <string name="settings_mode">Ручной режим управления</string>
+    <string name="system_grade">Система оценки:</string>
+    <string name="system_1">ОСКЭ</string>
+    <string name="system_2">КРООТ</string>
+    <string name="hint_minute">Минуты</string>
+    <string name="hint_second">Секунды</string>
+
+    <string name="bt_not_enabled_leaving">Bluetooth выключен</string>
+    <string name="title_connecting">соединение…</string>
+    <string name="title_connected_to">подключено к <xliff:g id="device_name">%1$s</xliff:g></string>
+    <string name="title_not_connected">не подключено</string>
+
+    <string name="not_connected">Ваше устройство не подключено к тренажеру</string>
+
+
+    <string name="tvCommentPairList">*Tap on a device to connect or disconnect.</string>
+    <string name="tvCommentFindList">*Tap on a device to pair.</string>
+    <string name="tvCommentPairListRus">*Коснитесь устройства для подключения/отключения.</string>
+    <string name="tvCommentFindListRus">*Коснитесь устройства для сопряжения.</string>
+
+    <string name="tvCommentSelectDevice">Selected device is: </string>
+    <string name="tvSelectDevice">none</string>
+
+    <string name="tvAnswer">Last answer is:</string>
+    <string name="tvEmpty">empty</string>
+
+    <string name="colon">:</string>
+
+    <string name="tvCommentStatus">Connection status: </string>
+    <string name="statusDisconnect">disconnect</string>
+    <string name="statusConnecting">connecting</string>
+    <string name="statusConnected">connected</string>
+
+
+    <string name="sent_dialog_header">Select beats per minute: </string>
+    <string name="defBPM">ЧСС: 70</string>
+    <string name="defPressure">АД: 120/70</string>
+    <string name="defResp">ЧДД: 10</string>
+    <string name="defSPO">SpO2: 97</string>
+    <string name="minBPM">0</string>
+    <string name="maxBPM">200</string>
+    <string name="minPress">90</string>
+    <string name="maxPress">200</string>
+    <string name="minBleed">0</string>
+    <string name="maxBleed">3000</string>
+    <string name="minSat">0</string>
+    <string name="maxSat">99</string>
+
+    <string name="preHintBpm">ЧСС: </string>
+    <string name="preHintPress">АД: </string>
+    <string name="preHintBleed">Кровопотеря: </string>
+    <string name="preHintSPO">SpO2: </string>
+
+    <string name="unknown">None found</string>
+    <string name="unnamed">Unnamed</string>
+    <string name="check_title">Система оценки </string>
+    <string name="check_system">КРООТ</string>
+    <string name="default_device_send">none</string>
+    <string name="hintEdit">Введите значение</string>
+    <string name="hintTime">__ : __</string>
+    <string name="hintMinute">__\nминут</string>
+    <string name="plusMinute">\nминут</string>
+
+    <string name="check_title_kroot">Комплексная рейтинговая оценка оперативной техники (КРООТ)</string>
+    <string name="kroot_private_info">Личные данные</string>
+    <string name="kroot_teacher_nick">ФИО\nпреподавателя</string>
+    <string name="kroot_teacher_ID">ID\nпреподавателя</string>
+    <string name="kroot_student_nick">ФИО\nслушателя</string>
+    <string name="kroot_student_ID">ID\nслушателя</string>
+    <string name="kroot_program">Программа</string>
+    <string name="kroot_ord">1. Ординатура </string>
+    <string name="kroot_prepare">2. Подготовка и повышение квалификации</string>
+    <string name="kroot_title_testing_data">по данным тестирования</string>
+    <string name="kroot_title_prev_kroot">предыдущие КРООТ\n(при отсутствии данных,\nуровень – «Базовый»)</string>
+    <string name="kroot_student_level">Уровень слушателя</string>
+    <string name="kroot_level_0">0. Не выполнялось</string>
+    <string name="kroot_level_1">1. Базовый</string>
+    <string name="kroot_level_2">2. Ниже среднего</string>
+    <string name="kroot_level_3">3. Средний</string>
+    <string name="kroot_level_4">4. Выше среднего</string>
+    <string name="kroot_level_5">5. Опытный</string>
+    <string name="kroot_operation">Операция</string>
+    <string name="kroot_operation_type_1">Сосудистый доступ</string>
+    <string name="kroot_operation_type_2">Сосудистый шов</string>
+    <string name="kroot_operation_type_3">Сосудистое протезирование</string>
+    <string name="kroot_all_time">Общее время операции</string>
+    <string name="kroot_start_time">Время\nначала</string>
+    <string name="kroot_stop_time">Время\nзавершения</string>
+    <string name="kroot_stage_prepare">Этапы подготовки</string>
+    <string name="kroot_prepare_1">1. Подготовка\nбольного</string>
+    <string name="kroot_prepare_2">2. Халат,\nперчатки</string>
+    <string name="kroot_prepare_3">3. Обработка,\nотграничение\nоперац. поля</string>
+    <string name="kroot_stage_operation">Этапы операции</string>
+    <string name="kroot_operation_1">1. Доступ, выделение</string>
+    <string name="kroot_operation_2">2. Операция на сосуде</string>
+    <string name="kroot_operation_3">3. Закрытие раны</string>
+    <string name="kroot_operation_difficulty">Уровень сложности</string>
+    <string name="kroot_difficulty_1">Простая неизмененная анатомия</string>
+    <string name="kroot_difficulty_2">Некоторые изменения, не связанные с предыду-\nщими операциями, характером повреждения.</string>
+    <string name="kroot_difficulty_3">Средней сложности</string>
+    <string name="kroot_difficulty_4">Измененная анатомия, вероятно требующая альтернативных методов</string>
+    <string name="kroot_difficulty_5">Измененная анатомия, обширная патология, связанная с предыдущими операциями, лечением, характером повреждений</string>
+
+
+
+    <string name="oske_title_start">II этап аккредитационного экзамена</string>
+    <string name="oske_title_spec">Специальность</string>
+    <string name="oske_spec">Хирургия</string>
+    <string name="oske_title_date">Дата</string>
+    <string name="oske_hint_date">Введите дату…</string>
+    <string name="oske_title_stud_number">Номер кандидата</string>
+    <string name="oske_hint_stud_number">Введите номер…</string>
+
+
+    <string name="interval_1">Доступ,\nвыделение:</string>
+    <string name="interval_2">Операция на\nсосуде:</string>
+    <string name="interval_3">Закрытие\nраны:</string>
+
+    <string name="about_version_title">Версия приложения</string>
+    <string name="about_version">1.5.4</string>
+    <string name="about_build">Сборка</string>
+    <string name="about_build_number">220121</string>
+    <string name="about_footer">© MedSimTech LLC, 2021</string>
+    <string name="hyperlink"><a href="https://www.medsim.tech"> <![CDATA[www.medsim.tech]]></a></string>
+
+
+
+    <string name="oske_column_number">№\nп/п</string>
+    <string name="oske_column_action">Действие аккредитуемого лица</string>
+    <string name="oske_column_yes_no">Критерий\nоценки</string>
+    <string name="oske_yes">ДА</string>
+    <string name="oske_no">НЕТ</string>
+    <string name="button_prev">ПРЕД.</string>
+    <string name="button_next">СЛЕД.</string>
+    <string name="oske_button_end">завершить</string>
+
+
+    <string name="kroot_1">1 балл</string>
+    <string name="kroot_2">2 балла</string>
+    <string name="kroot_3">3 балла</string>
+    <string name="kroot_4">4 балла</string>
+    <string name="kroot_5">5 баллов</string>
+
+    <string name="kroot_name_hint">Введите ФИО…</string>
+    <string name="kroot_id_hint">Введите ID…</string>
+
+
+    <string-array name="pressure">
+        <item>70/40</item>
+        <item>70%40</item>
+        <item>80/45</item>
+        <item>80%45</item>
+        <item>90/50</item>
+        <item>90%50</item>
+        <item>100/60</item>
+        <item>100%60</item>
+        <item>110/65</item>
+        <item>110%65</item>
+        <item>120/70</item>
+        <item>120%70</item>
+        <item>130/80</item>
+        <item>130%80</item>
+        <item>140/85</item>
+        <item>140%85</item>
+        <item>150/90</item>
+        <item>150%90</item>
+        <item>160/90</item>
+        <item>160%90</item>
+    </string-array>
+
+
+    <string-array name="number">
+        <item>0</item>
+        <item>1</item>
+        <item>2</item>
+        <item>3</item>
+        <item>4</item>
+        <item>5</item>
+        <item>6</item>
+        <item>7</item>
+        <item>8</item>
+        <item>9</item>
+        <item>10</item>
+        <item>11</item>
+        <item>12</item>
+        <item>13</item>
+        <item>14</item>
+        <item>15</item>
+        <item>16</item>
+        <item>17</item>
+        <item>18</item>
+        <item>18</item>
+        <item>19</item>
+        <item>20</item>
+        <item>21</item>
+        <item>22</item>
+        <item>23</item>
+        <item>24</item>
+        <item>25</item>
+        <item>26</item>
+        <item>27</item>
+        <item>28</item>
+        <item>29</item>
+        <item>30</item>
+        <item>31</item>
+        <item>32</item>
+        <item>33</item>
+        <item>34</item>
+        <item>35</item>
+        <item>36</item>
+        <item>37</item>
+        <item>38</item>
+        <item>39</item>
+        <item>40</item>
+        <item>41</item>
+        <item>42</item>
+        <item>43</item>
+        <item>44</item>
+        <item>45</item>
+        <item>46</item>
+        <item>47</item>
+        <item>48</item>
+        <item>49</item>
+        <item>50</item>
+        <item>51</item>
+        <item>52</item>
+        <item>53</item>
+        <item>54</item>
+        <item>55</item>
+        <item>56</item>
+        <item>57</item>
+        <item>58</item>
+        <item>59</item>
+        <item>60</item>
+        <item>61</item>
+        <item>62</item>
+        <item>63</item>
+        <item>64</item>
+        <item>65</item>
+        <item>66</item>
+        <item>67</item>
+        <item>68</item>
+        <item>69</item>
+        <item>70</item>
+        <item>71</item>
+        <item>72</item>
+        <item>73</item>
+        <item>74</item>
+        <item>75</item>
+        <item>76</item>
+        <item>77</item>
+        <item>78</item>
+        <item>79</item>
+        <item>80</item>
+        <item>81</item>
+        <item>82</item>
+        <item>83</item>
+        <item>84</item>
+        <item>85</item>
+        <item>86</item>
+        <item>87</item>
+        <item>88</item>
+        <item>89</item>
+        <item>90</item>
+        <item>91</item>
+        <item>92</item>
+        <item>93</item>
+        <item>94</item>
+        <item>95</item>
+        <item>96</item>
+        <item>97</item>
+        <item>98</item>
+        <item>99</item>
+        <item>100</item>
+        <item>101</item>
+        <item>102</item>
+        <item>103</item>
+        <item>104</item>
+        <item>105</item>
+        <item>106</item>
+        <item>107</item>
+        <item>108</item>
+        <item>109</item>
+        <item>110</item>
+        <item>111</item>
+        <item>112</item>
+        <item>113</item>
+        <item>114</item>
+        <item>115</item>
+        <item>116</item>
+        <item>117</item>
+        <item>118</item>
+        <item>119</item>
+        <item>120</item>
+        <item>121</item>
+        <item>122</item>
+        <item>123</item>
+        <item>124</item>
+        <item>125</item>
+        <item>126</item>
+        <item>127</item>
+        <item>128</item>
+        <item>129</item>
+        <item>130</item>
+        <item>131</item>
+        <item>132</item>
+        <item>133</item>
+        <item>134</item>
+        <item>135</item>
+        <item>136</item>
+        <item>137</item>
+        <item>138</item>
+        <item>139</item>
+        <item>140</item>
+        <item>141</item>
+        <item>142</item>
+        <item>143</item>
+        <item>144</item>
+        <item>145</item>
+        <item>146</item>
+        <item>147</item>
+        <item>148</item>
+        <item>149</item>
+        <item>150</item>
+    </string-array>
+
+    <string name="title_activity_settings">Settings</string>
+
+    <!-- Preference Titles -->
+    <string name="messages_header">Messages</string>
+    <string name="sync_header">Sync</string>
+
+    <!-- Messages Preferences -->
+    <string name="signature_title">Your signature</string>
+    <string name="reply_title">Default reply action</string>
+
+    <!-- Sync Preferences -->
+    <string name="sync_title">Sync email periodically</string>
+    <string name="attachment_title">Download incoming attachments</string>
+    <string name="attachment_summary_on">Automatically download attachments for incoming emails
+    </string>
+    <string name="attachment_summary_off">Only download attachments when manually requested</string>
+    <!-- Strings used for fragments for navigation -->
+    <string name="first_fragment_label">First Fragment</string>
+    <string name="second_fragment_label">Second Fragment</string>
+    <string name="next">Next</string>
+    <string name="previous">Previous</string>
+
+    <string name="hello_first_fragment">Hello first fragment</string>
+    <string name="hello_second_fragment">Hello second fragment. Arg: %1$s</string>
+    <string name="title_activity_main2">Main2Activity</string>
+
+</resources>
