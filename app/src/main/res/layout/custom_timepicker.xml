@@ -53,6 +53,7 @@
         android:layout_marginStart="2dp"
         android:layout_marginTop="10dp"
         android:layout_marginBottom="2dp"
+        android:fontFamily="@font/rubik_regular"
         android:text="@string/hint_second" />
 
     <TextView
@@ -63,6 +64,7 @@
         android:layout_alignStart="@+id/MinutePicker"
         android:layout_marginStart="5dp"
         android:layout_marginBottom="0dp"
+        android:fontFamily="@font/rubik_regular"
         android:text="@string/hint_minute" />
 
 </RelativeLayout>

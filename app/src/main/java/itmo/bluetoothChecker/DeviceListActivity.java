@@ -16,7 +16,6 @@
 
 package itmo.bluetoothChecker;
 
-import android.app.ActionBar;
 import android.app.Activity;
 import android.bluetooth.BluetoothAdapter;
 import android.bluetooth.BluetoothDevice;
@@ -24,24 +23,18 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
-import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.view.Window;
 import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ListView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
-
-import androidx.appcompat.app.AppCompatActivity;
-
 import java.util.ArrayList;
-import java.util.Objects;
 import java.util.Set;
 
 /**
@@ -92,7 +85,7 @@ public class DeviceListActivity extends Activity {
         setResult(Activity.RESULT_CANCELED);
 
         status = findViewById(R.id.status_devices);
-        progressBar = findViewById(R.id.progressBar);
+        //progressBar = findViewById(R.id.progressBar);
 
         // Initialize the button to perform device discovery
         Button scanButton = findViewById(R.id.button_scan);
@@ -119,6 +112,7 @@ public class DeviceListActivity extends Activity {
         //pairedListView.setAdapter(pairedDevicesArrayAdapter);
         pairedListView.setAdapter(newDeviceListAdapter);
         pairedListView.setOnItemClickListener(mDeviceClickListener);
+        pairedListView.setSelection(0);
 
         // Find and set up the ListView for newly discovered devices
         ListView newDevicesListView = findViewById(R.id.new_devices);
@@ -176,7 +170,7 @@ public class DeviceListActivity extends Activity {
         // Indicate scanning in the title
         setProgressBarIndeterminateVisibility(true);
         status.setText(R.string.scanning);
-        progressBar.setVisibility(View.VISIBLE);
+        //progressBar.setVisibility(View.VISIBLE);
 
         // Turn on sub-title for new devices
         findViewById(R.id.title_new_devices).setVisibility(View.VISIBLE);
@@ -240,7 +234,7 @@ public class DeviceListActivity extends Activity {
             else if (BluetoothAdapter.ACTION_DISCOVERY_FINISHED.equals(action)) {
                 setProgressBarIndeterminateVisibility(false);
                 status.setText(R.string.select_device);
-                progressBar.setVisibility(View.GONE);
+                //progressBar.setVisibility(View.GONE);
                 if (mFoundDevicesArrayAdapter.getCount() == 0) {
                     String noDevices = getResources().getText(R.string.none_found).toString();
                     Toast.makeText(context, R.string.none_found, Toast.LENGTH_SHORT).show();

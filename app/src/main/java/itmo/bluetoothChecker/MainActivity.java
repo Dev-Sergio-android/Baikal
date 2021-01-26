@@ -210,6 +210,14 @@ public class MainActivity extends AppCompatActivity {
 
         //requestApplicationConfig();
 
+        IntentFilter filter = new IntentFilter();
+        filter.addAction(BluetoothDevice.ACTION_ACL_CONNECTED);
+        filter.addAction(BluetoothDevice.ACTION_ACL_DISCONNECT_REQUESTED);
+        filter.addAction(BluetoothDevice.ACTION_ACL_DISCONNECTED);
+        this.registerReceiver(mReceiver, filter);
+
+
+
         registerReceiver(mReceiver, new IntentFilter(BluetoothAdapter.ACTION_STATE_CHANGED));
         registerReceiver(mReceiver, new IntentFilter(SEND));
 
