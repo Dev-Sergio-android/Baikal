@@ -83,7 +83,7 @@ public class MainActivity extends AppCompatActivity {
             if (BluetoothDevice.ACTION_ACL_CONNECTED.equals(action)) {
                 toolbar.setSubtitle(R.string.statusConnected);
             } else if (BluetoothDevice.ACTION_ACL_DISCONNECTED.equals(action)) {
-                toolbar.setSubtitle(R.string.statusDisconnect);
+                toolbar.setSubtitle(R.string.title_not_connected);
             } else if (BluetoothAdapter.ACTION_STATE_CHANGED.equals(action)) {
                 if (intent.getIntExtra(BluetoothAdapter.EXTRA_STATE, -1)
                         == BluetoothAdapter.STATE_ON) {
@@ -211,8 +211,8 @@ public class MainActivity extends AppCompatActivity {
         //requestApplicationConfig();
 
         IntentFilter filter = new IntentFilter();
-        filter.addAction(BluetoothDevice.ACTION_ACL_CONNECTED);
-        filter.addAction(BluetoothDevice.ACTION_ACL_DISCONNECT_REQUESTED);
+//        filter.addAction(BluetoothDevice.ACTION_ACL_CONNECTED);
+//        filter.addAction(BluetoothDevice.ACTION_ACL_DISCONNECT_REQUESTED);
         filter.addAction(BluetoothDevice.ACTION_ACL_DISCONNECTED);
         this.registerReceiver(mReceiver, filter);
 
