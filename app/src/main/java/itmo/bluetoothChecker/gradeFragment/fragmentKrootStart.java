@@ -124,12 +124,12 @@ public class fragmentKrootStart extends Fragment {
         teacherName
                 .setText(requireContext()
                         .getSharedPreferences("GradeAnswer", MODE_PRIVATE)
-                        .getString("teacher_id", ""));
+                        .getString("teacher_name", ""));
 
         teacherID
                 .setText(requireContext()
                         .getSharedPreferences("GradeAnswer", MODE_PRIVATE)
-                        .getString("teacher_name", ""));
+                        .getString("teacher_id", ""));
 
         studentName
                 .setText(requireContext()

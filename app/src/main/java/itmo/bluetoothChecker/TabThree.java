@@ -8,7 +8,6 @@ import android.content.SharedPreferences;
 import android.os.Build;
 import android.os.Bundle;
 import android.text.Html;
-import android.text.Spanned;
 import android.util.Log;
 import android.view.HapticFeedbackConstants;
 import android.view.LayoutInflater;
@@ -19,9 +18,7 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.RadioButton;
-import android.widget.RadioGroup;
 import android.widget.Spinner;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -31,8 +28,10 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 
 import itmo.bluetoothChecker.gradeFragment.fragmentKroot;
+import itmo.bluetoothChecker.gradeFragment.fragmentKrootCalc;
 import itmo.bluetoothChecker.gradeFragment.fragmentKrootStart;
 import itmo.bluetoothChecker.gradeFragment.fragmentOske;
+import itmo.bluetoothChecker.gradeFragment.fragmentOskeCalc;
 import itmo.bluetoothChecker.gradeFragment.fragmentOskeStart;
 
 import static android.content.Context.MODE_PRIVATE;
@@ -190,13 +189,13 @@ public class TabThree extends Fragment {
                                             btnPrev.setVisibility(View.VISIBLE);
                                             btnDel.setVisibility(View.INVISIBLE);
 
-                                            saveAns(cntItem, fragmentOske.getCheckedIndex());
+                                            saveAns(cntItem, getCheckedIndex());
 
                                             Log.e(TAG, "answer " + cntItem + ":   " + fragmentOske.getCheckedIndex());
 
                                             if (cntItem == getResources().getTextArray(R.array.oske_items).length - 1) {
-                                                btnNext.setText("Завершить");
-                                            } else {
+                                                btnNext.setText(getResources().getString(R.string.button_calc));
+                                            }else {
                                                 btnNext.setText("СЛЕД.");
                                             }
 
@@ -230,6 +229,14 @@ public class TabThree extends Fragment {
                                                 "Выберите ответ",
                                                 Toast.LENGTH_SHORT).show();
                                     }
+                                } else if (cntItem == (getResources().getTextArray(R.array.oske_items).length)){
+                                    saveAns(cntItem, getCheckedIndex() + 1);
+                                    Fragment fragment = new fragmentOskeCalc();
+                                    FragmentTransaction transaction3 = getChildFragmentManager().beginTransaction();
+                                    transaction3.replace(R.id.parent_fragment, fragment).commit();
+                                    btnPrev.setVisibility(View.INVISIBLE);
+                                    btnNext.setText(getResources().getString(R.string.oske_button_end));
+                                    cntItem += 1;
                                 } else {
                                     Fragment fragment = new fragmentOskeStart();
                                     FragmentTransaction transaction1 = getChildFragmentManager().beginTransaction();
@@ -260,12 +267,12 @@ public class TabThree extends Fragment {
 
                                     if (rgKrootChecked()) {
 
-                                        saveAns(cntItem, fragmentKroot.getCheckedIndex());
+                                        saveAns(cntItem, fragmentKroot.getCheckedIndex() + 1);
 
                                         Log.e(TAG, "answer " + cntItem + ":   " + fragmentKroot.getCheckedIndex());
 
                                         if (cntItem == (getResources().getTextArray(R.array.kroot_items).length / 3) - 1) {
-                                            btnNext.setText("Завершить");
+                                            btnNext.setText(getResources().getString(R.string.button_calc));
                                         }
 
                                         setRB(cntItem);
@@ -285,6 +292,14 @@ public class TabThree extends Fragment {
                                     } else {
                                         Toast.makeText(requireActivity(), "Выберите ответ", Toast.LENGTH_SHORT).show();
                                     }
+                                }else if (cntItem == (getResources().getTextArray(R.array.kroot_items).length / 3)){
+                                    saveAns(cntItem, fragmentKroot.getCheckedIndex() + 1);
+                                    Fragment fragment = new fragmentKrootCalc();
+                                    FragmentTransaction transaction2 = getChildFragmentManager().beginTransaction();
+                                    transaction2.replace(R.id.parent_fragment, fragment).commit();
+                                    btnPrev.setVisibility(View.INVISIBLE);
+                                    btnNext.setText(getResources().getString(R.string.oske_button_end));
+                                    cntItem += 1;
                                 } else {
                                     Fragment fragment = new fragmentKrootStart();
                                     FragmentTransaction transaction1 = getChildFragmentManager().beginTransaction();

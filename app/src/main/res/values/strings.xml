@@ -157,6 +157,7 @@
     <string name="kroot_difficulty_4">Измененная анатомия, вероятно требующая альтернативных методов</string>
     <string name="kroot_difficulty_5">Измененная анатомия, обширная патология, связанная с предыдущими операциями, лечением, характером повреждений</string>
 
+    <string name="kroot_title_grade">Ваша оценка: </string>
 
 
     <string name="oske_title_start">II этап аккредитационного экзамена</string>
@@ -173,9 +174,9 @@
     <string name="interval_3">Закрытие\nраны:</string>
 
     <string name="about_version_title">Версия приложения</string>
-    <string name="about_version">1.5.4</string>
+    <string name="about_version">1.5.5</string>
     <string name="about_build">Сборка</string>
-    <string name="about_build_number">220121</string>
+    <string name="about_build_number">080221</string>
     <string name="about_footer">© MedSimTech LLC, 2021</string>
     <string name="hyperlink"><a href="https://www.medsim.tech"> <![CDATA[www.medsim.tech]]></a></string>
 
@@ -188,6 +189,7 @@
     <string name="oske_no">НЕТ</string>
     <string name="button_prev">ПРЕД.</string>
     <string name="button_next">СЛЕД.</string>
+    <string name="button_calc">ОЦЕНКА</string>
     <string name="oske_button_end">завершить</string>
 
 
