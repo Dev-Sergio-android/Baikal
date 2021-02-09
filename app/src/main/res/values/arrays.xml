@@ -39,8 +39,6 @@
         <item><![CDATA[ОРГАНИЗАЦИЯ]]></item>
     </string-array>
 
-
-
     <string-array name="oske_items">
         <item><![CDATA[<br>Надел перчатки.</br>]]></item>
         <item><![CDATA[<br>Правильно отобрал инструменты, необходимые для наложения
@@ -90,7 +88,6 @@
         <item><![CDATA[<br>Швы прорезались.</br>]]></item>
         <item><![CDATA[<br>Края раны сопоставлены.</br>]]></item>
     </string-array>
-
 
     <string-array name="kroot_items">
         <item>Не придал должного внимания к необходимому положению больного.</item>

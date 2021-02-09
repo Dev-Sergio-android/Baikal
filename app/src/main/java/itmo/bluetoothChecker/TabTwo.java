@@ -9,11 +9,9 @@ import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.SharedPreferences;
 import android.content.res.ColorStateList;
-import android.graphics.Typeface;
 import android.os.Bundle;
 import android.os.SystemClock;
 import android.util.Log;
-import android.view.Gravity;
 import android.view.HapticFeedbackConstants;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -25,13 +23,12 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentActivity;
 import androidx.viewpager.widget.ViewPager;
 
 import com.google.android.material.tabs.TabLayout;
-
-import itmo.bluetoothChecker.CircularSeekBar.OnCircularSeekBarChangeListener;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -43,6 +40,8 @@ import java.util.Locale;
 import java.util.Objects;
 import java.util.TimeZone;
 
+import itmo.bluetoothChecker.CircularSeekBar.OnCircularSeekBarChangeListener;
+
 import static android.content.Context.MODE_PRIVATE;
 
 
@@ -52,7 +51,6 @@ public class TabTwo extends Fragment {
     private static final int REQUEST_ENABLE_BT = 0;
     private static final String TAG = "Fragment 2 send";
     private static final String TAG1 = "Button Start";
-    private static final String TAG2 = "Button Stop";
     public static boolean flagComplete = true;
     private boolean flagStop = false;
     public static boolean flagPause = false;
@@ -91,11 +89,6 @@ public class TabTwo extends Fragment {
     private TextView result_2;
     private TextView result_3;
 
-    private String device;
-    private String con;
-    private String ansOK;
-    private int timer;
-
     private boolean runningChrono_1 = false;
     private boolean runningChrono_2 = false;
     private boolean runningChrono_3 = false;
@@ -116,8 +109,53 @@ public class TabTwo extends Fragment {
                 try {
                     assert receiveMessage != null;
                     jsonObj = new JSONObject(receiveMessage);
-                    Log.d("My App", jsonObj.toString());
+                    Log.e("My App", jsonObj.toString());
+
+
                     if (jsonObj.getString("device").equals("pump")) {
+                        Log.e(TAG, "device pump");
+
+                        if(jsonObj.getString("started").equals("true")){
+                            Log.e(TAG, "started true");
+                            customToast("started true");
+                            String ad = (jsonObj.getString("ad").substring(1, jsonObj.getString("ad").length()-1)).replace(",","/");
+                            int pos = -1;
+                            for(int i = 0; i < getResources().getStringArray(R.array.pressure).length; i++){
+                                if(getResources().getStringArray(R.array.pressure)[i].equals(ad)){
+                                    pos = i/2;
+                                    break;
+                                }
+                            }
+
+                            try{
+                                bpmCirSeek.setProgress(jsonObj.getInt("hr")-70);
+                            }catch (Exception e){
+                                Log.e(TAG, "Receive wrong value of bpm: " + jsonObj.getInt("hr"));
+                            }
+
+                            try{
+                                pressCirSeek.setProgress(pos);
+                            }catch (Exception e){
+                                Log.e(TAG, "Receive wrong value of pressure: " + jsonObj.getInt("ad"));
+                            }
+
+                            try{
+                                respCirSeek.setProgress(jsonObj.getInt("rr")-15);
+                            }catch (Exception e){
+                                Log.e(TAG, "Receive wrong value of respiration rate: " + jsonObj.getInt("rr"));
+                            }
+
+                            try{
+                                satCirSeek.setProgress(jsonObj.getInt("sp"));
+                            }catch (Exception e){
+                                Log.e(TAG, "Receive wrong value of saturation: " + jsonObj.getInt("sp"));
+                            }
+
+                        }else{
+                            Log.e(TAG, "started true");
+                            customToast("started false");
+                        }
+
                         ///// Запуск таймеров от датчика давления только в автоматическом режиме ////
                         if (!getMode()) {
                             if (jsonObj.has("timer") && jsonObj.getInt("timer") < 4) {
@@ -219,8 +257,30 @@ public class TabTwo extends Fragment {
                             }
                         }
                     }
-                } catch (JSONException e) {
-                    customToast("Приняты поврежденные данные: " + receiveMessage);
+                }catch (JSONException e) {
+                    try {
+                        assert jsonObj != null;
+                        if(jsonObj.has("device")){
+
+                            if(jsonObj.getString("device").equals("pump")){
+                                Log.e(TAG,"not device pump");
+                                customToast("Принято сообщение со стороннего устройства");
+                            }else{
+                                if(!receiveMessage.substring(0,1).equals("{")
+                                        && !receiveMessage.substring(receiveMessage.length() - 1).equals("}")){
+                                    Log.e(TAG,"wrong data");
+                                    customToast("Приняты поврежденные данные: " + receiveMessage);
+                                }
+                            }
+                        }else{
+                            Log.e(TAG,"Принято сообщение с неизвестное устройство");
+                            customToast("Принято сообщение с неизвестное устройство");
+                        }
+
+                    } catch (JSONException ex) {
+                        Log.e(TAG,"catch error");
+                        ex.printStackTrace();
+                    }
                     answer.setText(receiveMessage);
                     e.printStackTrace();
                 }
@@ -723,7 +783,7 @@ public class TabTwo extends Fragment {
                     result_1.setText(R.string.def_val_settings_time);
                     result_1.setVisibility(View.VISIBLE);
                     colorState = result_1.getTextColors();
-                    result_1.setTextColor(getResources().getColor(R.color.heart_color));
+                    result_1.setTextColor(ContextCompat.getColor(requireContext(), R.color.heart_color));
                     //resetChrono(time_1);
                     time_1.stop();
                     customToast("Время на завршение этапа истекло");
@@ -740,7 +800,7 @@ public class TabTwo extends Fragment {
                     result_2.setText(R.string.def_val_settings_time);
                     result_2.setVisibility(View.VISIBLE);
                     colorState = result_2.getTextColors();
-                    result_2.setTextColor(getResources().getColor(R.color.heart_color));
+                    result_2.setTextColor(ContextCompat.getColor(requireContext(), R.color.heart_color));
                     //resetChrono(time_2);
                     time_2.stop();
                     customToast("Время на завршение этапа истекло");
@@ -757,7 +817,7 @@ public class TabTwo extends Fragment {
                     result_3.setText(R.string.def_val_settings_time);
                     result_3.setVisibility(View.VISIBLE);
                     colorState = result_3.getTextColors();
-                    result_3.setTextColor(getResources().getColor(R.color.heart_color));
+                    result_3.setTextColor(ContextCompat.getColor(requireContext(), R.color.heart_color));
                     //resetChrono(time_3);
                     time_3.stop();
                     customToast("Время на завршение этапа истекло");
