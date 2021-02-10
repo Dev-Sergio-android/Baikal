@@ -167,9 +167,7 @@ public class MainActivity extends AppCompatActivity {
         toolbar.setTitle(R.string.app_name);
         toolbar.setSubtitle("не подключено");
         setSupportActionBar(toolbar);
-
-        compareDate();
-
+        formatDate();
         mBluetoothAdapter = BluetoothAdapter.getDefaultAdapter();
 
         /*if (mBluetoothAdapter == null) {
@@ -454,11 +452,10 @@ public class MainActivity extends AppCompatActivity {
         ed.apply();
     }
 
-    void compareDate() {
+    void formatDate() {
         String valid_until = "01-04-2021";
         SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy", Locale.US);
         Date date2 = null;
-
         try {
             date2 = sdf.parse(valid_until);
         } catch (Exception e) {

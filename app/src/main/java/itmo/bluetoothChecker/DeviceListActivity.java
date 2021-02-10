@@ -205,6 +205,7 @@ public class DeviceListActivity extends Activity {
             Intent intent = new Intent();
             intent.putExtra(EXTRA_DEVICE_ADDRESS, address);
 
+
             // Set result and finish this Activity
             setResult(Activity.RESULT_OK, intent);
             finish();
@@ -227,7 +228,8 @@ public class DeviceListActivity extends Activity {
                 // If it's already paired, skip it, because it's been listed already
                 if (device != null && device.getBondState() != BluetoothDevice.BOND_BONDED) {
                     //mNewDevicesArrayAdapter.add(device.getName() + "\n" + device.getAddress());
-                    mFoundDevicesArrayAdapter.add(device);
+                        mFoundDevicesArrayAdapter.add(device);
+
                 }
                 // When discovery is finished, change the Activity title
             }
@@ -236,7 +238,7 @@ public class DeviceListActivity extends Activity {
                 status.setText(R.string.select_device);
                 //progressBar.setVisibility(View.GONE);
                 if (mFoundDevicesArrayAdapter.getCount() == 0) {
-                    String noDevices = getResources().getText(R.string.none_found).toString();
+                    String noDevices = getResources().getString(R.string.none_found);
                     Toast.makeText(context, R.string.none_found, Toast.LENGTH_SHORT).show();
                 }
             }

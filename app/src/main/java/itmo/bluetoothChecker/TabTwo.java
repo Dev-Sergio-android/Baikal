@@ -114,8 +114,9 @@ public class TabTwo extends Fragment {
 
                     if (jsonObj.getString("device").equals("pump")) {
                         Log.e(TAG, "device pump");
+                        Log.e(TAG, "manual mode " + getMode());
 
-                        if(jsonObj.getString("started").equals("true")){
+                        if(jsonObj.has("started") && jsonObj.getString("started").equals("true")){
                             Log.e(TAG, "started true");
                             customToast("started true");
                             String ad = (jsonObj.getString("ad").substring(1, jsonObj.getString("ad").length()-1)).replace(",","/");
@@ -152,14 +153,15 @@ public class TabTwo extends Fragment {
                             }
 
                         }else{
-                            Log.e(TAG, "started true");
+                            Log.e(TAG, "started false");
                             customToast("started false");
                         }
 
                         ///// Запуск таймеров от датчика давления только в автоматическом режиме ////
-                        if (!getMode()) {
+                        if (!getMode() && !flagComplete) {
+                            Log.e(TAG, "manual mode" + getMode());
                             if (jsonObj.has("timer") && jsonObj.getInt("timer") < 4) {
-
+                                Log.e(TAG, "timer: " + jsonObj.getInt("timer"));
                                 if (jsonObj.getInt("timer") == 1
                                         && !flagComplete
                                         && result_1.getVisibility() == View.INVISIBLE) {
@@ -262,7 +264,7 @@ public class TabTwo extends Fragment {
                         assert jsonObj != null;
                         if(jsonObj.has("device")){
 
-                            if(jsonObj.getString("device").equals("pump")){
+                            if(!jsonObj.getString("device").equals("pump")){
                                 Log.e(TAG,"not device pump");
                                 customToast("Принято сообщение со стороннего устройства");
                             }else{
@@ -273,8 +275,8 @@ public class TabTwo extends Fragment {
                                 }
                             }
                         }else{
-                            Log.e(TAG,"Принято сообщение с неизвестное устройство");
-                            customToast("Принято сообщение с неизвестное устройство");
+                            Log.e(TAG,"Принято сообщение с неизвестного устройство");
+                            customToast("Принято сообщение с неизвестного устройство");
                         }
 
                     } catch (JSONException ex) {
@@ -316,10 +318,10 @@ public class TabTwo extends Fragment {
 
         // If the adapter is null, then Bluetooth is not supported
 
-        if (mBluetoothAdapter == null) {
+        /*if (mBluetoothAdapter == null) {
             Toast.makeText(activity, "Bluetooth is not available", Toast.LENGTH_LONG).show();
             activity.finish();
-        }
+        }*/
 
 
         if (!Objects.requireNonNull(mBluetoothAdapter).isEnabled()) {
@@ -575,7 +577,6 @@ public class TabTwo extends Fragment {
                     Log.e(TAG1, "flagComplete (else): " + flagComplete);
                     customToast("Ваше устройство не подключено к тренажеру");
                 }
-
                 buttonProtect(buttonStart);
                 view.performHapticFeedback(HapticFeedbackConstants.VIRTUAL_KEY);
             }
@@ -626,7 +627,16 @@ public class TabTwo extends Fragment {
             public void onClick(View view) {
                 if (loadState()) {
                     Log.i(TAG, "State" + loadState());
-                    sendStatus("mute");
+                    JSONObject mesMute = new JSONObject();
+                    try {
+                        mesMute.put("device", "android");
+                        mesMute.put("mute", true);
+
+                        sendMessage(mesMute.toString());
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
+
                     customToast("Звук отключен");
                 } else {
                     Log.e(TAG, "State" + loadState());
@@ -929,14 +939,15 @@ public class TabTwo extends Fragment {
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         if (requestCode == REQUEST_ENABLE_BT) {// When the request to enable Bluetooth returns
             if (resultCode == Activity.RESULT_OK) {
-                customToast("Bluetooth is available.");
+                Toast.makeText(requireActivity(), "Bluetooth включен", Toast.LENGTH_SHORT).show();
+                //customToast("Bluetooth is available.");
                 //bondList();
             } else {
                 // User did not enable Bluetooth or an error occurred
                 Log.d(TAG, "BT not enabled");
                 FragmentActivity activity = getActivity();
                 if (activity != null) {
-                    customToast("Bluetooth is not enabled");
+                    customToast("Bluetooth выключен");
                     activity.finish();
                 }
             }
