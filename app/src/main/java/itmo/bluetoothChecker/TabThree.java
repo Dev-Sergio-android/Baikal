@@ -5,8 +5,15 @@ import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.SharedPreferences;
+import android.graphics.Canvas;
+import android.graphics.Paint;
+import android.graphics.Typeface;
+import android.graphics.pdf.PdfDocument;
 import android.os.Build;
 import android.os.Bundle;
+import android.os.Environment;
+import android.print.PrintAttributes;
+import android.print.pdf.PrintedPdfDocument;
 import android.text.Html;
 import android.util.Log;
 import android.view.HapticFeedbackConstants;
@@ -27,6 +34,13 @@ import androidx.annotation.RequiresApi;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.Locale;
+
 import itmo.bluetoothChecker.gradeFragment.fragmentKroot;
 import itmo.bluetoothChecker.gradeFragment.fragmentKrootCalc;
 import itmo.bluetoothChecker.gradeFragment.fragmentKrootStart;
@@ -35,6 +49,7 @@ import itmo.bluetoothChecker.gradeFragment.fragmentOskeCalc;
 import itmo.bluetoothChecker.gradeFragment.fragmentOskeStart;
 
 import static android.content.Context.MODE_PRIVATE;
+import static android.content.Context.PRINT_SERVICE;
 import static itmo.bluetoothChecker.TabTwo.flagComplete;
 import static itmo.bluetoothChecker.gradeFragment.fragmentKroot.rgKrootChecked;
 import static itmo.bluetoothChecker.gradeFragment.fragmentKroot.rgKrootClear;
@@ -230,13 +245,19 @@ public class TabThree extends Fragment {
                                                 Toast.LENGTH_SHORT).show();
                                     }
                                 } else if (cntItem == (getResources().getTextArray(R.array.oske_items).length)){
-                                    saveAns(cntItem, getCheckedIndex() + 1);
-                                    Fragment fragment = new fragmentOskeCalc();
-                                    FragmentTransaction transaction3 = getChildFragmentManager().beginTransaction();
-                                    transaction3.replace(R.id.parent_fragment, fragment).commit();
-                                    btnPrev.setVisibility(View.INVISIBLE);
-                                    btnNext.setText(getResources().getString(R.string.oske_button_end));
-                                    cntItem += 1;
+                                    if (rgOskeChecked()) {
+                                        saveAns(cntItem, getCheckedIndex() + 1);
+                                        Fragment fragment = new fragmentOskeCalc();
+                                        FragmentTransaction transaction3 = getChildFragmentManager().beginTransaction();
+                                        transaction3.replace(R.id.parent_fragment, fragment).commit();
+                                        btnPrev.setVisibility(View.INVISIBLE);
+                                        btnNext.setText(getResources().getString(R.string.oske_button_end));
+                                        cntItem += 1;
+                                    } else {
+                                        Toast.makeText(requireActivity(),
+                                                "Выберите ответ",
+                                                Toast.LENGTH_SHORT).show();
+                                    }
                                 } else {
                                     Fragment fragment = new fragmentOskeStart();
                                     FragmentTransaction transaction1 = getChildFragmentManager().beginTransaction();
@@ -293,13 +314,22 @@ public class TabThree extends Fragment {
                                         Toast.makeText(requireActivity(), "Выберите ответ", Toast.LENGTH_SHORT).show();
                                     }
                                 }else if (cntItem == (getResources().getTextArray(R.array.kroot_items).length / 3)){
-                                    saveAns(cntItem, fragmentKroot.getCheckedIndex() + 1);
-                                    Fragment fragment = new fragmentKrootCalc();
-                                    FragmentTransaction transaction2 = getChildFragmentManager().beginTransaction();
-                                    transaction2.replace(R.id.parent_fragment, fragment).commit();
-                                    btnPrev.setVisibility(View.INVISIBLE);
-                                    btnNext.setText(getResources().getString(R.string.oske_button_end));
-                                    cntItem += 1;
+                                    if (rgKrootChecked()) {
+                                        saveAns(cntItem, fragmentKroot.getCheckedIndex() + 1);
+                                        try {
+                                            pdfRes();
+                                        }catch(Exception e){
+                                            Log.e(TAG, e.toString());
+                                        }
+                                        Fragment fragment = new fragmentKrootCalc();
+                                        FragmentTransaction transaction2 = getChildFragmentManager().beginTransaction();
+                                        transaction2.replace(R.id.parent_fragment, fragment).commit();
+                                        btnPrev.setVisibility(View.INVISIBLE);
+                                        btnNext.setText(getResources().getString(R.string.oske_button_end));
+                                        cntItem += 1;
+                                    } else {
+                                        Toast.makeText(requireActivity(), "Выберите ответ", Toast.LENGTH_SHORT).show();
+                                    }
                                 } else {
                                     Fragment fragment = new fragmentKrootStart();
                                     FragmentTransaction transaction1 = getChildFragmentManager().beginTransaction();
@@ -312,7 +342,6 @@ public class TabThree extends Fragment {
                                     requireActivity().getSharedPreferences("GradeAnswer", MODE_PRIVATE).edit().clear().apply();
                                     //Toast.makeText(requireActivity(), "cnt reset", Toast.LENGTH_SHORT).show();
                                 }
-
                                 break;
                         }
 
@@ -565,6 +594,106 @@ public class TabThree extends Fragment {
         sb.delete(0, sb.length());
     }
 
+    
+    void pdfRes(){
+        Paint title = new Paint();
+        Paint content = new Paint();
+        float pageWidth = 600;
+
+        Date date = new Date();
+        SimpleDateFormat formatter = new SimpleDateFormat("dd.MM.yyyy HH:mm:ss", Locale.getDefault());
+
+        PrintAttributes printAttrs = new PrintAttributes.Builder().
+                setColorMode(PrintAttributes.COLOR_MODE_COLOR).
+                setMediaSize(PrintAttributes.MediaSize.NA_LETTER).
+                setResolution(new PrintAttributes.Resolution("MedSim", PRINT_SERVICE, 300, 300)).
+                setMinMargins(PrintAttributes.Margins.NO_MARGINS).
+                build();
+
+        PdfDocument document = new PrintedPdfDocument(requireActivity(), printAttrs);
+        // crate a page description
+        PdfDocument.PageInfo pageInfo = new PdfDocument.PageInfo.Builder(600, 1100, 1).create();
+        // create a new page from the PageInfo
+        PdfDocument.Page page = document.startPage(pageInfo);
+
+        Canvas canvas = page.getCanvas();
+        title.setTextAlign(Paint.Align.CENTER);
+        title.setTypeface(Typeface.create(Typeface.DEFAULT,Typeface.BOLD));
+        title.setTextSize(30);
+
+        content.setTextAlign(Paint.Align.LEFT);
+        content.setTypeface(Typeface.create(Typeface.DEFAULT,Typeface.NORMAL));
+        content.setTextSize(14);
+
+        canvas.drawText("MedSimTech", pageWidth/2, 35, title);
+
+        canvas.drawText("Дата: " , requireActivity().getResources().getInteger(R.integer.pdf_margin_title), 80, content);
+        canvas.drawText(formatter.format(date) , requireActivity().getResources().getInteger(R.integer.pdf_margin_title_content), 80, content);
+        canvas.drawText("Аттестуемый: ", requireActivity().getResources().getInteger(R.integer.pdf_margin_title), 110, content);
+        canvas.drawText("Аттестующий: ", requireActivity().getResources().getInteger(R.integer.pdf_margin_title), 140, content);
+        canvas.drawText("Тип операции: ", requireActivity().getResources().getInteger(R.integer.pdf_margin_title), 170, content);
+        canvas.drawText("Время выполнения операции: ", requireActivity().getResources().getInteger(R.integer.pdf_margin_title), 200, content);
+        canvas.drawText("Время выполнения этапов: ", requireActivity().getResources().getInteger(R.integer.pdf_margin_title), 230, content);
+        canvas.drawText("Оцениваемые параметры: ", requireActivity().getResources().getInteger(R.integer.pdf_margin_title), 260, content);
+        canvas.drawText("ПОДГОТОВКА БОЛЬНОГО - " + requireActivity().getSharedPreferences("GradeAnswer", MODE_PRIVATE)
+                .getInt("ans1", 0), requireActivity().getResources().getInteger(R.integer.pdf_margin_item), 290, content);
+        canvas.drawText("ОБРАБОТКА РУК - " + requireActivity().getSharedPreferences("GradeAnswer", MODE_PRIVATE)
+                .getInt("ans2", 0), requireActivity().getResources().getInteger(R.integer.pdf_margin_item), 320, content);
+        canvas.drawText("НАДЕВАНИЕ ХАЛАТА - " + requireActivity().getSharedPreferences("GradeAnswer", MODE_PRIVATE)
+                .getInt("ans3", 0), requireActivity().getResources().getInteger(R.integer.pdf_margin_item), 350, content);
+        canvas.drawText("НАДЕВАНИЕ ПЕРЧАТОК - " + requireActivity().getSharedPreferences("GradeAnswer", MODE_PRIVATE)
+                .getInt("ans4", 0), requireActivity().getResources().getInteger(R.integer.pdf_margin_item), 380, content);
+        canvas.drawText("ОБРАБОТКА ОПЕРАЦИОННОГО ПОЛЯ - " + requireActivity().getSharedPreferences("GradeAnswer", MODE_PRIVATE)
+                .getInt("ans5", 0), requireActivity().getResources().getInteger(R.integer.pdf_margin_item), 410, content);
+        canvas.drawText("ОТГРАНИЧЕНИЕ ОПЕРАЦИОННОГО ПОЛЯ - " + requireActivity().getSharedPreferences("GradeAnswer", MODE_PRIVATE)
+                .getInt("ans6", 0), requireActivity().getResources().getInteger(R.integer.pdf_margin_item), 440, content);
+        canvas.drawText("РАЗРЕЗ:ТЕХНИКА - " + requireActivity().getSharedPreferences("GradeAnswer", MODE_PRIVATE)
+                .getInt("ans7", 0), requireActivity().getResources().getInteger(R.integer.pdf_margin_item), 470, content);
+        canvas.drawText("РАЗРЕЗ:АНАТОМИЯ - " + requireActivity().getSharedPreferences("GradeAnswer", MODE_PRIVATE)
+                .getInt("ans8", 0), requireActivity().getResources().getInteger(R.integer.pdf_margin_item), 500, content);
+        canvas.drawText("РАЗРЕЗ:ОРГАНИЗАЦИЯ - " + requireActivity().getSharedPreferences("GradeAnswer", MODE_PRIVATE)
+                .getInt("ans9", 0), requireActivity().getResources().getInteger(R.integer.pdf_margin_item), 530, content);
+        canvas.drawText("СОСУДИСТЫЙ ДОСТУП:ТЕХНИКА - " + requireActivity().getSharedPreferences("GradeAnswer", MODE_PRIVATE)
+                .getInt("ans10", 0), requireActivity().getResources().getInteger(R.integer.pdf_margin_item), 560, content);
+        canvas.drawText("СОСУДИСТЫЙ ДОСТУП:АНАТОМИЯ - " + requireActivity().getSharedPreferences("GradeAnswer", MODE_PRIVATE)
+                .getInt("ans11", 0), requireActivity().getResources().getInteger(R.integer.pdf_margin_item), 590, content);
+        canvas.drawText("СОСУДИСТЫЙ ДОСТУП:ОРГАНИЗАЦИЯ - " + requireActivity().getSharedPreferences("GradeAnswer", MODE_PRIVATE)
+                .getInt("ans12", 0), requireActivity().getResources().getInteger(R.integer.pdf_margin_item), 620, content);
+        canvas.drawText("ИДЕНТИФИКАЦИЯ АРТЕРИИ:ТЕХНИКА - " + requireActivity().getSharedPreferences("GradeAnswer", MODE_PRIVATE)
+                .getInt("ans13", 0), requireActivity().getResources().getInteger(R.integer.pdf_margin_item), 650, content);
+        canvas.drawText("ИДЕНТИФИКАЦИЯ АРТЕРИИ:АНАТОМИЯ - " + requireActivity().getSharedPreferences("GradeAnswer", MODE_PRIVATE)
+                .getInt("ans14", 0), requireActivity().getResources().getInteger(R.integer.pdf_margin_item), 680, content);
+        canvas.drawText("ИДЕНТИФИКАЦИЯ АРТЕРИИ:ОРГАНИЗАЦИЯ - " + requireActivity().getSharedPreferences("GradeAnswer", MODE_PRIVATE)
+                .getInt("ans15", 0), requireActivity().getResources().getInteger(R.integer.pdf_margin_item), 710, content);
+        canvas.drawText("ВСКРЫТИЕ ПРОСВЕТА ТРАХЕИ:ТЕХНИКА - " + requireActivity().getSharedPreferences("GradeAnswer", MODE_PRIVATE)
+                .getInt("ans16", 0), requireActivity().getResources().getInteger(R.integer.pdf_margin_item), 740, content);
+        canvas.drawText("ВСКРЫТИЕ ПРОСВЕТА ТРАХЕИ:АНАТОМИЯ - " + requireActivity().getSharedPreferences("GradeAnswer", MODE_PRIVATE)
+                .getInt("ans17", 0), requireActivity().getResources().getInteger(R.integer.pdf_margin_item), 770, content);
+        canvas.drawText("ВСКРЫТИЕ ПРОСВЕТА ТРАХЕИ:ОРГАНИЗАЦИЯ - " + requireActivity().getSharedPreferences("GradeAnswer", MODE_PRIVATE)
+                .getInt("ans18", 0), requireActivity().getResources().getInteger(R.integer.pdf_margin_item), 800, content);
+        canvas.drawText("СОСУДИСТЫЙ ШОВ:ТЕХНИКА - " + requireActivity().getSharedPreferences("GradeAnswer", MODE_PRIVATE)
+                .getInt("ans19", 0), requireActivity().getResources().getInteger(R.integer.pdf_margin_item), 830, content);
+        canvas.drawText("СОСУДИСТЫЙ ШОВ:АНАТОМИЯ - " + requireActivity().getSharedPreferences("GradeAnswer", MODE_PRIVATE)
+                .getInt("ans20", 0), requireActivity().getResources().getInteger(R.integer.pdf_margin_item), 860, content);
+        canvas.drawText("СОСУДИСТЫЙ ШОВ:ОРГАНИЗАЦИЯ - " + requireActivity().getSharedPreferences("GradeAnswer", MODE_PRIVATE)
+                .getInt("ans21", 0), requireActivity().getResources().getInteger(R.integer.pdf_margin_item), 890, content);
+
+
+        // do final processing of the page
+        document.finishPage(page);
+
+
+        try {
+            File f = new File(Environment.getExternalStorageDirectory().getPath() + "/MedSimTech_report_" + formatter.format(date) + ".pdf");
+            FileOutputStream fos = new FileOutputStream(f);
+            document.writeTo(fos);
+            document.close();
+            fos.close();
+        } catch (IOException e) {
+            throw new RuntimeException("Error generating file", e);
+        }
+    }
+    
 
     void saveSys(int iParam) {
         SharedPreferences spSys = requireActivity().getSharedPreferences("gr_sys", MODE_PRIVATE);

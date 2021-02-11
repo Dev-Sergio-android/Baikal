@@ -8,4 +8,8 @@
     <integer name="oske_first_column_weight">6</integer>
     <integer name="oske_second_column_weight">9</integer>
 
+    <integer name="pdf_margin_title">20</integer>
+    <integer name="pdf_margin_title_content">130</integer>
+    <integer name="pdf_margin_item">40</integer>
+
 </resources>

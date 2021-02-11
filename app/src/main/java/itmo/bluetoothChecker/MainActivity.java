@@ -54,6 +54,7 @@ public class MainActivity extends AppCompatActivity {
     private static final String BLUETOOTH_ADMIN = Manifest.permission.BLUETOOTH_ADMIN;
     private static final String ACCESS_COARSE_LOCATION = Manifest.permission.ACCESS_COARSE_LOCATION;
     private static final String ACCESS_FINE_LOCATION = Manifest.permission.ACCESS_FINE_LOCATION;
+    private static final String WRITE_EXTERNAL_STORAGE = Manifest.permission.WRITE_EXTERNAL_STORAGE;
 
     private final String SEND = "MedSimTech_send_message";
 
@@ -197,8 +198,7 @@ public class MainActivity extends AppCompatActivity {
         if (!isPermissionGranted()) {
             requestPermission();
         } else {
-            if (ContextCompat.checkSelfPermission(
-                    this, BLUETOOTH) == PackageManager.PERMISSION_GRANTED) {
+            if (ContextCompat.checkSelfPermission(this, BLUETOOTH) == PackageManager.PERMISSION_GRANTED) {
             } else if (shouldShowRequestPermissionRationale(BLUETOOTH)) {
             } else {
                 // You can directly ask for the permission.
@@ -363,10 +363,12 @@ public class MainActivity extends AppCompatActivity {
             int permissionCheckBluetoothAdmin = ActivityCompat.checkSelfPermission(this, MainActivity.BLUETOOTH_ADMIN);
             int permissionCheckAccessCoarse = ActivityCompat.checkSelfPermission(this, MainActivity.ACCESS_COARSE_LOCATION);
             int permissionCheckAccessFine = ActivityCompat.checkSelfPermission(this, MainActivity.ACCESS_FINE_LOCATION);
+            int permissionCheckWriteStorage = ActivityCompat.checkSelfPermission(this, MainActivity.WRITE_EXTERNAL_STORAGE);
 
             return permissionCheckBluetooth == PERMISSION_GRANTED
                     & permissionCheckBluetoothAdmin == PERMISSION_GRANTED
                     & permissionCheckAccessCoarse == PERMISSION_GRANTED
+                    & permissionCheckWriteStorage == PERMISSION_GRANTED
                     & permissionCheckAccessFine == PERMISSION_GRANTED;
         } else {
             return true;
@@ -409,7 +411,7 @@ public class MainActivity extends AppCompatActivity {
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
         if (requestCode == REQUEST_MULTIPLE_PERMISSION) {
             if (grantResults.length > 0 && grantResults[0] == PERMISSION_GRANTED) { //& grantResults[1] == PackageManager.PERMISSION_GRANTED & grantResults[2] == PackageManager.PERMISSION_GRANTED ){
-                customToast("Разрешения получены");
+                //customToast("Разрешения получены");
             } else {
                 customToast("Разрешения не получены");
                 showPermissionDialog(MainActivity.this);
@@ -426,7 +428,8 @@ public class MainActivity extends AppCompatActivity {
                 MainActivity.BLUETOOTH,
                 MainActivity.BLUETOOTH_ADMIN,
                 MainActivity.ACCESS_COARSE_LOCATION,
-                MainActivity.ACCESS_FINE_LOCATION}, MainActivity.REQUEST_MULTIPLE_PERMISSION);
+                MainActivity.ACCESS_FINE_LOCATION,
+                MainActivity.WRITE_EXTERNAL_STORAGE}, MainActivity.REQUEST_MULTIPLE_PERMISSION);
     }
 
     ////////////////////////////////////////////////////////////////////////////////////////////////
