@@ -37,6 +37,7 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Locale;
 
+import itmo.bluetoothChecker.ui.login.LoginActivity;
 import itmo.bluetoothChecker.ui.main.SectionsPagerAdapter;
 
 import static android.content.pm.PackageManager.PERMISSION_GRANTED;
@@ -232,7 +233,13 @@ public class MainActivity extends AppCompatActivity {
         // Handle item selection
         switch (item.getItemId()) {
             case R.id.menu_find:
-                customToast("Slide show");
+                if(mChatService.getState() == BluetoothChatService.STATE_CONNECTED){
+                    mChatService.stop();
+                    customToast("Устройство отключено от тренажера");
+                }else{
+                    customToast("Нет подключенных устройств");
+                }
+
                 break;
 
             case R.id.menu_conn:
@@ -247,8 +254,9 @@ public class MainActivity extends AppCompatActivity {
 
             case R.id.menu_bar_settings:
                 if (flagComplete) {
-                    Intent settingsIntent = new Intent(this, SettingsActivity.class);
-                    startActivityForResult(settingsIntent, REQUEST_SETTINGS);
+                    mChatService.stop();
+                    Intent LoginIntent = new Intent(this, LoginActivity.class);
+                    startActivityForResult(LoginIntent, REQUEST_SETTINGS);
                 } else {
                     customToast("Недоступно во время операции");
                 }

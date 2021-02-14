@@ -7,6 +7,8 @@ import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.ImageView;
 
+import itmo.bluetoothChecker.ui.login.LoginActivity;
+
 public class SplashActivity extends Activity {
 
     @Override
@@ -16,7 +18,7 @@ public class SplashActivity extends Activity {
         ImageView logo = findViewById(R.id.logo);
         Animation animation = AnimationUtils.loadAnimation(this, R.anim.animation);
         logo.startAnimation(animation);
-        final Intent intent = new Intent(this, MainActivity.class);
+        final Intent intent = new Intent(this, LoginActivity.class);
         Thread timer = new Thread(){
             @Override
             public void run() {

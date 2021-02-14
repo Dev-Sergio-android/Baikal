@@ -16,5 +16,7 @@
     <color name="text_color">#757575</color>
     <color name="radio_button_color">#0277BD</color>
     <color name="colorTitle">#2F2F2F</color>
+    <color name="colorLogin">#565656</color>
+    <color name="colorTabs">#675C5C</color>
 <!--    <color name="colorAccent">#D81B60</color>-->
 </resources>
