@@ -55,7 +55,6 @@ public class TabTwo extends Fragment {
     private boolean flagStop = false;
     public static boolean flagPause = false;
 
-    private static BluetoothAdapter mBluetoothAdapter = null;
     private static TextView answer;
 
     private final String SEND = "MedSimTech_send_message";
@@ -96,6 +95,7 @@ public class TabTwo extends Fragment {
     private boolean pauseChrono_2 = false;
     private boolean pauseChrono_3 = false;
     private long pauseOffset = 0;
+
 
     private final BroadcastReceiver tabReceiver = new BroadcastReceiver() {
         @SuppressLint("SetTextI18n")
@@ -309,12 +309,18 @@ public class TabTwo extends Fragment {
         final View view = inflater.inflate(R.layout.tab_pump, container, false);
         FragmentActivity activity = getActivity();
 
-        //TabTwo.context = Objects.requireNonNull(getActivity()).getApplicationContext();
+        String limit_1 = "10:00";
+        String limit_2 = "15:00";
+        String limit_3 = "10:00";
 
-        mBluetoothAdapter = BluetoothAdapter.getDefaultAdapter();
+        BluetoothAdapter mBluetoothAdapter = BluetoothAdapter.getDefaultAdapter();
 
         Objects.requireNonNull(activity).registerReceiver(tabReceiver, new IntentFilter(RECEIVE));
         Objects.requireNonNull(activity).registerReceiver(tabReceiver, new IntentFilter(SETTINGS_MODE));
+
+        requireActivity().getSharedPreferences("limit", MODE_PRIVATE).edit().putString("time1", limit_1).apply();
+        requireActivity().getSharedPreferences("limit", MODE_PRIVATE).edit().putString("time2", limit_2).apply();
+        requireActivity().getSharedPreferences("limit", MODE_PRIVATE).edit().putString("time3", limit_3).apply();
 
         // If the adapter is null, then Bluetooth is not supported
 
@@ -789,7 +795,7 @@ public class TabTwo extends Fragment {
             @Override
             public void onChronometerTick(Chronometer chronometer) {
                 long elapsedMillis = SystemClock.elapsedRealtime() - time_1.getBase();
-                if (elapsedMillis > getLimit("limit_1", "time1")) {
+                if (elapsedMillis > getLimit("time1")) {
                     result_1.setText(R.string.def_val_settings_time);
                     result_1.setVisibility(View.VISIBLE);
                     colorState = result_1.getTextColors();
@@ -806,7 +812,7 @@ public class TabTwo extends Fragment {
             @Override
             public void onChronometerTick(Chronometer chronometer) {
                 long elapsedMillis = SystemClock.elapsedRealtime() - time_2.getBase();
-                if (elapsedMillis > getLimit("limit_2", "time2")) {
+                if (elapsedMillis > getLimit("time2")) {
                     result_2.setText(R.string.def_val_settings_time);
                     result_2.setVisibility(View.VISIBLE);
                     colorState = result_2.getTextColors();
@@ -823,7 +829,7 @@ public class TabTwo extends Fragment {
             @Override
             public void onChronometerTick(Chronometer chronometer) {
                 long elapsedMillis = SystemClock.elapsedRealtime() - time_3.getBase();
-                if (elapsedMillis > getLimit("limit_3", "time3")) {
+                if (elapsedMillis > getLimit("time3")) {
                     result_3.setText(R.string.def_val_settings_time);
                     result_3.setVisibility(View.VISIBLE);
                     colorState = result_3.getTextColors();
@@ -907,22 +913,22 @@ public class TabTwo extends Fragment {
         return s.getBoolean("mode", false);
     }
 
-    private long getLimit(String name, String key) {
+    private long getLimit(String key) {
         long seconds;
         long minutes;
         Date time = null;
         //StringBuffer strBuffer = new StringBuffer();
-        SharedPreferences s = requireActivity().getSharedPreferences(name, MODE_PRIVATE);
-        String str = s.getString(key, "00:10");
+        SharedPreferences s = requireActivity().getSharedPreferences("limit", MODE_PRIVATE);
+        String str = s.getString(key, "10:00");
         SimpleDateFormat format = new SimpleDateFormat("mm:ss", new Locale("en"));
-        format.setTimeZone(TimeZone.getTimeZone("UTC")); //// !!!важно для отображения gettime в положительном формате
+        format.setTimeZone(TimeZone.getTimeZone("UTC")); //// !!!важно для отображения getTime в положительном формате
         try {
             time = format.parse(str);
             minutes = (Objects.requireNonNull(time).getTime() / (60 * 1000) % 60);
             seconds = (Objects.requireNonNull(time).getTime() / 1000 % 60);
             //minutes = TimeUnit.MILLISECONDS.toMinutes(Objects.requireNonNull(time).getTime()) / 60;
             //seconds = TimeUnit.MILLISECONDS.toSeconds(time.getTime()) % 60;
-            System.out.println(minutes + " minutes and " + seconds + " seconds and " + Objects.requireNonNull(time).getTime() + " get time");
+            Log.i(TAG,minutes + " minutes and " + seconds + " seconds and " + Objects.requireNonNull(time).getTime() + " get time");
         } catch (ParseException e) {
             e.printStackTrace();
         }
