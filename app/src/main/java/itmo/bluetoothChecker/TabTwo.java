@@ -26,6 +26,7 @@ import androidx.annotation.Nullable;
 import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentActivity;
+import androidx.lifecycle.MutableLiveData;
 import androidx.viewpager.widget.ViewPager;
 
 import com.google.android.material.tabs.TabLayout;
@@ -1182,5 +1183,27 @@ public class TabTwo extends Fragment {
 
     }
 
+
+    /*public static class ObservableString{
+        private String str = "";
+        private ChangeListener listener;
+
+        public void setStr(String str) {
+            this.str = str;
+            if (listener != null) listener.onChange();
+        }
+
+        public ChangeListener getListener() {
+            return listener;
+        }
+
+        public void setListener(ChangeListener listener) {
+            this.listener = listener;
+        }
+    }
+
+    public interface ChangeListener {
+        void onChange();
+    }*/
 
 }
