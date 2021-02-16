@@ -11,6 +11,8 @@
 
     <dimen name="settings_header_size">16sp</dimen>
 
+    <dimen name="button_margin">12dp</dimen>
+
     <dimen name="title_to_seek">20dp</dimen>
     <dimen name="seek_to_title">25dp</dimen>
 

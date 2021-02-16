@@ -12,6 +12,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
+import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -22,6 +23,7 @@ import androidx.fragment.app.Fragment;
 
 import itmo.bluetoothChecker.R;
 import itmo.bluetoothChecker.TabThree;
+import itmo.bluetoothChecker.TabTwo;
 
 import static android.content.Context.MODE_PRIVATE;
 
@@ -57,11 +59,16 @@ public class fragmentOske extends Fragment {
         rbNo = view.findViewById(R.id.rb_no);
         rgYesNo = view.findViewById(R.id.rg_yes_no);
 
+
         cntItem = TabThree.getCntItem();
 
-        gradeTitle.setText(Html.fromHtml(sb.append("<b>№").append(cntItem + 1).append("  </b>")
-                .append(getResources().getTextArray(R.array.oske_items)[cntItem]).toString()));
-
+        if(requireActivity().getSharedPreferences("gr_sys", MODE_PRIVATE).getInt("gr_sys", 1) == 1) {
+            gradeTitle.setText(Html.fromHtml(sb.append("<b>№").append(cntItem + 1).append("  </b>")
+                    .append(getResources().getTextArray(R.array.oske_items)[cntItem]).toString()));
+        }else{
+            gradeTitle.setText(Html.fromHtml(sb.append("<b>№").append(cntItem + 1).append("  </b>")
+                    .append(getResources().getTextArray(R.array.lp_items)[cntItem]).toString()));
+        }
         gradeTitle.setJustificationMode(Layout.JUSTIFICATION_MODE_INTER_WORD);
 
         TabThree.setCntItem(cntItem += 1);

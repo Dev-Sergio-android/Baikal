@@ -5,6 +5,7 @@ import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.SharedPreferences;
+import android.content.res.Resources;
 import android.graphics.Canvas;
 import android.graphics.Paint;
 import android.graphics.Typeface;
@@ -93,6 +94,8 @@ public class TabThree extends Fragment {
 
                 case 2:
                     cntItem = 0;
+                    requireActivity().getSharedPreferences("GradeAnswer", MODE_PRIVATE).edit().clear().apply();
+                    transaction.replace(R.id.parent_fragment, new fragmentOskeStart()).commit();
                     break;
 
                 default:
@@ -132,20 +135,25 @@ public class TabThree extends Fragment {
                 if (i == 1) {
                     cntItem = 0;
                     btnPrev.setVisibility(View.INVISIBLE);
+                    btnDel.setVisibility(View.VISIBLE);
+                    btnNext.setText(getResources().getString(R.string.button_next));
                     requireActivity().getSharedPreferences("GradeAnswer", MODE_PRIVATE).edit().clear().apply();
                     FragmentTransaction transaction = getChildFragmentManager().beginTransaction();
                     transaction.replace(R.id.parent_fragment, new fragmentOskeStart()).commit();
                 } else if (i == 2) {
                     cntItem = 0;
-                    /*btnPrev.setVisibility(View.INVISIBLE);
+                    btnPrev.setVisibility(View.INVISIBLE);
+                    btnDel.setVisibility(View.VISIBLE);
+                    btnNext.setText(getResources().getString(R.string.button_next));
                     requireActivity().getSharedPreferences("GradeAnswer", MODE_PRIVATE).edit().clear().apply();
                     FragmentTransaction transaction = getChildFragmentManager().beginTransaction();
-                    transaction.replace(R.id.parent_fragment, new fragmentKrootStart()).commit();*/
-                    btnPrev.setVisibility(View.INVISIBLE);
+                    transaction.replace(R.id.parent_fragment, new fragmentOskeStart()).commit();
 
                 } else {
                     cntItem = 0;
                     btnPrev.setVisibility(View.INVISIBLE);
+                    btnDel.setVisibility(View.VISIBLE);
+                    btnNext.setText(getResources().getString(R.string.button_next));
                     requireActivity().getSharedPreferences("GradeAnswer", MODE_PRIVATE).edit().clear().apply();
                     FragmentTransaction transaction = getChildFragmentManager().beginTransaction();
                     transaction.replace(R.id.parent_fragment, new fragmentKrootStart()).commit();
@@ -169,111 +177,11 @@ public class TabThree extends Fragment {
 
                         switch (spinner.getSelectedItemPosition()) {
                             case 1:
-                                if (cntItem == 0) {
-                                    if (OskeStartChecked()) {
-                                        SharedPreferences.Editor ed = requireActivity().getSharedPreferences("GradeAnswer", MODE_PRIVATE).edit();
-                                        ed.putString("date", getmDate());
-                                        ed.putString("num", getmStNumber()).apply();
-                                        btnNext.setText("СЛЕД.");
-                                        Fragment fragment = new fragmentOske();
-                                        FragmentTransaction transaction1 = getChildFragmentManager().beginTransaction();
-                                        transaction1.replace(R.id.parent_fragment, fragment).commit();
-                                        btnPrev.setVisibility(View.VISIBLE);
-                                        btnDel.setVisibility(View.INVISIBLE);
-                                    } else {
-                                        Toast.makeText(requireActivity(), "Заполните все поля", Toast.LENGTH_SHORT).show();
-                                    }
-                                } else if (cntItem > 0 && cntItem < (getResources().getTextArray(R.array.oske_items).length)) {
-                                    if (rgOskeChecked()) {
-                                        StringBuilder sb = new StringBuilder(20);
-
-                                        if (cntItem == getResources().getTextArray(R.array.oske_items).length) {
-                                            saveAns(cntItem, getCheckedIndex());
-                                            cntItem = 0;
-
-                                            setGradeTitle(Html.fromHtml(sb.append("<b>№").append(cntItem).append("  </b>")
-                                                    .append(getResources().getTextArray(R.array.oske_items)[cntItem]).toString()));
-
-                                            sb.delete(0, sb.length());
-                                            btnPrev.setVisibility(View.INVISIBLE);
-                                            btnDel.setVisibility(View.VISIBLE);
-                                            btnNext.setText(getResources().getString(R.string.button_next));
-                                            requireActivity().getSharedPreferences("GradeAnswer", MODE_PRIVATE).edit().clear().apply();
-                                            rgOskeChecked();
-                                        } else {
-
-                                            btnPrev.setVisibility(View.VISIBLE);
-                                            btnDel.setVisibility(View.INVISIBLE);
-
-                                            saveAns(cntItem, getCheckedIndex());
-
-                                            Log.e(TAG, "answer " + cntItem + ":   " + fragmentOske.getCheckedIndex());
-
-                                            if (cntItem == getResources().getTextArray(R.array.oske_items).length - 1) {
-                                                btnNext.setText(getResources().getString(R.string.button_calc));
-                                            }else {
-                                                btnNext.setText("СЛЕД.");
-                                            }
-
-                                            String ans = fragmentOske.getCheckedIndex() == 0 ? "yes" : "no";
-
-                                            setGradeTitle(Html.fromHtml(sb.append("<b>№").append(cntItem + 1).append("  </b>")
-                                                    .append(getResources().getTextArray(R.array.oske_items)[cntItem]).toString()));
-
-                                            sb.delete(0, sb.length());
-
-
-                                            Toast.makeText(requireActivity(),
-                                                    "question " + cntItem + ": " + ans,
-                                                    Toast.LENGTH_SHORT).show();
-
-                                            cntItem += 1;
-
-                                            fragmentOske.rgOskeClear();
-
-                                            String name = "ans" + (cntItem);
-                                            //Toast.makeText(requireContext(), " -- SharedPref " + name + " is " + requireActivity().getSharedPreferences("GradeAnswer", MODE_PRIVATE).getInt("ans" + (cntItem), -1), Toast.LENGTH_SHORT).show();
-                                            if (requireActivity().getSharedPreferences("GradeAnswer", MODE_PRIVATE).getInt(name, -1) != -1) {
-                                                Log.i(TAG, " ----------------------- load ---------------------");
-                                                loadAns(cntItem);
-                                            }
-
-                                        }
-
-                                    } else {
-                                        Toast.makeText(requireActivity(),
-                                                "Выберите ответ",
-                                                Toast.LENGTH_SHORT).show();
-                                    }
-                                } else if (cntItem == (getResources().getTextArray(R.array.oske_items).length)){
-                                    if (rgOskeChecked()) {
-                                        saveAns(cntItem, getCheckedIndex() + 1);
-                                        Fragment fragment = new fragmentOskeCalc();
-                                        FragmentTransaction transaction3 = getChildFragmentManager().beginTransaction();
-                                        transaction3.replace(R.id.parent_fragment, fragment).commit();
-                                        btnPrev.setVisibility(View.INVISIBLE);
-                                        btnNext.setText(getResources().getString(R.string.oske_button_end));
-                                        cntItem += 1;
-                                    } else {
-                                        Toast.makeText(requireActivity(),
-                                                "Выберите ответ",
-                                                Toast.LENGTH_SHORT).show();
-                                    }
-                                } else {
-                                    Fragment fragment = new fragmentOskeStart();
-                                    FragmentTransaction transaction1 = getChildFragmentManager().beginTransaction();
-                                    transaction1.replace(R.id.parent_fragment, fragment).commit();
-                                    //Toast.makeText(requireActivity(), "switch 1: cnt is " + cntItem, Toast.LENGTH_SHORT).show();
-                                    btnPrev.setVisibility(View.INVISIBLE);
-                                    btnDel.setVisibility(View.VISIBLE);
-                                    cntItem = 0;
-                                    btnNext.setText(getResources().getString(R.string.button_next));
-                                    requireActivity().getSharedPreferences("GradeAnswer", MODE_PRIVATE).edit().clear().apply();
-                                    //Toast.makeText(requireActivity(), "cnt reset", Toast.LENGTH_SHORT).show();
-                                }
+                                oske(getResources().getTextArray(R.array.oske_items));
                                 break;
 
                             case 2:
+                                oske(getResources().getTextArray(R.array.lp_items));
                                 break;
 
                             default:
@@ -367,57 +275,14 @@ public class TabThree extends Fragment {
 
                         switch (spinner.getSelectedItemPosition()) {
                             case 1:
-                                StringBuilder sb = new StringBuilder(20);
-
-                                if (cntItem == 1) {
-                                    cntItem -= 1;
-                                    Fragment fragment = new fragmentOskeStart();
-                                    FragmentTransaction transaction1 = getChildFragmentManager().beginTransaction();
-                                    transaction1.replace(R.id.parent_fragment, fragment).commit();
-
-
-                                    Log.e(TAG, requireActivity().getSharedPreferences("GradeAnswer", MODE_PRIVATE).getString("date", "empty"));
-                                    Log.e(TAG, requireActivity().getSharedPreferences("GradeAnswer", MODE_PRIVATE).getString("num", "empty"));
-
-                                    btnPrev.setVisibility(View.INVISIBLE);
-                                    btnDel.setVisibility(View.VISIBLE);
-                                } else if (cntItem > 1 && cntItem <= (getResources().getTextArray(R.array.oske_items).length)) {
-
-                                    cntItem -= 1;
-
-                                    if (cntItem == getResources().getTextArray(R.array.oske_items).length - 1) {
-                                        btnNext.setText(getResources().getString(R.string.button_next));
-                                    }
-
-                                    /*Toast.makeText(requireActivity(),
-                                            "cntItem --> " + cntItem,
-                                            Toast.LENGTH_SHORT).show();*/
-
-                                    setGradeTitle(Html.fromHtml(sb.append("<b>№").append(cntItem).append("  </b>")
-                                            .append(getResources().getTextArray(R.array.oske_items)[cntItem - 1]).toString()));
-
-                                    sb.delete(0, sb.length());
-
-                                    rgOskeClear();
-
-                                    loadAns(cntItem);
-
-                                } else {
-                                    Toast.makeText(requireActivity(),
-                                            "Недоступно во время операции",
-                                            Toast.LENGTH_SHORT).show();
-                                }
-
-
-                                view.performHapticFeedback(HapticFeedbackConstants.VIRTUAL_KEY);
-
+                                oskePrev(getResources().getTextArray(R.array.oske_items));
                                 break;
 
                             case 2:
+                                oskePrev(getResources().getTextArray(R.array.lp_items));
                                 break;
 
                             default:
-
                                 if (cntItem == 1) {
                                     cntItem -= 1;
                                     Fragment fragment = new fragmentKrootStart();
@@ -464,7 +329,6 @@ public class TabThree extends Fragment {
                     Toast.makeText(requireActivity(), "Ваше устройство не подключено к тренажеру", Toast.LENGTH_SHORT).show();
                 }
 
-
                 view.performHapticFeedback(HapticFeedbackConstants.VIRTUAL_KEY);
             }
         });
@@ -475,7 +339,7 @@ public class TabThree extends Fragment {
             public void onClick(final View view) {
                 AlertDialog.Builder alertDialog = new AlertDialog.Builder(getActivity(), R.style.AlertDialogCustom);
                 alertDialog.setTitle("Удаление данных")
-                        .setMessage("Введенные данные будут стерты.")
+                        .setMessage("Введенные данные будут стерты.\nПродолжить?")
                         .setPositiveButton("OK", new DialogInterface.OnClickListener() {
                                     @Override
                                     public void onClick(DialogInterface dialogInterface, int i) {
@@ -485,6 +349,7 @@ public class TabThree extends Fragment {
                                                 fragment = new fragmentOskeStart();
                                                 break;
                                             case 2:
+                                                fragment = new fragmentOskeStart();
                                                 break;
                                             default:
                                                 fragment = new fragmentKrootStart();
@@ -520,6 +385,157 @@ public class TabThree extends Fragment {
 
         return view;
     }
+///////////////////////////////////////////////////////////////////       OSKE      /////////////////////////////////////////////////////////
+
+    void oske(CharSequence[] charSequences){
+
+        if (cntItem == 0) {
+            if (OskeStartChecked()) {
+                requireActivity().getSharedPreferences("GradeAnswer", MODE_PRIVATE)
+                        .edit().putString("date", getmDate())
+                        .putString("num", getmStNumber()).apply();
+                btnNext.setText("СЛЕД.");
+                Fragment fragment = new fragmentOske();
+                FragmentTransaction transaction1 = getChildFragmentManager().beginTransaction();
+                transaction1.replace(R.id.parent_fragment, fragment).commit();
+                btnPrev.setVisibility(View.VISIBLE);
+                btnDel.setVisibility(View.INVISIBLE);
+            } else {
+                Toast.makeText(requireActivity(), "Заполните все поля", Toast.LENGTH_SHORT).show();
+            }
+        } else if (cntItem > 0 && cntItem < (charSequences.length)) {
+            if (rgOskeChecked()) {
+                StringBuilder sb = new StringBuilder(20);
+
+                if (cntItem == charSequences.length) {
+                    saveAns(cntItem, getCheckedIndex());
+                    cntItem = 0;
+
+                    setGradeTitle(Html.fromHtml(sb.append("<b>№").append(cntItem).append("  </b>")
+                            .append(charSequences[cntItem]).toString()));
+
+                    sb.delete(0, sb.length());
+                    btnPrev.setVisibility(View.INVISIBLE);
+                    btnDel.setVisibility(View.VISIBLE);
+                    btnNext.setText(getResources().getString(R.string.button_next));
+                    requireActivity().getSharedPreferences("GradeAnswer", MODE_PRIVATE).edit().clear().apply();
+                    rgOskeChecked();
+                } else {
+
+                    btnPrev.setVisibility(View.VISIBLE);
+                    btnDel.setVisibility(View.INVISIBLE);
+
+                    saveAns(cntItem, getCheckedIndex());
+
+                    Log.e(TAG, "answer " + cntItem + ":   " + fragmentOske.getCheckedIndex());
+
+                    if (cntItem == charSequences.length - 1) {
+                        btnNext.setText(getResources().getString(R.string.button_calc));
+                    }else {
+                        btnNext.setText("СЛЕД.");
+                    }
+
+                    setGradeTitle(Html.fromHtml(sb.append("<b>№").append(cntItem + 1).append("  </b>")
+                            .append(charSequences[cntItem]).toString()));
+
+                    sb.delete(0, sb.length());
+
+                    cntItem += 1;
+
+                    fragmentOske.rgOskeClear();
+
+                    String name = "ans" + (cntItem);
+
+                    if (requireActivity().getSharedPreferences("GradeAnswer", MODE_PRIVATE).getInt(name, -1) != -1) {
+                        Log.i(TAG, " ----------------------- load ---------------------");
+                        loadAns(cntItem);
+                    }
+
+                }
+
+            } else {
+                Toast.makeText(requireActivity(),
+                        "Выберите ответ",
+                        Toast.LENGTH_SHORT).show();
+            }
+        } else if (cntItem == (charSequences.length)){
+            if (rgOskeChecked()) {
+                saveAns(cntItem, getCheckedIndex() + 1);
+                Fragment fragment = new fragmentOskeCalc();
+                FragmentTransaction transaction3 = getChildFragmentManager().beginTransaction();
+                transaction3.replace(R.id.parent_fragment, fragment).commit();
+                btnPrev.setVisibility(View.INVISIBLE);
+                btnNext.setText(getResources().getString(R.string.oske_button_end));
+                cntItem += 1;
+            } else {
+                Toast.makeText(requireActivity(),
+                        "Выберите ответ",
+                        Toast.LENGTH_SHORT).show();
+            }
+        } else {
+            Fragment fragment = new fragmentOskeStart();
+            FragmentTransaction transaction1 = getChildFragmentManager().beginTransaction();
+            transaction1.replace(R.id.parent_fragment, fragment).commit();
+            //Toast.makeText(requireActivity(), "switch 1: cnt is " + cntItem, Toast.LENGTH_SHORT).show();
+            btnPrev.setVisibility(View.INVISIBLE);
+            btnDel.setVisibility(View.VISIBLE);
+            cntItem = 0;
+            btnNext.setText(getResources().getString(R.string.button_next));
+            requireActivity().getSharedPreferences("GradeAnswer", MODE_PRIVATE).edit().clear().apply();
+            //Toast.makeText(requireActivity(), "cnt reset", Toast.LENGTH_SHORT).show();
+        }
+
+    }
+
+
+
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    void oskePrev(CharSequence[] charSequences){
+        StringBuilder sb = new StringBuilder(20);
+
+        if (cntItem == 1) {
+            cntItem -= 1;
+            Fragment fragment = new fragmentOskeStart();
+            FragmentTransaction transaction1 = getChildFragmentManager().beginTransaction();
+            transaction1.replace(R.id.parent_fragment, fragment).commit();
+
+
+            Log.e(TAG, requireActivity().getSharedPreferences("GradeAnswer", MODE_PRIVATE).getString("date", "empty"));
+            Log.e(TAG, requireActivity().getSharedPreferences("GradeAnswer", MODE_PRIVATE).getString("num", "empty"));
+
+            btnPrev.setVisibility(View.INVISIBLE);
+            btnDel.setVisibility(View.VISIBLE);
+        } else if (cntItem > 1 && cntItem <= (charSequences.length)) {
+
+            cntItem -= 1;
+
+            if (cntItem == charSequences.length - 1) {
+                btnNext.setText(getResources().getString(R.string.button_next));
+            }
+
+                                    /*Toast.makeText(requireActivity(),
+                                            "cntItem --> " + cntItem,
+                                            Toast.LENGTH_SHORT).show();*/
+
+            setGradeTitle(Html.fromHtml(sb.append("<b>№").append(cntItem).append("  </b>")
+                    .append(charSequences[cntItem - 1]).toString()));
+
+            sb.delete(0, sb.length());
+
+            rgOskeClear();
+
+            loadAns(cntItem);
+
+        } else {
+            Toast.makeText(requireActivity(),
+                    "Недоступно во время операции",
+                    Toast.LENGTH_SHORT).show();
+        }
+
+        requireView().performHapticFeedback(HapticFeedbackConstants.VIRTUAL_KEY);
+
+    }
+
 
 
     void saveAns(int question, int witch) {

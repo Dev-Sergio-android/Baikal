@@ -62,7 +62,7 @@
 
     <Button
         android:id="@+id/login"
-        android:layout_width="wrap_content"
+        android:layout_width="200dp"
         android:layout_height="wrap_content"
         android:layout_gravity="start"
         android:layout_marginStart="48dp"
@@ -81,6 +81,22 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintVertical_bias="0.2" />
+
+    <TextView
+        android:id="@+id/about_footer_site"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:autoLink="web"
+        android:layout_marginBottom="5dp"
+        android:layout_centerHorizontal="true"
+        android:textColorLink="@color/white"
+        android:gravity="center"
+        android:drawablePadding="@dimen/kroot_padding_5dp"
+        app:drawableStartCompat="@drawable/ic_globe"
+
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"/>
 
     <ProgressBar
         android:id="@+id/loading"

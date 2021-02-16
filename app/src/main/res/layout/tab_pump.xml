@@ -9,29 +9,32 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical">
-        <LinearLayout
-            android:layout_width="match_parent"
+
+        <GridLayout
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:paddingBottom="5dp">
+            android:layout_marginStart="10dp"
+            android:layout_marginEnd="10dp"
+            android:orientation="horizontal"
+            android:layout_gravity="center"
+            android:columnCount="5">
 
 
             <Button
                 android:id="@+id/buttonStart"
                 android:layout_width="50dp"
                 android:layout_height="50dp"
+                android:layout_column="0"
                 android:stateListAnimator="@animator/button_state_list_animator"
-                android:layout_marginStart="30dp"
-                android:layout_marginTop="@dimen/button_to_top"
-                android:layout_marginBottom="@dimen/button_to_bottom"
+                android:layout_margin="@dimen/button_margin"
                 android:background="@drawable/rounded_button_start"/>
 
             <Button
                 android:id="@+id/buttonPause"
                 android:layout_width="50dp"
                 android:layout_height="50dp"
-                android:layout_marginStart="20dp"
-                android:layout_marginTop="@dimen/button_to_top"
-                android:layout_marginBottom="@dimen/button_to_bottom"
+                android:layout_column="1"
+                android:layout_margin="@dimen/button_margin"
                 android:stateListAnimator="@animator/button_state_list_animator"
                 android:background="@drawable/rounded_button_pause" />
 
@@ -39,9 +42,8 @@
                 android:id="@+id/buttonSend"
                 android:layout_width="50dp"
                 android:layout_height="50dp"
-                android:layout_marginStart="20dp"
-                android:layout_marginTop="@dimen/button_to_top"
-                android:layout_marginBottom="@dimen/button_to_bottom"
+                android:layout_column="2"
+                android:layout_margin="@dimen/button_margin"
                 android:stateListAnimator="@animator/button_state_list_animator"
                 android:background="@drawable/rounded_button" />
 
@@ -49,9 +51,8 @@
                 android:id="@+id/buttonStop"
                 android:layout_width="50dp"
                 android:layout_height="50dp"
-                android:layout_marginStart="20dp"
-                android:layout_marginTop="@dimen/button_to_top"
-                android:layout_marginBottom="@dimen/button_to_bottom"
+                android:layout_column="3"
+                android:layout_margin="@dimen/button_margin"
                 android:stateListAnimator="@animator/button_state_list_animator"
                 android:background="@drawable/rounded_button_stop"/>
 
@@ -59,12 +60,11 @@
                 android:id="@+id/buttonMute"
                 android:layout_width="50dp"
                 android:layout_height="50dp"
-                android:layout_marginStart="20dp"
-                android:layout_marginEnd="30dp"
-                android:layout_marginTop="@dimen/button_to_top"
-                android:layout_marginBottom="@dimen/button_to_bottom"
+                android:layout_column="4"
+                android:layout_margin="@dimen/button_margin"
+                android:stateListAnimator="@animator/button_state_list_animator"
                 android:background="@drawable/rounded_button_sound"/>
-        </LinearLayout>
+        </GridLayout>
 
         <RelativeLayout
             android:id="@+id/rvTimerLayout"

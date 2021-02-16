@@ -314,6 +314,8 @@ public class TabTwo extends Fragment {
         String limit_2 = "15:00";
         String limit_3 = "10:00";
 
+        customToast(getString(R.string.welcome));
+
         BluetoothAdapter mBluetoothAdapter = BluetoothAdapter.getDefaultAdapter();
 
         Objects.requireNonNull(activity).registerReceiver(tabReceiver, new IntentFilter(RECEIVE));
@@ -505,11 +507,11 @@ public class TabTwo extends Fragment {
                     } catch (JSONException e) {
                         e.printStackTrace();
                     }
-                    buttonProtect(buttonSend);
-                    view.performHapticFeedback(HapticFeedbackConstants.VIRTUAL_KEY);
                 } else {
                     customToast("Ваше устройство не подключено к тренажеру");
                 }
+                buttonProtect(buttonSend);
+                view.performHapticFeedback(HapticFeedbackConstants.VIRTUAL_KEY);
             }
         });
 
