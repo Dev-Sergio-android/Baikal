@@ -170,6 +170,7 @@ public class TabTwo extends Fragment {
                                     if (!runningChrono_1 && !runningChrono_2 && !runningChrono_3) {
                                         // TODO save start time in sharedPreference
                                         requireActivity().getSharedPreferences("KrootTime", MODE_PRIVATE).edit().putString("time1Start", getDate()).apply();
+                                        Log.e(TAG, "time1Start: " + requireActivity().getSharedPreferences("KrootTime", MODE_PRIVATE).getString("time1Start", "fuck up"));
                                         sendTime("send_message_time1Start", getDate());
 
                                         startChrono(time_1);
@@ -190,6 +191,7 @@ public class TabTwo extends Fragment {
                                         if (!time_1.getText().equals("00:00")) {
                                             // TODO send broadcast with timer1
                                             requireActivity().getSharedPreferences("KrootTime", MODE_PRIVATE).edit().putString("time1Stop", getDate()).apply();
+                                            Log.e(TAG, "time1Stop: " + requireActivity().getSharedPreferences("KrootTime", MODE_PRIVATE).getString("time1Stop", "fuck up"));
                                             sendTime("send_message_time1Stop", getDate());
 
                                             result_1.setText(time_1.getText());

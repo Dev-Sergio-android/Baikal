@@ -26,6 +26,7 @@ import androidx.fragment.app.Fragment;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.time.Duration;
 import java.util.Calendar;
 import java.util.Locale;
 import java.util.Objects;
@@ -56,11 +57,14 @@ public class fragmentKrootStart extends Fragment {
 
     int mHour, mMinute;
 
+
     private final BroadcastReceiver checkReceiver = new BroadcastReceiver() {
         @SuppressLint("SetTextI18n")
         @Override
         public void onReceive(Context context, Intent intent) {
             String action = intent.getAction();
+            String startTime, stopTime;
+
             if (TIME.equals(action)) {
                 Log.e("Kroooooot", "broadcast");
                 if(intent.hasExtra("send_message_time1Start")){
@@ -69,18 +73,37 @@ public class fragmentKrootStart extends Fragment {
                     operStopTime_1.setText(intent.getStringExtra("send_message_time1Stop"));
                     operStartTime_2.setText(intent.getStringExtra("send_message_time1Stop"));
 
+                    stopTime =  context.getSharedPreferences("KrootTime", MODE_PRIVATE).getString("time1Stop", "00:00");
+                    startTime = context.getSharedPreferences("KrootTime", MODE_PRIVATE).getString("time1Start", "00:00");
+
+                    Log.e("Kroooooot", "----> " + startTime + " ---> " + stopTime);
+
+                    /*if(!operStartTime_1.getText().toString().equals("") && !operStopTime_1.getText().toString().equals("")) {
+                        try {
+                            operAllTime_1.setText(timeDif(operStartTime_1.getText().toString(), operStopTime_1.getText().toString()));
+                        } catch (ParseException e) {
+                            e.printStackTrace();
+                        }
+                    }*/
+
                 }else if(intent.hasExtra("send_message_time2Stop")){
                     operStopTime_2.setText(intent.getStringExtra("send_message_time2Stop"));
                     operStartTime_3.setText(intent.getStringExtra("send_message_time2Stop"));
 
+                    if(!operStartTime_2.getText().toString().equals("") && !operStopTime_2.getText().toString().equals("")) {
+                        try {
+                            operAllTime_2.setText(timeDif(operStartTime_1.getText().toString(), operStopTime_2.getText().toString()));
+                        } catch (ParseException e) {
+                            e.printStackTrace();
+                        }
+                    }
 
                 }else if(intent.hasExtra("send_message_time3Stop")){
                     operStopTime_3.setText(intent.getStringExtra("send_message_time3Stop"));
 
                     if(!operStartTime_3.getText().toString().equals("") && !operStopTime_3.getText().toString().equals("")) {
                         try {
-                            operAllTime_3.setText(timeDif(requireActivity().getSharedPreferences("KrootTime", MODE_PRIVATE).getString("time2Stop", "00:00"),
-                                    requireActivity().getSharedPreferences("KrootTime", MODE_PRIVATE).getString("time3Stop", "00:00")));
+                            operAllTime_3.setText(timeDif(operStartTime_3.getText().toString(), operStopTime_3.getText().toString()));
                         } catch (ParseException e) {
                             e.printStackTrace();
                         }
@@ -507,13 +530,7 @@ public class fragmentKrootStart extends Fragment {
 
     String timeDif(String time1, String time2) throws ParseException {
         SimpleDateFormat simpleDateFormat = new SimpleDateFormat("HH:mm", Locale.getDefault());
-
-        long difference = Objects.requireNonNull(simpleDateFormat.parse(time2)).getTime() - Objects.requireNonNull(simpleDateFormat.parse(time1)).getTime();
-        int hours = (int) ((difference - (1000*60*60*24)) / (1000*60*60));
-        int min = (int) (difference - (1000*60*60*24) - (1000*60*60*hours)) / (1000*60);
-
-        return hours + ":" + min;
-
+        return ((Objects.requireNonNull(simpleDateFormat.parse(time2)).getTime() - Objects.requireNonNull(simpleDateFormat.parse(time1)).getTime())/ (1000 * 60)) % 60 + "\nминут";
     }
 
 
