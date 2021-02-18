@@ -26,7 +26,6 @@ import androidx.annotation.Nullable;
 import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentActivity;
-import androidx.lifecycle.MutableLiveData;
 import androidx.viewpager.widget.ViewPager;
 
 import com.google.android.material.tabs.TabLayout;
@@ -59,6 +58,7 @@ public class TabTwo extends Fragment {
     private static TextView answer;
 
     private final String SEND = "MedSimTech_send_message";
+    private final String TIME = "MedSimTech_send_time";
     private final String RECEIVE = "MedSimTech_receive_message";
     private final String SETTINGS_MODE = "MedSimTech_send_mode";
     private final String CONNECTION = "MedSimTech_bl_connection";
@@ -168,6 +168,10 @@ public class TabTwo extends Fragment {
                                         && result_1.getVisibility() == View.INVISIBLE) {
 
                                     if (!runningChrono_1 && !runningChrono_2 && !runningChrono_3) {
+                                        // TODO save start time in sharedPreference
+                                        requireActivity().getSharedPreferences("KrootTime", MODE_PRIVATE).edit().putString("time1Start", getDate()).apply();
+                                        sendTime("send_message_time1Start", getDate());
+
                                         startChrono(time_1);
                                         resetChrono(time_2);
                                         time_2.stop();
@@ -184,13 +188,17 @@ public class TabTwo extends Fragment {
                                     if (!runningChrono_2 && runningChrono_1) {
 
                                         if (!time_1.getText().equals("00:00")) {
+                                            // TODO send broadcast with timer1
+                                            requireActivity().getSharedPreferences("KrootTime", MODE_PRIVATE).edit().putString("time1Stop", getDate()).apply();
+                                            sendTime("send_message_time1Stop", getDate());
+
                                             result_1.setText(time_1.getText());
                                             result_1.setVisibility(View.VISIBLE);
                                             time_1.stop();
-                                            /////// reset timer ////////
+                                            ////////////////// reset timer /////////////////
                                             time_1.setBase(SystemClock.elapsedRealtime());
                                             pauseOffset = 0;
-                                            ///////////////////////////
+                                            ///////////////////////////////////////////////
                                             startChrono(time_2);
                                             customToast("Переход ко 2 этапу");
                                             sendMessage("OK");
@@ -206,6 +214,10 @@ public class TabTwo extends Fragment {
                                     if (!runningChrono_3 && runningChrono_2) {
 
                                         if (!time_2.getText().equals("00:00")) {
+                                            // TODO send broadcast with timer1
+                                            sendTime("send_message_time2Stop", getDate());
+                                            requireActivity().getSharedPreferences("KrootTime", MODE_PRIVATE).edit().putString("time2Stop", getDate()).apply();
+
                                             result_2.setText(time_2.getText());
                                             result_2.setVisibility(View.VISIBLE);
                                             time_2.stop();
@@ -225,6 +237,7 @@ public class TabTwo extends Fragment {
                                         && result_1.getVisibility() == View.VISIBLE
                                         && result_2.getVisibility() == View.VISIBLE
                                         && result_3.getVisibility() == View.INVISIBLE) {
+
                                     result_3.setText(time_3.getText());
                                     result_3.setVisibility(View.VISIBLE);
                                     resetChrono(time_3);
@@ -251,6 +264,7 @@ public class TabTwo extends Fragment {
                                         "ЧДД = " + jsonObj.getString("rr") + "; " +
                                         "SPO2 = " + jsonObj.getString("sp"));
                             } else {
+                                // TODO check why toast when start operation
                                 customToast("code: 9");
                             }
                         } else {
@@ -310,9 +324,9 @@ public class TabTwo extends Fragment {
         final View view = inflater.inflate(R.layout.tab_pump, container, false);
         FragmentActivity activity = getActivity();
 
-        String limit_1 = "10:00";
-        String limit_2 = "15:00";
-        String limit_3 = "10:00";
+        String limit_1 = "55:00";
+        String limit_2 = "55:00";
+        String limit_3 = "55:00";
 
         customToast(getString(R.string.welcome));
 
@@ -320,6 +334,7 @@ public class TabTwo extends Fragment {
 
         Objects.requireNonNull(activity).registerReceiver(tabReceiver, new IntentFilter(RECEIVE));
         Objects.requireNonNull(activity).registerReceiver(tabReceiver, new IntentFilter(SETTINGS_MODE));
+        Objects.requireNonNull(activity).registerReceiver(tabReceiver, new IntentFilter(TIME));
 
         requireActivity().getSharedPreferences("limit", MODE_PRIVATE).edit().putString("time1", limit_1).apply();
         requireActivity().getSharedPreferences("limit", MODE_PRIVATE).edit().putString("time2", limit_2).apply();
@@ -673,6 +688,7 @@ public class TabTwo extends Fragment {
                         resetChrono(time_2);
                         resetChrono(time_3);
                         flagStop = false;
+                        requireActivity().getSharedPreferences("KrootTime", MODE_PRIVATE).edit().clear().apply();
                         customToast("Сброс таймеров");
                     } else {
                         if (!flagStop) {
@@ -691,9 +707,12 @@ public class TabTwo extends Fragment {
                                     result_2.setVisibility(View.VISIBLE);
                                     result_3.setVisibility(View.VISIBLE);
                             } else if (runningChrono_3) {
-                                    time_3.stop();
-                                    result_3.setText(R.string.def_val_settings_time);
-                                    result_3.setVisibility(View.VISIBLE);
+                                sendTime("send_message_time3Stop", getDate());
+                                requireActivity().getSharedPreferences("KrootTime", MODE_PRIVATE).edit().putString("time3Stop", getDate()).apply();
+                                result_3.setText(time_3.getText());
+                                result_3.setVisibility(View.VISIBLE);
+                                time_3.stop();
+                                time_3.setBase(SystemClock.elapsedRealtime());
                             }
                             sendStatus("stop");
 
@@ -890,6 +909,13 @@ public class TabTwo extends Fragment {
         intentSM.setAction(SEND);
         intentSM.putExtra("send_message_text", message);
         requireActivity().sendBroadcast(intentSM);
+    }
+
+    private void sendTime(String name, String message) {
+        Intent intentTime = new Intent();
+        intentTime.setAction(TIME);
+        intentTime.putExtra(name, message);
+        requireActivity().sendBroadcast(intentTime);
     }
 
     private void sendSPS(String param, Boolean cond) {
@@ -1186,26 +1212,10 @@ public class TabTwo extends Fragment {
     }
 
 
-    /*public static class ObservableString{
-        private String str = "";
-        private ChangeListener listener;
-
-        public void setStr(String str) {
-            this.str = str;
-            if (listener != null) listener.onChange();
-        }
-
-        public ChangeListener getListener() {
-            return listener;
-        }
-
-        public void setListener(ChangeListener listener) {
-            this.listener = listener;
-        }
+    String getDate(){
+        Date date = new Date();
+        SimpleDateFormat formatter = new SimpleDateFormat("HH:mm", Locale.getDefault());
+        return formatter.format(date);
     }
-
-    public interface ChangeListener {
-        void onChange();
-    }*/
 
 }

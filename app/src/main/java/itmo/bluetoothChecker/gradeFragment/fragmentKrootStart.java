@@ -1,6 +1,11 @@
 package itmo.bluetoothChecker.gradeFragment;
 
+import android.annotation.SuppressLint;
 import android.app.TimePickerDialog;
+import android.content.BroadcastReceiver;
+import android.content.Context;
+import android.content.Intent;
+import android.content.IntentFilter;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
@@ -29,7 +34,11 @@ import itmo.bluetoothChecker.R;
 
 import static android.content.Context.MODE_PRIVATE;
 
+
 public class fragmentKrootStart extends Fragment {
+
+    private final String TIME = "MedSimTech_send_time";
+
 
     EditText teacherName, studentName, teacherID, studentID;
     TextView prepStartTime_1, prepStartTime_2, prepStartTime_3,
@@ -47,10 +56,50 @@ public class fragmentKrootStart extends Fragment {
 
     int mHour, mMinute;
 
+    private final BroadcastReceiver checkReceiver = new BroadcastReceiver() {
+        @SuppressLint("SetTextI18n")
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            String action = intent.getAction();
+            if (TIME.equals(action)) {
+                Log.e("Kroooooot", "broadcast");
+                if(intent.hasExtra("send_message_time1Start")){
+                    operStartTime_1.setText(intent.getStringExtra("send_message_time1Start"));
+                }else if(intent.hasExtra("send_message_time1Stop")){
+                    operStopTime_1.setText(intent.getStringExtra("send_message_time1Stop"));
+                    operStartTime_2.setText(intent.getStringExtra("send_message_time1Stop"));
+
+                }else if(intent.hasExtra("send_message_time2Stop")){
+                    operStopTime_2.setText(intent.getStringExtra("send_message_time2Stop"));
+                    operStartTime_3.setText(intent.getStringExtra("send_message_time2Stop"));
+
+
+                }else if(intent.hasExtra("send_message_time3Stop")){
+                    operStopTime_3.setText(intent.getStringExtra("send_message_time3Stop"));
+
+                    if(!operStartTime_3.getText().toString().equals("") && !operStopTime_3.getText().toString().equals("")) {
+                        try {
+                            operAllTime_3.setText(timeDif(requireActivity().getSharedPreferences("KrootTime", MODE_PRIVATE).getString("time2Stop", "00:00"),
+                                    requireActivity().getSharedPreferences("KrootTime", MODE_PRIVATE).getString("time3Stop", "00:00")));
+                        } catch (ParseException e) {
+                            e.printStackTrace();
+                        }
+                    }
+
+                }else{
+                    Log.e("Kroooooot", "else");
+                }
+
+            }
+        }
+    };
+
 
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
 
         View view = inflater.inflate(R.layout.fragment_kroot_start, container, false);
+
+        Objects.requireNonNull(requireActivity()).registerReceiver(checkReceiver, new IntentFilter(TIME));
 
         teacherName = view.findViewById(R.id.kroot_teacher_name);
         studentName = view.findViewById(R.id.kroot_student_name);
@@ -182,6 +231,16 @@ public class fragmentKrootStart extends Fragment {
         operStartTimeAll.setText(requireContext()
                 .getSharedPreferences("GradeAnswer", MODE_PRIVATE)
                 .getString("kroot_prepare_1_start_time", ""));
+
+
+        try {
+            operAllTime_1.setText(timeDif(requireActivity().getSharedPreferences("KrootTime", MODE_PRIVATE).getString("time1Start",""),
+                    requireActivity().getSharedPreferences("KrootTime", MODE_PRIVATE).getString("time1Stop","")));
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+
+        operStartTime_1.setText(requireActivity().getSharedPreferences("KrootTime", MODE_PRIVATE).getString("time1Start",""));
 
 
         teacherName.addTextChangedListener(new TextWatcher() {
@@ -444,6 +503,17 @@ public class fragmentKrootStart extends Fragment {
             }
         }
         return before;
+    }
+
+    String timeDif(String time1, String time2) throws ParseException {
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("HH:mm", Locale.getDefault());
+
+        long difference = Objects.requireNonNull(simpleDateFormat.parse(time2)).getTime() - Objects.requireNonNull(simpleDateFormat.parse(time1)).getTime();
+        int hours = (int) ((difference - (1000*60*60*24)) / (1000*60*60));
+        int min = (int) (difference - (1000*60*60*24) - (1000*60*60*hours)) / (1000*60);
+
+        return hours + ":" + min;
+
     }
 
 

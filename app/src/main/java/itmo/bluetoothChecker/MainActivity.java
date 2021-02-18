@@ -67,8 +67,6 @@ public class MainActivity extends AppCompatActivity {
     androidx.appcompat.widget.Toolbar toolbar;
 
 
-
-
     ////////////            !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!     ////////////
     private final BroadcastReceiver mReceiver = new BroadcastReceiver() {
         @Override
@@ -507,6 +505,8 @@ public class MainActivity extends AppCompatActivity {
         if (mChatService != null) {
             mChatService.stop();
         }
+
+        this.getSharedPreferences("KrootTime", MODE_PRIVATE).edit().clear().apply();
     }
 
     @Override

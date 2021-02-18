@@ -2,8 +2,11 @@ package itmo.bluetoothChecker;
 
 import android.annotation.SuppressLint;
 import android.app.AlertDialog;
+import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.content.Intent;
+import android.content.IntentFilter;
 import android.content.SharedPreferences;
 import android.content.res.Resources;
 import android.graphics.Canvas;
@@ -41,6 +44,7 @@ import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Locale;
+import java.util.Objects;
 
 import itmo.bluetoothChecker.gradeFragment.fragmentKroot;
 import itmo.bluetoothChecker.gradeFragment.fragmentKrootCalc;
@@ -78,6 +82,9 @@ public class TabThree extends Fragment {
     Spinner spinner;
     Button btnNext, btnPrev;
     ImageButton btnDel;
+
+
+
 
 
     @Override
