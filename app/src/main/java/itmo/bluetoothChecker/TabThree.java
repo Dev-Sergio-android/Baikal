@@ -41,6 +41,7 @@ import androidx.fragment.app.FragmentTransaction;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Locale;
@@ -74,6 +75,7 @@ public class TabThree extends Fragment {
     private final String TAG = "check";
 
     private final String CONNECTION = "MedSimTech_bl_connection";
+    private final String TIME = "MedSimTech_send_time";
 
     private static int cntItem = 0;
 
@@ -83,7 +85,25 @@ public class TabThree extends Fragment {
     Button btnNext, btnPrev;
     ImageButton btnDel;
 
+    private final BroadcastReceiver tabThreeReceiver = new BroadcastReceiver() {
+        @SuppressLint("SetTextI18n")
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            String action = intent.getAction();
+            if (TIME.equals(action)) {
+                Log.e(TAG, "broadcast");
+                if(intent.hasExtra("send_message_time_reset")){
+                    if(loadMode() == 0) {
+                        FragmentTransaction ft = getChildFragmentManager().beginTransaction();
+                        ft.replace(R.id.parent_fragment, new fragmentKrootStart()).commit();
+                    }
+                }else{
+                    Log.e(TAG, "Exception Broadcast");
+                }
 
+            }
+        }
+    };
 
 
 
@@ -92,24 +112,14 @@ public class TabThree extends Fragment {
         super.onActivityCreated(savedInstanceState);
         FragmentTransaction transaction = getChildFragmentManager().beginTransaction();
         try {
-            switch (loadMode()) {
-                case 1:
-                    cntItem = 0;
-                    requireActivity().getSharedPreferences("GradeAnswer", MODE_PRIVATE).edit().clear().apply();
-                    transaction.replace(R.id.parent_fragment, new fragmentOskeStart()).commit();
-                    break;
-
-                case 2:
-                    cntItem = 0;
-                    requireActivity().getSharedPreferences("GradeAnswer", MODE_PRIVATE).edit().clear().apply();
-                    transaction.replace(R.id.parent_fragment, new fragmentOskeStart()).commit();
-                    break;
-
-                default:
-                    cntItem = 0;
-                    requireActivity().getSharedPreferences("GradeAnswer", MODE_PRIVATE).edit().clear().apply();
-                    transaction.replace(R.id.parent_fragment, new fragmentKrootStart()).commit();
-                    break;
+            if(loadMode() == 1 || loadMode() == 2) {
+                cntItem = 0;
+                requireActivity().getSharedPreferences("GradeAnswer", MODE_PRIVATE).edit().clear().apply();
+                transaction.replace(R.id.parent_fragment, new fragmentOskeStart()).commit();
+            }else{
+                cntItem = 0;
+                requireActivity().getSharedPreferences("GradeAnswer", MODE_PRIVATE).edit().clear().apply();
+                transaction.replace(R.id.parent_fragment, new fragmentKrootStart()).commit();
             }
         } catch (Exception e) {
             Log.e(TAG, "ERROR in onActivityCreated");
@@ -125,6 +135,8 @@ public class TabThree extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
 
         View view = inflater.inflate(R.layout.tab_check, container, false);
+
+        Objects.requireNonNull(requireActivity()).registerReceiver(tabThreeReceiver, new IntentFilter(TIME));
 
         btnNext = view.findViewById(R.id.btn_next);
         btnPrev = view.findViewById(R.id.btn_prev);
@@ -603,6 +615,11 @@ public class TabThree extends Fragment {
         super.onDetach();
     }
 
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        requireActivity().unregisterReceiver(tabThreeReceiver);
+    }
 
     void setRB(int param) {
         StringBuilder sb = new StringBuilder(20);

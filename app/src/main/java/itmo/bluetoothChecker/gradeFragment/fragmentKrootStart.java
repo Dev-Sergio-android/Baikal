@@ -23,6 +23,9 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentActivity;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -39,7 +42,7 @@ import static android.content.Context.MODE_PRIVATE;
 public class fragmentKrootStart extends Fragment {
 
     private final String TIME = "MedSimTech_send_time";
-
+    private final String TAG = "fragmentKrootStart";
 
     EditText teacherName, studentName, teacherID, studentID;
     TextView prepStartTime_1, prepStartTime_2, prepStartTime_3,
@@ -66,7 +69,7 @@ public class fragmentKrootStart extends Fragment {
             String startTime, stopTime;
 
             if (TIME.equals(action)) {
-                Log.e("Kroooooot", "broadcast");
+                Log.e(TAG, "broadcast");
                 if(intent.hasExtra("send_message_time1Start")){
                     operStartTime_1.setText(intent.getStringExtra("send_message_time1Start"));
                 }else if(intent.hasExtra("send_message_time1Stop")){
@@ -76,41 +79,40 @@ public class fragmentKrootStart extends Fragment {
                     stopTime =  context.getSharedPreferences("KrootTime", MODE_PRIVATE).getString("time1Stop", "00:00");
                     startTime = context.getSharedPreferences("KrootTime", MODE_PRIVATE).getString("time1Start", "00:00");
 
-                    Log.e("Kroooooot", "----> " + startTime + " ---> " + stopTime);
+                    try {
+                        operAllTime_1.setText(timeDif(startTime, stopTime));
+                    } catch (ParseException e) {
+                        e.printStackTrace();
+                    }
 
-                    /*if(!operStartTime_1.getText().toString().equals("") && !operStopTime_1.getText().toString().equals("")) {
-                        try {
-                            operAllTime_1.setText(timeDif(operStartTime_1.getText().toString(), operStopTime_1.getText().toString()));
-                        } catch (ParseException e) {
-                            e.printStackTrace();
-                        }
-                    }*/
 
                 }else if(intent.hasExtra("send_message_time2Stop")){
                     operStopTime_2.setText(intent.getStringExtra("send_message_time2Stop"));
                     operStartTime_3.setText(intent.getStringExtra("send_message_time2Stop"));
 
-                    if(!operStartTime_2.getText().toString().equals("") && !operStopTime_2.getText().toString().equals("")) {
-                        try {
-                            operAllTime_2.setText(timeDif(operStartTime_1.getText().toString(), operStopTime_2.getText().toString()));
-                        } catch (ParseException e) {
-                            e.printStackTrace();
-                        }
+                    stopTime =  context.getSharedPreferences("KrootTime", MODE_PRIVATE).getString("time2Stop", "00:00");
+                    startTime = context.getSharedPreferences("KrootTime", MODE_PRIVATE).getString("time1Stop", "00:00");
+                    try {
+                        operAllTime_2.setText(timeDif(startTime, stopTime));
+                    } catch (ParseException e) {
+                        e.printStackTrace();
                     }
 
                 }else if(intent.hasExtra("send_message_time3Stop")){
                     operStopTime_3.setText(intent.getStringExtra("send_message_time3Stop"));
 
-                    if(!operStartTime_3.getText().toString().equals("") && !operStopTime_3.getText().toString().equals("")) {
-                        try {
-                            operAllTime_3.setText(timeDif(operStartTime_3.getText().toString(), operStopTime_3.getText().toString()));
-                        } catch (ParseException e) {
-                            e.printStackTrace();
-                        }
+                    stopTime =  context.getSharedPreferences("KrootTime", MODE_PRIVATE).getString("time3Stop", "00:00");
+                    startTime = context.getSharedPreferences("KrootTime", MODE_PRIVATE).getString("time2Stop", "00:00");
+
+                    try {
+                        operAllTime_3.setText(timeDif(startTime, stopTime));
+                        operStopTimeAll.setText(stopTime);
+                    } catch (ParseException e) {
+                        e.printStackTrace();
                     }
 
                 }else{
-                    Log.e("Kroooooot", "else");
+                    Log.e(TAG, "Exception Broadcast");
                 }
 
             }
@@ -256,14 +258,57 @@ public class fragmentKrootStart extends Fragment {
                 .getString("kroot_prepare_1_start_time", ""));
 
 
-        try {
-            operAllTime_1.setText(timeDif(requireActivity().getSharedPreferences("KrootTime", MODE_PRIVATE).getString("time1Start",""),
-                    requireActivity().getSharedPreferences("KrootTime", MODE_PRIVATE).getString("time1Stop","")));
-        } catch (ParseException e) {
-            e.printStackTrace();
+        if(!requireActivity().getSharedPreferences("KrootTime", MODE_PRIVATE).getString("time1Start","").equals("")
+        && !requireActivity().getSharedPreferences("KrootTime", MODE_PRIVATE).getString("time1Stop","").equals("")){
+            try {
+                operAllTime_1.setText(timeDif(requireActivity().getSharedPreferences("KrootTime", MODE_PRIVATE).getString("time1Start",""),
+                        requireActivity().getSharedPreferences("KrootTime", MODE_PRIVATE).getString("time1Stop","")));
+            } catch (ParseException e) {
+                e.printStackTrace();
+            }
         }
 
-        operStartTime_1.setText(requireActivity().getSharedPreferences("KrootTime", MODE_PRIVATE).getString("time1Start",""));
+        if(!requireActivity().getSharedPreferences("KrootTime", MODE_PRIVATE).getString("time1Stop","").equals("")
+                && !requireActivity().getSharedPreferences("KrootTime", MODE_PRIVATE).getString("time2Stop","").equals("")){
+            try {
+                operAllTime_2.setText(timeDif(requireActivity().getSharedPreferences("KrootTime", MODE_PRIVATE).getString("time1Stop",""),
+                        requireActivity().getSharedPreferences("KrootTime", MODE_PRIVATE).getString("time2Stop","")));
+            } catch (ParseException e) {
+                e.printStackTrace();
+            }
+        }
+
+        if(!requireActivity().getSharedPreferences("KrootTime", MODE_PRIVATE).getString("time2Stop","").equals("")
+                && !requireActivity().getSharedPreferences("KrootTime", MODE_PRIVATE).getString("time3Stop","").equals("")){
+            try {
+                operAllTime_3.setText(timeDif(requireActivity().getSharedPreferences("KrootTime", MODE_PRIVATE).getString("time2Stop",""),
+                        requireActivity().getSharedPreferences("KrootTime", MODE_PRIVATE).getString("time3Stop","")));
+            } catch (ParseException e) {
+                e.printStackTrace();
+            }
+        }
+
+
+        operStartTime_1.setText(requireActivity().getSharedPreferences("KrootTime", MODE_PRIVATE)
+                .getString("time1Start",""));
+
+        operStopTime_1.setText(requireActivity().getSharedPreferences("KrootTime", MODE_PRIVATE)
+                .getString("time1Stop",""));
+
+        operStartTime_2.setText(requireActivity().getSharedPreferences("KrootTime", MODE_PRIVATE)
+                .getString("time1Stop",""));
+
+        operStopTime_2.setText(requireActivity().getSharedPreferences("KrootTime", MODE_PRIVATE)
+                .getString("time2Stop",""));
+
+        operStartTime_3.setText(requireActivity().getSharedPreferences("KrootTime", MODE_PRIVATE)
+                .getString("time2Stop",""));
+
+        operStopTime_3.setText(requireActivity().getSharedPreferences("KrootTime", MODE_PRIVATE)
+                .getString("time3Stop",""));
+
+        operStopTimeAll.setText(requireActivity().getSharedPreferences("KrootTime", MODE_PRIVATE)
+                .getString("time3Stop",""));
 
 
         teacherName.addTextChangedListener(new TextWatcher() {
@@ -499,6 +544,12 @@ public class fragmentKrootStart extends Fragment {
                     }
                 }, mHour, mMinute, true);
         timePickerDialog.show();
+    }
+
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        requireActivity().unregisterReceiver(checkReceiver);
     }
 
     boolean compareTime(String compareTo, String compareWhat, boolean isSame) throws ParseException {

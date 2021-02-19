@@ -146,8 +146,7 @@ public class MainActivity extends AppCompatActivity {
                 case Constants.MESSAGE_DEVICE_NAME:
                     // save the connected device's name
                     mConnectedDeviceName = msg.getData().getString(Constants.DEVICE_NAME);
-                    Toast.makeText(MainActivity.this, "Connected to "
-                            + mConnectedDeviceName, Toast.LENGTH_SHORT).show();
+                    Toast.makeText(MainActivity.this, getString(R.string.title_connected_to, mConnectedDeviceName), Toast.LENGTH_SHORT).show();
                     break;
                 case Constants.MESSAGE_TOAST:
                     Toast.makeText(MainActivity.this, msg.getData().getString(Constants.TOAST),
@@ -497,6 +496,12 @@ public class MainActivity extends AppCompatActivity {
             customToast("main: code: 2");
         }*/
 
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+        this.getSharedPreferences("KrootTime", MODE_PRIVATE).edit().clear().apply();
     }
 
     @Override

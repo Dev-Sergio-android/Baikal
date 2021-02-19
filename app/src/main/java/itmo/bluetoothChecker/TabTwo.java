@@ -691,6 +691,7 @@ public class TabTwo extends Fragment {
                         resetChrono(time_3);
                         flagStop = false;
                         requireActivity().getSharedPreferences("KrootTime", MODE_PRIVATE).edit().clear().apply();
+                        sendTime("send_message_time_reset", "reset");
                         customToast("Сброс таймеров");
                     } else {
                         if (!flagStop) {
