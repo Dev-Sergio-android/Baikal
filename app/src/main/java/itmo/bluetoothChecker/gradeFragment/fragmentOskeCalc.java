@@ -38,8 +38,7 @@ public class fragmentOskeCalc extends Fragment {
     String grade(Context context) {
         String result = "";
         Log.e("CALC", "" + context.getSharedPreferences("gr_sys", MODE_PRIVATE).getInt("gr_sys", 5));
-/*
-if (context.getSharedPreferences("gr_sys", MODE_PRIVATE).getInt("gr_sys", -1) == 1) {
+        if (context.getSharedPreferences("gr_sys", MODE_PRIVATE).getInt("gr_sys", -1) == 1) {
             for (int i = 1; i < 46; i++) {
                 String name = "ans" + i;
 
@@ -59,13 +58,11 @@ if (context.getSharedPreferences("gr_sys", MODE_PRIVATE).getInt("gr_sys", -1) ==
             if (result.isEmpty()) {
                 result = "Удовлетворительно";
             }
-        } else
-* */
-         if(context.getSharedPreferences("gr_sys", MODE_PRIVATE).getInt("gr_sys", -1) == 2){
-            int good = 0;
+        } else if (context.getSharedPreferences("gr_sys", MODE_PRIVATE).getInt("gr_sys", -1) == 2) {
+            double good = 0;
             int len = getResources().getStringArray(R.array.lp_items).length;
 
-            for (int i = 1; i < len + 1; i++) {
+            for (int i = 1; i <= len; i++) {
                 String name = "ans" + i;
 
                 if (context.getSharedPreferences("GradeAnswer", MODE_PRIVATE).getInt(name, -1) == 0) {
@@ -74,10 +71,11 @@ if (context.getSharedPreferences("gr_sys", MODE_PRIVATE).getInt("gr_sys", -1) ==
 
             }
 
-            result = good + "/" + len + "\n" + String.format(Locale.getDefault(), "%.2f", (double) (good / len) * 100) + "%";
+            result = (int) good + "/" + len + "\n" + "\n" + String.format(Locale.getDefault(), "%.1f", (good * 100 / len) ) + "%";
 
+            Log.e("Calc", "" + (good * 100 / len));
 
-        }else {
+        } else {
             Log.e("CALC", "OskeCalc Exception");
         }
 

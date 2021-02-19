@@ -177,6 +177,7 @@ public class TabThree extends Fragment {
                     FragmentTransaction transaction = getChildFragmentManager().beginTransaction();
                     transaction.replace(R.id.parent_fragment, new fragmentKrootStart()).commit();
                 }
+                Log.e(TAG, "item - " + i);
                 saveSys(i);
             }
 
