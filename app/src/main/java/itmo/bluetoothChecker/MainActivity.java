@@ -417,6 +417,7 @@ public class MainActivity extends AppCompatActivity {
         if (requestCode == REQUEST_MULTIPLE_PERMISSION) {
             if (grantResults.length > 0 && grantResults[0] == PERMISSION_GRANTED) { //& grantResults[1] == PackageManager.PERMISSION_GRANTED & grantResults[2] == PackageManager.PERMISSION_GRANTED ){
                 //customToast("Разрешения получены");
+                Log.i("Main", "Разрешения получены");
             } else {
                 customToast("Разрешения не получены");
                 showPermissionDialog(MainActivity.this);
@@ -438,7 +439,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     ////////////////////////////////////////////////////////////////////////////////////////////////
-
+/*
     private void requestApplicationConfig() {
         if (isPermissionGranted()) {
             customToast("Разрешения получены");
@@ -446,7 +447,7 @@ public class MainActivity extends AppCompatActivity {
             customToast("Пользователь снова не дал разрешение");
             requestPermission();
         }
-    }
+    }*/
 
     void customToast(String string) {
         Toast.makeText(this, string, Toast.LENGTH_SHORT).show();

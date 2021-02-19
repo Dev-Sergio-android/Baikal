@@ -446,7 +446,7 @@ public class TabThree extends Fragment {
 
                     saveAns(cntItem, getCheckedIndex());
 
-                    Log.e(TAG, "answer " + cntItem + ":   " + fragmentOske.getCheckedIndex());
+                    Log.e(TAG, "answer " + cntItem + ":   " + getCheckedIndex());
 
                     if (cntItem == charSequences.length - 1) {
                         btnNext.setText(getResources().getString(R.string.button_calc));
@@ -480,7 +480,7 @@ public class TabThree extends Fragment {
         } else if (cntItem == (charSequences.length)){
             if (rgOskeChecked()) {
                 saveAns(cntItem, getCheckedIndex());
-                Log.e(TAG, "answer " + cntItem + ":   " + getCheckedIndex() + 1);
+                Log.e(TAG, "answer " + cntItem + ":   " + getCheckedIndex());
 
                 Fragment fragment = new fragmentOskeCalc();
                 FragmentTransaction transaction3 = getChildFragmentManager().beginTransaction();
