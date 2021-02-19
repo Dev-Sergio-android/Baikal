@@ -479,7 +479,9 @@ public class TabThree extends Fragment {
             }
         } else if (cntItem == (charSequences.length)){
             if (rgOskeChecked()) {
-                saveAns(cntItem, getCheckedIndex() + 1);
+                saveAns(cntItem, getCheckedIndex());
+                Log.e(TAG, "answer " + cntItem + ":   " + getCheckedIndex() + 1);
+
                 Fragment fragment = new fragmentOskeCalc();
                 FragmentTransaction transaction3 = getChildFragmentManager().beginTransaction();
                 transaction3.replace(R.id.parent_fragment, fragment).commit();
@@ -737,10 +739,8 @@ public class TabThree extends Fragment {
     
 
     void saveSys(int iParam) {
-        SharedPreferences spSys = requireActivity().getSharedPreferences("gr_sys", MODE_PRIVATE);
-        SharedPreferences.Editor ed = spSys.edit();
-        ed.putInt("gr_sys", iParam);
-        ed.apply();
+        requireActivity().getSharedPreferences("gr_sys", MODE_PRIVATE).edit().putInt("gr_sys", iParam).apply();
+
     }
 
     int loadMode() {

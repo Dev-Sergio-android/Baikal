@@ -171,16 +171,16 @@
     <string name="oske_hint_stud_number">Введите номер…</string>
 
 
-    <string name="interval_1">Доступ,\nвыделение:</string>
-    <string name="interval_2">Операция на\nсосуде:</string>
+    <string name="interval_1">Доступ:</string>
+    <string name="interval_2">Операция:</string>
     <string name="interval_3">Закрытие\nраны:</string>
 
     <string name="about_version_title">Версия приложения</string>
-    <string name="about_version">1.5.7a</string>
+    <string name="about_version">1.5.8</string>
     <string name="about_build">Сборка</string>
-    <string name="about_build_number">160221</string>
+    <string name="about_build_number">190221</string>
     <string name="about_footer">© MedSimTech LLC, 2021</string>
-    <string name="hyperlink"><a href="https://www.medsim.tech"> <![CDATA[www.medsim.tech]]></a></string>
+    <string name="hyperlink"><a href="https://www.medsimtech.com"> <![CDATA[www.medsimtech.com]]></a></string>
 
 
     <string name="oske_column_number">№\nп/п</string>

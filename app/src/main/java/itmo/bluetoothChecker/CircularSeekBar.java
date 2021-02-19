@@ -41,6 +41,7 @@ public class CircularSeekBar extends View {
     protected static final int DEFAULT_MAX = 16;
     protected static final int DEFAULT_MIN = 0;
     protected static final int DEFAULT_PROGRESS = 0;
+    protected final int DEFAULT_TEXT_COLOR  = ContextCompat.getColor(getContext(), R.color.text_color);
     protected static final int DEFAULT_CIRCLE_COLOR = Color.LTGRAY; //DKGRAY
     protected static final int DEFAULT_CIRCLE_PROGRESS_COLOR = Color.argb(235, 74, 138, 255);
     protected static final int DEFAULT_POINTER_COLOR = Color.argb(235, 74, 138, 255);
@@ -242,6 +243,8 @@ public class CircularSeekBar extends View {
 
     protected int mMin;
 
+    protected int mTextColor = DEFAULT_TEXT_COLOR;
+
     /**
      * Progress value that this CircularSeekBar is representing.
      */
@@ -424,6 +427,7 @@ public class CircularSeekBar extends View {
         mCircleColor = attrArray.getColor(R.styleable.CircularSeekBar_circle_color, DEFAULT_CIRCLE_COLOR);
         mCircleProgressColor = attrArray.getColor(R.styleable.CircularSeekBar_circle_progress_color, DEFAULT_CIRCLE_PROGRESS_COLOR);
         mCircleFillColor = attrArray.getColor(R.styleable.CircularSeekBar_circle_fill, DEFAULT_CIRCLE_FILL_COLOR);
+        mTextColor = attrArray.getColor(R.styleable.CircularSeekBar_textColor, DEFAULT_TEXT_COLOR);
 
         mPointerAlpha = Color.alpha(mPointerHaloColor);
 
@@ -607,15 +611,15 @@ public class CircularSeekBar extends View {
 
         //Rect mTitleBoundRect = new Rect();
 
-        typeface = Typeface.createFromAsset(getContext().getAssets(), "rubik_semi_bold.ttf");
+        typeface = Typeface.createFromAsset(getContext().getAssets(), "rubik_bold.ttf");
         //Paint titlePaint = new Paint();
         titlePaint.setTypeface(typeface);
         titlePaint.setAntiAlias(true);
-        titlePaint.setColor(ContextCompat.getColor(getContext(), R.color.heart_color));
+        titlePaint.setColor(mTextColor);
         titlePaint.setTextSize(50.0f);
-        titlePaint.setStrokeWidth(3.0f);
-        titlePaint.setStyle(Paint.Style.STROKE);
-        //titlePaint.setShadowLayer(10.0f, 10.0f, 10.0f, getResources().getColor(R.color.heart_color));
+        titlePaint.setStrokeWidth(4.0f);
+        titlePaint.setStyle(Paint.Style.FILL);
+        //titlePaint.setShadowLayer(10.0f, 10.0f, 10.0f, ContextCompat.getColor(getContext(), R.color.text_color));
         titlePaint.getTextBounds(mHint, 0, mHint.length(), mTitleBoundRect);
         canvas.drawText(mHint, mCircleRectF.centerX() - (mTitleBoundRect.width() / 2f),  mCircleRectF.centerY() + getHeight()/4.8f, titlePaint);
 
@@ -626,7 +630,7 @@ public class CircularSeekBar extends View {
         shadowPaint.setTextSize(60.0f);
         shadowPaint.setStrokeWidth(5.0f);
         shadowPaint.setStyle(Paint.Style.FILL);
-        //shadowPaint.setShadowLayer(10.0f, 10.0f, 10.0f, Color.BLUE);
+        shadowPaint.setShadowLayer(10.0f, 10.0f, 10.0f, ContextCompat.getColor(getContext(), R.color.colorShadow));
         shadowPaint.getTextBounds(mValue, 0, mValue.length(), mTextBoundRect);
         canvas.drawText(mValue, mCircleRectF.centerX() - (mTextBoundRect.width() / 2f),  mCircleRectF.centerY() - getHeight()/1.93f, shadowPaint);
 
@@ -946,6 +950,7 @@ public class CircularSeekBar extends View {
         state.putInt("MIN", mMin);
         state.putInt("PROGRESS", mProgress);
         state.putString("mHint", mHint);
+        state.putInt("mTextColor", mTextColor);
         state.putInt("mCircleColor", mCircleColor);
         state.putInt("mCircleProgressColor", mCircleProgressColor);
         state.putInt("mPointerColor", mPointerColor);
@@ -968,6 +973,7 @@ public class CircularSeekBar extends View {
 
         mMax = savedState.getInt("MAX");
         mProgress = savedState.getInt("PROGRESS");
+        mTextColor = savedState.getInt("mTextColor");
         mCircleColor = savedState.getInt("mCircleColor");
         mCircleProgressColor = savedState.getInt("mCircleProgressColor");
         mPointerColor = savedState.getInt("mPointerColor");
@@ -1002,6 +1008,13 @@ public class CircularSeekBar extends View {
     public void setCircleColor(int color) {
         mCircleColor = color;
         mCirclePaint.setColor(mCircleColor);
+        invalidate();
+    }
+
+
+    public void setTextColor(int color) {
+        mTextColor = color;
+        titlePaint.setColor(mTextColor);
         invalidate();
     }
 
