@@ -212,36 +212,36 @@
                 android:id="@+id/tvCommentInterval_1"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="25dp"
+                android:layout_marginStart="15dp"
                 android:layout_marginTop="20dp"
                 android:fontFamily="@font/rubik_semi_bold"
                 android:textColor="@color/text_color"
                 android:text="@string/interval_1"
-                android:textSize="18sp" />
+                android:textSize="18sp"/>
 
             <TextView
                 android:id="@+id/tvCommentInterval_2"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/tvCommentInterval_1"
-                android:layout_marginStart="25dp"
+                android:layout_marginStart="15dp"
                 android:layout_marginTop="34dp"
                 android:fontFamily="@font/rubik_semi_bold"
                 android:text="@string/interval_2"
                 android:textColor="@color/text_color"
-                android:textSize="18sp" />
+                android:textSize="18sp"/>
 
             <TextView
                 android:id="@+id/tvCommentInterval_3"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/tvCommentInterval_2"
-                android:layout_marginStart="25dp"
+                android:layout_marginStart="15dp"
                 android:layout_marginTop="@dimen/interval_block_to_top"
                 android:fontFamily="@font/rubik_semi_bold"
                 android:textColor="@color/text_color"
                 android:text="@string/interval_3"
-                android:textSize="18sp" />
+                android:textSize="18sp"/>
 
             <Chronometer
                 android:id="@+id/chronometer1"
