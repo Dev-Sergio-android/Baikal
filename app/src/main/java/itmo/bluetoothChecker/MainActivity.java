@@ -254,6 +254,7 @@ public class MainActivity extends AppCompatActivity {
                     mChatService.stop();
                     Intent LoginIntent = new Intent(this, LoginActivity.class);
                     startActivityForResult(LoginIntent, REQUEST_SETTINGS);
+                    this.finish();
                 } else {
                     customToast("Недоступно во время операции");
                 }

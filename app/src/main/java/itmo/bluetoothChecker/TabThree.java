@@ -72,7 +72,7 @@ import static itmo.bluetoothChecker.gradeFragment.fragmentOskeStart.getmStNumber
 public class TabThree extends Fragment {
 
     private final String SYS_GRADE = "MedSimTech_sys_grade";
-    private final String TAG = "check";
+    private final String TAG = "TabThree";
 
     private final String CONNECTION = "MedSimTech_bl_connection";
     private final String TIME = "MedSimTech_send_time";
@@ -97,10 +97,7 @@ public class TabThree extends Fragment {
                         FragmentTransaction ft = getChildFragmentManager().beginTransaction();
                         ft.replace(R.id.parent_fragment, new fragmentKrootStart()).commit();
                     }
-                }else{
-                    Log.e(TAG, "Exception Broadcast");
                 }
-
             }
         }
     };
