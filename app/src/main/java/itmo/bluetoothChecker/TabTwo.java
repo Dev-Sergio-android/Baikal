@@ -337,7 +337,7 @@ public class TabTwo extends Fragment {
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState2) {
-//        return super.onCreateView(inflater, container, savedInstanceState);
+
         final View view = inflater.inflate(R.layout.tab_pump, container, false);
         FragmentActivity activity = getActivity();
 
@@ -903,9 +903,9 @@ public class TabTwo extends Fragment {
             }
         });
 
-        clickChono(time_1);
+      /*  clickChono(time_1);
         clickChono(time_2);
-        clickChono(time_3);
+        clickChono(time_3);*/
 
         return view;
     }
@@ -1210,7 +1210,7 @@ public class TabTwo extends Fragment {
     }
 
     void saveSeekState() {
-        SharedPreferences.Editor ed = requireActivity().getPreferences(MODE_PRIVATE).edit();
+        SharedPreferences.Editor ed = requireActivity().getSharedPreferences("SeekState", MODE_PRIVATE).edit();
         ed.putInt("bpm", bpmCirSeek.getProgress());
         ed.putInt("ap", pressCirSeek.getProgress());
         ed.putInt("rr", respCirSeek.getProgress());
@@ -1219,7 +1219,7 @@ public class TabTwo extends Fragment {
     }
 
     void loadSeekState() {
-        seekPref = requireActivity().getPreferences(MODE_PRIVATE);
+        seekPref = requireActivity().getSharedPreferences("SeekState", MODE_PRIVATE);
         int savedStateBpm = seekPref.getInt("bpm", 15);
         bpmCirSeek.setProgress(savedStateBpm);
         int savedStateAP = seekPref.getInt("ap", 5);
