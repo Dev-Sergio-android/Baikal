@@ -4,7 +4,7 @@
     xmlns:android="http://schemas.android.com/apk/res/android">
     <item
         android:id="@+id/menu_find"
-        android:icon="@drawable/ic_baseline_slideshow_24"
+        android:icon="@drawable/ic_baseline_bluetooth_disabled_24"
         app:showAsAction="ifRoom"
         android:title="@string/menu_find" />
 
@@ -17,12 +17,14 @@
     <item
         android:id="@+id/menu_bar_settings"
         android:orderInCategory="200"
-        android:title="@string/label_settings"
+        android:fontFamily="@font/rubik_light"
+        android:title="@string/label_exit"
         app:showAsAction="never" />
 
     <item
         android:id="@+id/menu_bar_about"
         android:orderInCategory="300"
+        android:fontFamily="@font/rubik_light"
         android:title="@string/label_about"
         app:showAsAction="never" />
 

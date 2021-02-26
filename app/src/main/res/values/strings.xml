@@ -1,5 +1,6 @@
 <resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
     <string name="app_name">ХКС-Байкал</string>
+    <string name="app_name_teacher">ХКС-Байкал-П</string>
 
     <string name="menu_find">FIND</string>
     <string name="menu_bl_conn">CONN</string>
@@ -46,6 +47,7 @@
     <string name="button_scan">Поиск устройств</string>
 
     <string name="label_settings">Настройки</string>
+    <string name="label_exit">Смена пользователя</string>
     <string name="label_about">О программе</string>
 
 
@@ -173,17 +175,16 @@
     <string name="oske_hint_stud_number">Введите номер…</string>
 
 
-    <string name="interval_1">Доступ,\nвыделение:</string>
-    <string name="interval_2">Операция на\nсосуде:</string>
+    <string name="interval_1">Доступ:</string>
+    <string name="interval_2">Операция:</string>
     <string name="interval_3">Закрытие\nраны:</string>
 
     <string name="about_version_title">Версия приложения</string>
-    <string name="about_version">1.5.5</string>
+    <string name="about_version">1.5.8</string>
     <string name="about_build">Сборка</string>
-    <string name="about_build_number">080221</string>
+    <string name="about_build_number">200221</string>
     <string name="about_footer">© MedSimTech LLC, 2021</string>
-    <string name="hyperlink"><a href="https://www.medsim.tech"> <![CDATA[www.medsim.tech]]></a></string>
-
+    <string name="hyperlink"><a href="https://www.medsimtech.com"> <![CDATA[www.medsimtech.com]]></a></string>
 
 
     <string name="oske_column_number">№\nп/п</string>
@@ -411,5 +412,15 @@
     <string name="hello_first_fragment">Hello first fragment</string>
     <string name="hello_second_fragment">Hello second fragment. Arg: %1$s</string>
     <string name="title_activity_main2">Main2Activity</string>
+    <string name="title_activity_login">LoginActivity</string>
+
+    <string name="prompt_email">E-mail</string>
+    <string name="prompt_password">Пароль</string>
+    <string name="action_sign_in">Вход</string>
+    <string name="action_sign_in_short">Вход</string>
+    <string name="welcome">"Добро пожаловать в ХКС-Байкал"</string>
+    <string name="invalid_username">Некорректное имя пользователя</string>
+    <string name="invalid_password">Пароль должен содержать не менее 6 символов</string>
+    <string name="login_failed">"Неудачная попытка входа"</string>
 
 </resources>

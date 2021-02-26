@@ -37,6 +37,7 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Locale;
 
+import itmo.bluetoothChecker.ui.login.LoginActivity;
 import itmo.bluetoothChecker.ui.main.SectionsPagerAdapter;
 
 import static android.content.pm.PackageManager.PERMISSION_GRANTED;
@@ -64,8 +65,6 @@ public class MainActivity extends AppCompatActivity {
     private long back_pressed;
 
     androidx.appcompat.widget.Toolbar toolbar;
-
-
 
 
     ////////////            !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!     ////////////
@@ -147,8 +146,7 @@ public class MainActivity extends AppCompatActivity {
                 case Constants.MESSAGE_DEVICE_NAME:
                     // save the connected device's name
                     mConnectedDeviceName = msg.getData().getString(Constants.DEVICE_NAME);
-                    Toast.makeText(MainActivity.this, "Connected to "
-                            + mConnectedDeviceName, Toast.LENGTH_SHORT).show();
+                    Toast.makeText(MainActivity.this, "Подключено к " + mConnectedDeviceName, Toast.LENGTH_SHORT).show();
                     break;
                 case Constants.MESSAGE_TOAST:
                     Toast.makeText(MainActivity.this, msg.getData().getString(Constants.TOAST),
@@ -232,7 +230,13 @@ public class MainActivity extends AppCompatActivity {
         // Handle item selection
         switch (item.getItemId()) {
             case R.id.menu_find:
-                customToast("Slide show");
+                if(mChatService.getState() == BluetoothChatService.STATE_CONNECTED){
+                    mChatService.stop();
+                    customToast("Устройство отключено от тренажера");
+                }else{
+                    customToast("Нет подключенных устройств");
+                }
+
                 break;
 
             case R.id.menu_conn:
@@ -247,8 +251,10 @@ public class MainActivity extends AppCompatActivity {
 
             case R.id.menu_bar_settings:
                 if (flagComplete) {
-                    Intent settingsIntent = new Intent(this, SettingsActivity.class);
-                    startActivityForResult(settingsIntent, REQUEST_SETTINGS);
+                    mChatService.stop();
+                    Intent LoginIntent = new Intent(this, LoginActivity.class);
+                    startActivityForResult(LoginIntent, REQUEST_SETTINGS);
+                    this.finish();
                 } else {
                     customToast("Недоступно во время операции");
                 }
@@ -412,6 +418,7 @@ public class MainActivity extends AppCompatActivity {
         if (requestCode == REQUEST_MULTIPLE_PERMISSION) {
             if (grantResults.length > 0 && grantResults[0] == PERMISSION_GRANTED) { //& grantResults[1] == PackageManager.PERMISSION_GRANTED & grantResults[2] == PackageManager.PERMISSION_GRANTED ){
                 //customToast("Разрешения получены");
+                Log.i("Main", "Разрешения получены");
             } else {
                 customToast("Разрешения не получены");
                 showPermissionDialog(MainActivity.this);
@@ -433,7 +440,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     ////////////////////////////////////////////////////////////////////////////////////////////////
-
+/*
     private void requestApplicationConfig() {
         if (isPermissionGranted()) {
             customToast("Разрешения получены");
@@ -441,7 +448,7 @@ public class MainActivity extends AppCompatActivity {
             customToast("Пользователь снова не дал разрешение");
             requestPermission();
         }
-    }
+    }*/
 
     void customToast(String string) {
         Toast.makeText(this, string, Toast.LENGTH_SHORT).show();
@@ -494,11 +501,19 @@ public class MainActivity extends AppCompatActivity {
     }
 
     @Override
+    protected void onStop() {
+        super.onStop();
+        this.getSharedPreferences("KrootTime", MODE_PRIVATE).edit().clear().apply();
+    }
+
+    @Override
     public void onDestroy() {
         super.onDestroy();
         if (mChatService != null) {
             mChatService.stop();
         }
+
+        this.getSharedPreferences("KrootTime", MODE_PRIVATE).edit().clear().apply();
     }
 
     @Override

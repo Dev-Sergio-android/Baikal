@@ -54,11 +54,13 @@ public class TabTwo extends Fragment {
     public static boolean flagComplete = true;
     private boolean flagStop = false;
     public static boolean flagPause = false;
+    private boolean flagMute = false;
 
-    private static BluetoothAdapter mBluetoothAdapter = null;
+
     private static TextView answer;
 
     private final String SEND = "MedSimTech_send_message";
+    private final String TIME = "MedSimTech_send_time";
     private final String RECEIVE = "MedSimTech_receive_message";
     private final String SETTINGS_MODE = "MedSimTech_send_mode";
     private final String CONNECTION = "MedSimTech_bl_connection";
@@ -96,6 +98,7 @@ public class TabTwo extends Fragment {
     private boolean pauseChrono_2 = false;
     private boolean pauseChrono_3 = false;
     private long pauseOffset = 0;
+
 
     private final BroadcastReceiver tabReceiver = new BroadcastReceiver() {
         @SuppressLint("SetTextI18n")
@@ -154,7 +157,6 @@ public class TabTwo extends Fragment {
 
                         }else{
                             Log.e(TAG, "started false");
-                            customToast("started false");
                         }
 
                         ///// Запуск таймеров от датчика давления только в автоматическом режиме ////
@@ -167,6 +169,11 @@ public class TabTwo extends Fragment {
                                         && result_1.getVisibility() == View.INVISIBLE) {
 
                                     if (!runningChrono_1 && !runningChrono_2 && !runningChrono_3) {
+                                        // TODO save start time in sharedPreference
+                                        requireActivity().getSharedPreferences("KrootTime", MODE_PRIVATE).edit().putString("time1Start", getDate()).apply();
+                                        Log.e(TAG, "time1Start: " + requireActivity().getSharedPreferences("KrootTime", MODE_PRIVATE).getString("time1Start", "fuck up"));
+                                        sendTime("send_message_time1Start", getDate());
+
                                         startChrono(time_1);
                                         resetChrono(time_2);
                                         time_2.stop();
@@ -183,13 +190,18 @@ public class TabTwo extends Fragment {
                                     if (!runningChrono_2 && runningChrono_1) {
 
                                         if (!time_1.getText().equals("00:00")) {
+                                            // TODO send broadcast with timer1
+                                            requireActivity().getSharedPreferences("KrootTime", MODE_PRIVATE).edit().putString("time1Stop", getDate()).apply();
+                                            Log.e(TAG, "time1Stop: " + requireActivity().getSharedPreferences("KrootTime", MODE_PRIVATE).getString("time1Stop", "fuck up"));
+                                            sendTime("send_message_time1Stop", getDate());
+
                                             result_1.setText(time_1.getText());
                                             result_1.setVisibility(View.VISIBLE);
                                             time_1.stop();
-                                            /////// reset timer ////////
+                                            ////////////////// reset timer /////////////////
                                             time_1.setBase(SystemClock.elapsedRealtime());
                                             pauseOffset = 0;
-                                            ///////////////////////////
+                                            ///////////////////////////////////////////////
                                             startChrono(time_2);
                                             customToast("Переход ко 2 этапу");
                                             sendMessage("OK");
@@ -205,6 +217,10 @@ public class TabTwo extends Fragment {
                                     if (!runningChrono_3 && runningChrono_2) {
 
                                         if (!time_2.getText().equals("00:00")) {
+                                            // TODO send broadcast with timer1
+                                            sendTime("send_message_time2Stop", getDate());
+                                            requireActivity().getSharedPreferences("KrootTime", MODE_PRIVATE).edit().putString("time2Stop", getDate()).apply();
+
                                             result_2.setText(time_2.getText());
                                             result_2.setVisibility(View.VISIBLE);
                                             time_2.stop();
@@ -224,6 +240,7 @@ public class TabTwo extends Fragment {
                                         && result_1.getVisibility() == View.VISIBLE
                                         && result_2.getVisibility() == View.VISIBLE
                                         && result_3.getVisibility() == View.INVISIBLE) {
+
                                     result_3.setText(time_3.getText());
                                     result_3.setVisibility(View.VISIBLE);
                                     resetChrono(time_3);
@@ -250,12 +267,27 @@ public class TabTwo extends Fragment {
                                         "ЧДД = " + jsonObj.getString("rr") + "; " +
                                         "SPO2 = " + jsonObj.getString("sp"));
                             } else {
-                                customToast("code: 9");
+                                // TODO check why toast when start operation
+                                //customToast("code: 9");
                             }
                         } else {
                             //// Во всех режимах прием подтверждения доставки команды ////
                             if (jsonObj.has("ansOK") && jsonObj.getString("ansOK").equals("OK") && !flagComplete) {
                                 customToast("Сообщение доставлено - OK");
+                            }
+                        }
+
+                        if(jsonObj.has("mute")){
+                            if(jsonObj.getString("mute").equals("off")){
+                                if(!flagMute){
+                                    buttonMute.setBackground(ContextCompat.getDrawable(context, R.drawable.rounded_button_sound_off));
+                                    flagMute = true;
+                                }
+                            }else{
+                                if(flagMute) {
+                                    buttonMute.setBackground(ContextCompat.getDrawable(context, R.drawable.rounded_button_sound));
+                                    flagMute = false;
+                                }
                             }
                         }
                     }
@@ -305,16 +337,25 @@ public class TabTwo extends Fragment {
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState2) {
-//        return super.onCreateView(inflater, container, savedInstanceState);
+
         final View view = inflater.inflate(R.layout.tab_pump, container, false);
         FragmentActivity activity = getActivity();
 
-        //TabTwo.context = Objects.requireNonNull(getActivity()).getApplicationContext();
+        String limit_1 = "55:00";
+        String limit_2 = "55:00";
+        String limit_3 = "55:00";
 
-        mBluetoothAdapter = BluetoothAdapter.getDefaultAdapter();
+        customToast(getString(R.string.welcome));
+
+        BluetoothAdapter mBluetoothAdapter = BluetoothAdapter.getDefaultAdapter();
 
         Objects.requireNonNull(activity).registerReceiver(tabReceiver, new IntentFilter(RECEIVE));
         Objects.requireNonNull(activity).registerReceiver(tabReceiver, new IntentFilter(SETTINGS_MODE));
+        Objects.requireNonNull(activity).registerReceiver(tabReceiver, new IntentFilter(TIME));
+
+        requireActivity().getSharedPreferences("limit", MODE_PRIVATE).edit().putString("time1", limit_1).apply();
+        requireActivity().getSharedPreferences("limit", MODE_PRIVATE).edit().putString("time2", limit_2).apply();
+        requireActivity().getSharedPreferences("limit", MODE_PRIVATE).edit().putString("time3", limit_3).apply();
 
         // If the adapter is null, then Bluetooth is not supported
 
@@ -498,11 +539,11 @@ public class TabTwo extends Fragment {
                     } catch (JSONException e) {
                         e.printStackTrace();
                     }
-                    buttonProtect(buttonSend);
-                    view.performHapticFeedback(HapticFeedbackConstants.VIRTUAL_KEY);
                 } else {
                     customToast("Ваше устройство не подключено к тренажеру");
                 }
+                buttonProtect(buttonSend);
+                view.performHapticFeedback(HapticFeedbackConstants.VIRTUAL_KEY);
             }
         });
 
@@ -628,16 +669,37 @@ public class TabTwo extends Fragment {
                 if (loadState()) {
                     Log.i(TAG, "State" + loadState());
                     JSONObject mesMute = new JSONObject();
-                    try {
-                        mesMute.put("device", "android");
-                        mesMute.put("mute", true);
 
-                        sendMessage(mesMute.toString());
-                    } catch (JSONException e) {
-                        e.printStackTrace();
+                    if(!flagMute){
+                        try {
+                            mesMute.put("device", "android");
+                            mesMute.put("mute", true);
+                            sendMessage(mesMute.toString());
+
+                            flagMute = true;
+                            buttonMute.setBackground(ContextCompat.getDrawable(requireContext(), R.drawable.rounded_button_sound_off));
+                            customToast("Звук отключен");
+
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+                    }else{
+
+                        try {
+                            mesMute.put("device", "android");
+                            mesMute.put("mute", false);
+                            sendMessage(mesMute.toString());
+
+                            flagMute = false;
+                            buttonMute.setBackground(ContextCompat.getDrawable(requireContext(), R.drawable.rounded_button_sound));
+                            customToast("Звук включен");
+
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
                     }
 
-                    customToast("Звук отключен");
+
                 } else {
                     Log.e(TAG, "State" + loadState());
                     Log.e(TAG, "flagComplete: " + flagComplete);
@@ -664,6 +726,8 @@ public class TabTwo extends Fragment {
                         resetChrono(time_2);
                         resetChrono(time_3);
                         flagStop = false;
+                        requireActivity().getSharedPreferences("KrootTime", MODE_PRIVATE).edit().clear().apply();
+                        sendTime("send_message_time_reset", "reset");
                         customToast("Сброс таймеров");
                     } else {
                         if (!flagStop) {
@@ -682,9 +746,12 @@ public class TabTwo extends Fragment {
                                     result_2.setVisibility(View.VISIBLE);
                                     result_3.setVisibility(View.VISIBLE);
                             } else if (runningChrono_3) {
-                                    time_3.stop();
-                                    result_3.setText(R.string.def_val_settings_time);
-                                    result_3.setVisibility(View.VISIBLE);
+                                sendTime("send_message_time3Stop", getDate());
+                                requireActivity().getSharedPreferences("KrootTime", MODE_PRIVATE).edit().putString("time3Stop", getDate()).apply();
+                                result_3.setText(time_3.getText());
+                                result_3.setVisibility(View.VISIBLE);
+                                time_3.stop();
+                                time_3.setBase(SystemClock.elapsedRealtime());
                             }
                             sendStatus("stop");
 
@@ -789,7 +856,7 @@ public class TabTwo extends Fragment {
             @Override
             public void onChronometerTick(Chronometer chronometer) {
                 long elapsedMillis = SystemClock.elapsedRealtime() - time_1.getBase();
-                if (elapsedMillis > getLimit("limit_1", "time1")) {
+                if (elapsedMillis > getLimit("time1")) {
                     result_1.setText(R.string.def_val_settings_time);
                     result_1.setVisibility(View.VISIBLE);
                     colorState = result_1.getTextColors();
@@ -806,7 +873,7 @@ public class TabTwo extends Fragment {
             @Override
             public void onChronometerTick(Chronometer chronometer) {
                 long elapsedMillis = SystemClock.elapsedRealtime() - time_2.getBase();
-                if (elapsedMillis > getLimit("limit_2", "time2")) {
+                if (elapsedMillis > getLimit("time2")) {
                     result_2.setText(R.string.def_val_settings_time);
                     result_2.setVisibility(View.VISIBLE);
                     colorState = result_2.getTextColors();
@@ -823,7 +890,7 @@ public class TabTwo extends Fragment {
             @Override
             public void onChronometerTick(Chronometer chronometer) {
                 long elapsedMillis = SystemClock.elapsedRealtime() - time_3.getBase();
-                if (elapsedMillis > getLimit("limit_3", "time3")) {
+                if (elapsedMillis > getLimit("time3")) {
                     result_3.setText(R.string.def_val_settings_time);
                     result_3.setVisibility(View.VISIBLE);
                     colorState = result_3.getTextColors();
@@ -836,9 +903,9 @@ public class TabTwo extends Fragment {
             }
         });
 
-        clickChono(time_1);
+      /*  clickChono(time_1);
         clickChono(time_2);
-        clickChono(time_3);
+        clickChono(time_3);*/
 
         return view;
     }
@@ -883,6 +950,13 @@ public class TabTwo extends Fragment {
         requireActivity().sendBroadcast(intentSM);
     }
 
+    private void sendTime(String name, String message) {
+        Intent intentTime = new Intent();
+        intentTime.setAction(TIME);
+        intentTime.putExtra(name, message);
+        requireActivity().sendBroadcast(intentTime);
+    }
+
     private void sendSPS(String param, Boolean cond) {
         try {
             JSONObject mes = JSONMode(param, cond);
@@ -907,22 +981,22 @@ public class TabTwo extends Fragment {
         return s.getBoolean("mode", false);
     }
 
-    private long getLimit(String name, String key) {
+    private long getLimit(String key) {
         long seconds;
         long minutes;
         Date time = null;
         //StringBuffer strBuffer = new StringBuffer();
-        SharedPreferences s = requireActivity().getSharedPreferences(name, MODE_PRIVATE);
-        String str = s.getString(key, "00:10");
+        SharedPreferences s = requireActivity().getSharedPreferences("limit", MODE_PRIVATE);
+        String str = s.getString(key, "10:00");
         SimpleDateFormat format = new SimpleDateFormat("mm:ss", new Locale("en"));
-        format.setTimeZone(TimeZone.getTimeZone("UTC")); //// !!!важно для отображения gettime в положительном формате
+        format.setTimeZone(TimeZone.getTimeZone("UTC")); //// !!!важно для отображения getTime в положительном формате
         try {
             time = format.parse(str);
             minutes = (Objects.requireNonNull(time).getTime() / (60 * 1000) % 60);
             seconds = (Objects.requireNonNull(time).getTime() / 1000 % 60);
             //minutes = TimeUnit.MILLISECONDS.toMinutes(Objects.requireNonNull(time).getTime()) / 60;
             //seconds = TimeUnit.MILLISECONDS.toSeconds(time.getTime()) % 60;
-            System.out.println(minutes + " minutes and " + seconds + " seconds and " + Objects.requireNonNull(time).getTime() + " get time");
+            Log.i(TAG,minutes + " minutes and " + seconds + " seconds and " + Objects.requireNonNull(time).getTime() + " get time");
         } catch (ParseException e) {
             e.printStackTrace();
         }
@@ -1136,7 +1210,7 @@ public class TabTwo extends Fragment {
     }
 
     void saveSeekState() {
-        SharedPreferences.Editor ed = requireActivity().getPreferences(MODE_PRIVATE).edit();
+        SharedPreferences.Editor ed = requireActivity().getSharedPreferences("SeekState", MODE_PRIVATE).edit();
         ed.putInt("bpm", bpmCirSeek.getProgress());
         ed.putInt("ap", pressCirSeek.getProgress());
         ed.putInt("rr", respCirSeek.getProgress());
@@ -1145,7 +1219,7 @@ public class TabTwo extends Fragment {
     }
 
     void loadSeekState() {
-        seekPref = requireActivity().getPreferences(MODE_PRIVATE);
+        seekPref = requireActivity().getSharedPreferences("SeekState", MODE_PRIVATE);
         int savedStateBpm = seekPref.getInt("bpm", 15);
         bpmCirSeek.setProgress(savedStateBpm);
         int savedStateAP = seekPref.getInt("ap", 5);
@@ -1176,5 +1250,11 @@ public class TabTwo extends Fragment {
 
     }
 
+
+    String getDate(){
+        Date date = new Date();
+        SimpleDateFormat formatter = new SimpleDateFormat("HH:mm", Locale.getDefault());
+        return formatter.format(date);
+    }
 
 }

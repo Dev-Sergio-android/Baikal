@@ -7,9 +7,11 @@
     <dimen name="appbar_padding_top">8dp</dimen>
     <dimen name="list_view_border">1dp</dimen>
 
-    <dimen name="interval_block_to_top">15dp</dimen>
+    <dimen name="interval_block_to_top">25dp</dimen>
 
     <dimen name="settings_header_size">16sp</dimen>
+
+    <dimen name="button_margin">12dp</dimen>
 
     <dimen name="title_to_seek">20dp</dimen>
     <dimen name="seek_to_title">25dp</dimen>
