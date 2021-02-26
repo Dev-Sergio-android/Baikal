@@ -1,8 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
+    android:layout_height="match_parent">
 
 
     <TextView
@@ -10,33 +9,31 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="15dp"
-        android:layout_marginStart="50dp"
+        android:layout_centerHorizontal="true"
         android:fontFamily="@font/rubik_semi_bold"
         android:textColor="@color/text_color"
-        android:text="@string/check_title"
+        android:text="@string/slide_title"
         android:textAppearance="?android:attr/textAppearance"
         android:textSize="20sp"/>
 
-    <Spinner
-        android:id="@+id/sp_grade_system"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignBottom="@+id/check_title"
-        android:layout_marginStart="0dp"
-        android:layout_toEndOf="@+id/check_title"
-        android:dropDownSelector="@color/colorPrimary"
-        android:entries="@array/grade_systems"
-        android:paddingStart="1dp"
-        android:paddingEnd="20dp" />
 
-    <FrameLayout
-        android:id="@+id/parent_fragment"
+    <TextView
+        android:id="@+id/slide_name"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/check_title"
+        android:layout_marginStart="15dp"
+        android:layout_marginEnd="15dp"
+        android:layout_marginTop="15dp"/>
+
+    <ImageView
+        android:id="@+id/slide"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_above="@+id/btn_prev"
-        android:layout_below="@+id/check_title"
-        android:layout_marginTop="15dp"
-        android:layout_marginBottom="15dp"/>
+        android:layout_below="@+id/slide_name"
+        android:layout_margin="15dp"
+        android:contentDescription="@null" />
 
 
     <Button
@@ -53,15 +50,6 @@
         android:textColor="@color/colorPrimary"
         android:text="@string/button_prev" />
 
-    <ImageButton
-        android:id="@+id/btn_del"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:layout_marginBottom="40dp"
-        android:layout_centerHorizontal="true"
-        android:src="@drawable/ic_trash"
-        style="@style/Widget.AppCompat.Button.Borderless.Colored"/>
 
     <Button
         android:id="@+id/btn_next"

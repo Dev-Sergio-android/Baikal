@@ -15,7 +15,7 @@
 
     <string name="tab_find_Rus">СВЯЗЬ</string>
     <string name="tab_send_Rus">УПРАВЛЕНИЕ</string>
-    <string name="tab_check_Rus">ОТЧЕТ</string>
+    <string name="tab_check_Rus">СЛАЙДЫ</string>
 
     <string name="tvFindList"> FIND DEVICES LIST </string>
     <string name="tvPairList"> PAIRED DEVICES LIST </string>
@@ -116,6 +116,10 @@
     <string name="hintTime">__ : __</string>
     <string name="hintMinute">__\nминут</string>
     <string name="plusMinute">\nминут</string>
+
+
+    <string name="slide_title">Этапы операции</string>
+
 
     <string name="check_title_kroot">Комплексная рейтинговая оценка оперативной техники (КРООТ)</string>
     <string name="kroot_private_info">Личные данные</string>
