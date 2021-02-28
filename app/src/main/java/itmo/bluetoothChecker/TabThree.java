@@ -8,7 +8,6 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.SharedPreferences;
-import android.content.res.Resources;
 import android.graphics.Canvas;
 import android.graphics.Paint;
 import android.graphics.Typeface;
@@ -41,7 +40,6 @@ import androidx.fragment.app.FragmentTransaction;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
-import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Locale;
@@ -479,6 +477,9 @@ public class TabThree extends Fragment {
             if (rgOskeChecked()) {
                 saveAns(cntItem, getCheckedIndex());
                 Log.e(TAG, "answer " + cntItem + ":   " + getCheckedIndex());
+                if(loadMode() == 2) {
+                    pdfResLP();
+                }
 
                 Fragment fragment = new fragmentOskeCalc();
                 FragmentTransaction transaction3 = getChildFragmentManager().beginTransaction();
@@ -734,6 +735,88 @@ public class TabThree extends Fragment {
             throw new RuntimeException("Error generating file", e);
         }
     }
+
+
+
+    void pdfResLP(){
+        Paint title = new Paint();
+        Paint content = new Paint();
+        float pageWidth = 600;
+
+        Date date = new Date();
+        SimpleDateFormat formatter = new SimpleDateFormat("dd.MM.yyyy HH:mm:ss", Locale.getDefault());
+
+        PrintAttributes printAttrs = new PrintAttributes.Builder().
+                setColorMode(PrintAttributes.COLOR_MODE_COLOR).
+                setMediaSize(PrintAttributes.MediaSize.NA_LETTER).
+                setResolution(new PrintAttributes.Resolution("MedSim", PRINT_SERVICE, 300, 300)).
+                setMinMargins(PrintAttributes.Margins.NO_MARGINS).
+                build();
+
+        PdfDocument document = new PrintedPdfDocument(requireActivity(), printAttrs);
+        // crate a page description
+        PdfDocument.PageInfo pageInfo = new PdfDocument.PageInfo.Builder(600, 600, 1).create();
+        // create a new page from the PageInfo
+        PdfDocument.Page page = document.startPage(pageInfo);
+
+        Canvas canvas = page.getCanvas();
+        title.setTextAlign(Paint.Align.CENTER);
+        title.setTypeface(Typeface.create(Typeface.DEFAULT,Typeface.BOLD));
+        title.setTextSize(30);
+
+        content.setTextAlign(Paint.Align.LEFT);
+        content.setTypeface(Typeface.create(Typeface.DEFAULT,Typeface.NORMAL));
+        content.setTextSize(14);
+
+        canvas.drawText("MedSimTech", pageWidth/2, 35, title);
+
+        canvas.drawText("Дата: " , requireActivity().getResources().getInteger(R.integer.pdf_margin_title), 90, content);
+        canvas.drawText(formatter.format(date) , requireActivity().getResources().getInteger(R.integer.pdf_margin_title_content) + 50, 90, content);
+
+        canvas.drawText("Номер кандидата: ", requireActivity().getResources().getInteger(R.integer.pdf_margin_title), 110, content);
+        canvas.drawText(requireActivity().getSharedPreferences("GradeAnswer", MODE_PRIVATE)
+                .getString("num", "0000"), requireActivity().getResources().getInteger(R.integer.pdf_margin_title_content) + 50, 110, content);
+
+        canvas.drawText("Результат: ", requireActivity().getResources().getInteger(R.integer.pdf_margin_title), 130, content);
+        canvas.drawText( grade(), requireActivity().getResources().getInteger(R.integer.pdf_margin_title_content) + 50, 130, content);
+        // do final processing of the page
+        document.finishPage(page);
+
+
+        try {
+            File f = new File(Environment.getExternalStorageDirectory().getPath() + "/MedSimTech_report_" + formatter.format(date) + ".pdf");
+            FileOutputStream fos = new FileOutputStream(f);
+            document.writeTo(fos);
+            document.close();
+            fos.close();
+        } catch (IOException e) {
+            throw new RuntimeException("Error generating file", e);
+        }
+    }
+
+
+    String grade(){
+        String result;
+        double good = 0;
+        int len = getResources().getStringArray(R.array.lp_items).length;
+
+        for (int i = 1; i <= len; i++) {
+            String name = "ans" + i;
+
+            if (requireContext().getSharedPreferences("GradeAnswer", MODE_PRIVATE).getInt(name, -1) == 0) {
+                good += 1;
+            }
+
+        }
+
+        result = (int) good + "/" + len + " (" + String.format(Locale.getDefault(), "%.1f", (good * 100 / len) ) + "%)";
+
+        requireActivity().getSharedPreferences("GradeAnswer", MODE_PRIVATE).edit().putString("resultLP", result).apply();
+
+        Log.e("Calc", "" + (good * 100 / len));
+
+        return result;
+    };
     
 
     void saveSys(int iParam) {

@@ -648,7 +648,7 @@ public class TabTwo extends Fragment {
                         } else if (pauseChrono_1 || pauseChrono_2 || pauseChrono_3) {
                             customToast("Действие не требуется");
                         } else {
-                            customToast("code: 11");
+                            //customToast("code: 11");
                         }
                     } else {
                         customToast("Операция не начата");
