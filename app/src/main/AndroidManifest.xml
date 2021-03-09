@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    package="itmo.bluetoothChecker">
+    package="itmo.bluetoothCheckerStudent">
 
     <uses-permission android:name="android.permission.BLUETOOTH" />
     <uses-permission android:name="android.permission.BLUETOOTH_ADMIN" />
@@ -13,7 +13,7 @@
         android:allowBackup="true"
         android:fullBackupContent="true"
         android:icon="@mipmap/logo"
-        android:label="@string/app_name_teacher"
+        android:label="@string/app_name_student"
         android:requestLegacyExternalStorage="true"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
@@ -21,7 +21,7 @@
         tools:ignore="GoogleAppIndexingWarning"
         tools:targetApi="q">
         <activity
-            android:name=".ui.login.LoginActivity"
+            android:name="itmo.bluetoothCheckerStudent.ui.login.LoginActivity"
             android:theme="@style/AppTheme.NoActionBar">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -29,7 +29,7 @@
 
         </activity>
         <activity
-            android:name=".SplashActivity"
+            android:name="itmo.bluetoothCheckerStudent.SplashActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar">
             <intent-filter>
@@ -38,7 +38,7 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".MainActivity"
+            android:name="itmo.bluetoothCheckerStudent.MainActivity"
             android:label="@string/app_name"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar"
@@ -53,17 +53,17 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".DeviceListActivity"
+            android:name="itmo.bluetoothCheckerStudent.DeviceListActivity"
             android:configChanges="orientation|keyboardHidden"
             android:label="@string/select_device"
             android:theme="@android:style/Theme.Holo.Dialog.NoActionBar" />
         <activity
-            android:name=".SettingsActivity"
+            android:name="itmo.bluetoothCheckerStudent.SettingsActivity"
             android:label="@string/label_settings"
             android:screenOrientation="portrait"
             tools:ignore="LockedOrientationActivity" />
         <activity
-            android:name=".About"
+            android:name="itmo.bluetoothCheckerStudent.About"
             android:label="@string/label_about"
             android:screenOrientation="portrait"
             tools:ignore="LockedOrientationActivity" />

@@ -26,7 +26,7 @@
 -verbose
 
 -keepattributes *Annotation*
--keep public class itmo.bluetoothChecker.MainActivity
+-keep public class itmo.bluetoothCheckerStudent.MainActivity
 
 # For native methods, see http://proguard.sourceforge.net/manual/examples.html#native
 -keepclasseswithmembernames class * {

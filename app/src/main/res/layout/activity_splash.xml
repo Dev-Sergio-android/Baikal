@@ -15,6 +15,6 @@
         android:src="@drawable/logo"
         android:scaleX="0.5"
         android:scaleY="0.5"
-        android:contentDescription="TODO" />
+        android:contentDescription="@null" />
 
 </RelativeLayout>

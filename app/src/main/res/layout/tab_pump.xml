@@ -73,7 +73,7 @@
             android:layout_height="wrap_content"
             android:paddingBottom="10dp">
 
-            <itmo.bluetoothChecker.CircularSeekBar
+            <itmo.bluetoothCheckerStudent.CircularSeekBar
                 android:id="@+id/circularSeekBarBpm"
                 android:layout_width="170dp"
                 android:scaleX="0.95"
@@ -97,7 +97,7 @@
                 app:use_custom_radius="true" />
 
 
-            <itmo.bluetoothChecker.CircularSeekBar
+            <itmo.bluetoothCheckerStudent.CircularSeekBar
                 android:id="@+id/circularSeekBarPress"
                 android:layout_width="170dp"
                 android:layout_height="170dp"
@@ -122,7 +122,7 @@
                 app:start_angle="-230"
                 app:use_custom_radius="true" />
 
-            <itmo.bluetoothChecker.CircularSeekBar
+            <itmo.bluetoothCheckerStudent.CircularSeekBar
                 android:id="@+id/circularSeekBarResp"
                 android:layout_width="170dp"
                 android:layout_height="170dp"
@@ -147,7 +147,7 @@
                 app:use_custom_radius="true" />
 
 
-            <itmo.bluetoothChecker.CircularSeekBar
+            <itmo.bluetoothCheckerStudent.CircularSeekBar
                 android:id="@+id/circularSeekBarSat"
                 android:layout_width="170dp"
                 android:layout_height="170dp"

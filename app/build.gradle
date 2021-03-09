@@ -4,11 +4,11 @@ android {
     compileSdkVersion 29
     buildToolsVersion "29.0.2"
     defaultConfig {
-        applicationId "itmo.bluetoothChecker"
+        applicationId "itmo.bluetoothCheckerStudent"
         minSdkVersion 23
         targetSdkVersion 29
-        versionCode 5
-        versionName "1.5.8f"
+        versionCode 100
+        versionName "1.0.0"
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
         vectorDrawables.useSupportLibrary = true
     }

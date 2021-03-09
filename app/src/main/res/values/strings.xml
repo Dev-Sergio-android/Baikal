@@ -1,6 +1,6 @@
 <resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
-    <string name="app_name">ХКС-Байкал</string>
-    <string name="app_name_teacher">ХКС-Байкал-П</string>
+    <string name="app_name">ХКС-Байкал-С</string>
+    <string name="app_name_student">ХКС-Байкал-С</string>
 
     <string name="menu_find">FIND</string>
     <string name="menu_bl_conn">CONN</string>
@@ -120,59 +120,11 @@
     <string name="plusMinute">\nминут</string>
 
 
-    <string name="slide_title">Этапы операции</string>
+    <string name="slide_title">Визуализация этапов операции</string>
 
 
-    <string name="check_title_kroot">Комплексная рейтинговая оценка оперативной техники (КРООТ)</string>
-    <string name="kroot_private_info">Личные данные</string>
-    <string name="kroot_teacher_nick">ФИО\nпреподавателя</string>
-    <string name="kroot_teacher_ID">ID\nпреподавателя</string>
-    <string name="kroot_student_nick">ФИО\nслушателя</string>
-    <string name="kroot_student_ID">ID\nслушателя</string>
-    <string name="kroot_program">Программа</string>
-    <string name="kroot_ord">1. Ординатура </string>
-    <string name="kroot_prepare">2. Подготовка и повышение квалификации</string>
-    <string name="kroot_title_testing_data">по данным тестирования</string>
-    <string name="kroot_title_prev_kroot">предыдущие КРООТ\n(при отсутствии данных,\nуровень – «Базовый»)</string>
-    <string name="kroot_student_level">Уровень слушателя</string>
-    <string name="kroot_level_0">0. Не выполнялось</string>
-    <string name="kroot_level_1">1. Базовый</string>
-    <string name="kroot_level_2">2. Ниже среднего</string>
-    <string name="kroot_level_3">3. Средний</string>
-    <string name="kroot_level_4">4. Выше среднего</string>
-    <string name="kroot_level_5">5. Опытный</string>
-    <string name="kroot_operation">Операция</string>
-    <string name="kroot_operation_type_1">Сосудистый доступ</string>
-    <string name="kroot_operation_type_2">Сосудистый шов</string>
-    <string name="kroot_operation_type_3">Сосудистое протезирование</string>
-    <string name="kroot_all_time">Общее время операции</string>
-    <string name="kroot_start_time">Время\nначала</string>
-    <string name="kroot_stop_time">Время\nзавершения</string>
-    <string name="kroot_stage_prepare">Этапы подготовки</string>
-    <string name="kroot_prepare_1">1. Подготовка\nбольного</string>
-    <string name="kroot_prepare_2">2. Халат,\nперчатки</string>
-    <string name="kroot_prepare_3">3. Обработка,\nотграничение\nоперац. поля</string>
-    <string name="kroot_stage_operation">Этапы операции</string>
-    <string name="kroot_operation_1">1. Доступ, выделение</string>
-    <string name="kroot_operation_2">2. Операция на сосуде</string>
-    <string name="kroot_operation_3">3. Закрытие раны</string>
-    <string name="kroot_operation_difficulty">Уровень сложности</string>
-    <string name="kroot_difficulty_1">Простая неизмененная анатомия</string>
-    <string name="kroot_difficulty_2">Некоторые изменения, не связанные с предыду-\nщими операциями, характером повреждения.</string>
-    <string name="kroot_difficulty_3">Средней сложности</string>
-    <string name="kroot_difficulty_4">Измененная анатомия, вероятно требующая альтернативных методов</string>
-    <string name="kroot_difficulty_5">Измененная анатомия, обширная патология, связанная с предыдущими операциями, лечением, характером повреждений</string>
-
-    <string name="kroot_title_grade">Ваша оценка: </string>
-
-
-    <string name="oske_title_start">II этап аккредитационного экзамена</string>
-    <string name="oske_title_spec">Специальность</string>
-    <string name="oske_spec">Хирургия</string>
-    <string name="oske_title_date">Дата</string>
-    <string name="oske_hint_date">Введите дату…</string>
-    <string name="oske_title_stud_number">Номер кандидата</string>
-    <string name="oske_hint_stud_number">Введите номер…</string>
+    <string name="button_prev">      </string>
+    <string name="button_next">      </string>
 
 
     <string name="interval_1">Доступ:</string>
@@ -180,32 +132,13 @@
     <string name="interval_3">Закрытие\nраны:</string>
 
     <string name="about_version_title">Версия приложения</string>
-    <string name="about_version">1.5.8</string>
+    <string name="about_version">1.0.0</string>
     <string name="about_build">Сборка</string>
-    <string name="about_build_number">200221</string>
+    <string name="about_build_number">270221</string>
     <string name="about_footer">© MedSimTech LLC, 2021</string>
     <string name="hyperlink"><a href="https://www.medsimtech.com"> <![CDATA[www.medsimtech.com]]></a></string>
 
 
-    <string name="oske_column_number">№\nп/п</string>
-    <string name="oske_column_action">Действие аккредитуемого лица</string>
-    <string name="oske_column_yes_no">Критерий\nоценки</string>
-    <string name="oske_yes">ДА</string>
-    <string name="oske_no">НЕТ</string>
-    <string name="button_prev">ПРЕД.</string>
-    <string name="button_next">СЛЕД.</string>
-    <string name="button_calc">ОЦЕНКА</string>
-    <string name="oske_button_end">ЗАВЕРШИТЬ</string>
-
-
-    <string name="kroot_1">1 балл</string>
-    <string name="kroot_2">2 балла</string>
-    <string name="kroot_3">3 балла</string>
-    <string name="kroot_4">4 балла</string>
-    <string name="kroot_5">5 баллов</string>
-
-    <string name="kroot_name_hint">Введите ФИО…</string>
-    <string name="kroot_id_hint">Введите ID…</string>
 
 
     <string-array name="pressure">

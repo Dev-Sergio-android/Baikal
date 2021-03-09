@@ -4,15 +4,15 @@
     "type": "APK",
     "kind": "Directory"
   },
-  "applicationId": "itmo.bluetoothChecker",
+  "applicationId": "itmo.bluetoothCheckerStudent",
   "variantName": "release",
   "elements": [
     {
       "type": "SINGLE",
       "filters": [],
       "properties": [],
-      "versionCode": 5,
-      "versionName": "1.5.8f",
+      "versionCode": 100,
+      "versionName": "1.0.0",
       "enabled": true,
       "outputFile": "app-release.apk"
     }
