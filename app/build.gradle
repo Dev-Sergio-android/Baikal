@@ -7,8 +7,8 @@ android {
         applicationId "itmo.bluetoothChecker"
         minSdkVersion 23
         targetSdkVersion 29
-        versionCode 6
-        versionName "1.5.9"
+        versionCode 7
+        versionName "1.5.10"
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
         vectorDrawables.useSupportLibrary = true
     }

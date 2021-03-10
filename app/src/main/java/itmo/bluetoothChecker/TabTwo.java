@@ -673,7 +673,7 @@ public class TabTwo extends Fragment {
                     if(!flagMute){
                         try {
                             mesMute.put("device", "android");
-                            mesMute.put("mute", true);
+                            mesMute.put("mute", "on");
                             sendMessage(mesMute.toString());
 
                             flagMute = true;
@@ -687,7 +687,7 @@ public class TabTwo extends Fragment {
 
                         try {
                             mesMute.put("device", "android");
-                            mesMute.put("mute", false);
+                            mesMute.put("mute", "off");
                             sendMessage(mesMute.toString());
 
                             flagMute = false;
