@@ -69,7 +69,6 @@ public class fragmentKrootStart extends Fragment {
             String startTime, stopTime;
 
             if (TIME.equals(action)) {
-                Log.e(TAG, "broadcast");
                 if(intent.hasExtra("send_message_time1Start")){
                     operStartTime_1.setText(intent.getStringExtra("send_message_time1Start"));
                 }else if(intent.hasExtra("send_message_time1Stop")){
@@ -107,6 +106,16 @@ public class fragmentKrootStart extends Fragment {
                     try {
                         operAllTime_3.setText(timeDif(startTime, stopTime));
                         operStopTimeAll.setText(stopTime);
+
+                        SimpleDateFormat df = new SimpleDateFormat("HH:mm", Locale.getDefault());
+
+                        Log.e(TAG, "stop time: " + operStopTimeAll.getText().toString()
+                                + " start time: " + operStartTimeAll.getText().toString()
+                        + "compare: " + df.parse(operStopTimeAll.getText().toString()).after(df.parse(operStartTimeAll.getText().toString())));
+
+                        if(!operStartTimeAll.getText().equals("") && df.parse(operStopTimeAll.getText().toString()).after(df.parse(operStartTimeAll.getText().toString()))){
+                            operAllTime.setText(timeDifAll(operStartTimeAll.getText().toString(), operStopTimeAll.getText().toString()));
+                        }
                     } catch (ParseException e) {
                         e.printStackTrace();
                     }
@@ -552,6 +561,7 @@ public class fragmentKrootStart extends Fragment {
         requireActivity().unregisterReceiver(checkReceiver);
     }
 
+
     boolean compareTime(String compareTo, String compareWhat, boolean isSame) throws ParseException {
         boolean before = false;
         SimpleDateFormat dateFormat = new SimpleDateFormat("HH:mm", Locale.getDefault());
@@ -582,6 +592,15 @@ public class fragmentKrootStart extends Fragment {
     String timeDif(String time1, String time2) throws ParseException {
         SimpleDateFormat simpleDateFormat = new SimpleDateFormat("HH:mm", Locale.getDefault());
         return ((Objects.requireNonNull(simpleDateFormat.parse(time2)).getTime() - Objects.requireNonNull(simpleDateFormat.parse(time1)).getTime())/ (1000 * 60)) % 60 + "\nминут";
+    }
+
+    String timeDifAll(String time1, String time2) throws ParseException {
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("HH:mm", Locale.getDefault());
+        String sMm = "";
+        long iHh = ((Objects.requireNonNull(simpleDateFormat.parse(time2)).getTime() - Objects.requireNonNull(simpleDateFormat.parse(time1)).getTime())/ (1000 * 60)) / 60;
+        long iMm = ((Objects.requireNonNull(simpleDateFormat.parse(time2)).getTime() - Objects.requireNonNull(simpleDateFormat.parse(time1)).getTime())/ (1000 * 60)) % 60;
+        sMm = iMm < 10? "0" + iMm : String.valueOf(iMm);
+        return "0" + iHh + ":" + sMm ;
     }
 
 

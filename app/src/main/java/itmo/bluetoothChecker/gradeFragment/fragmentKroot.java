@@ -82,7 +82,7 @@ public class fragmentKroot extends Fragment {
             loadAns(cntItem);
         }
 
-        Toast.makeText(requireContext(),  "cnt set:  " + cntItem, Toast.LENGTH_SHORT).show();
+        //Toast.makeText(requireContext(),  "cnt set:  " + cntItem, Toast.LENGTH_SHORT).show();
 
 
         rgKroot.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {

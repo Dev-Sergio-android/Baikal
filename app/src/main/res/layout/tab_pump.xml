@@ -212,36 +212,42 @@
                 android:id="@+id/tvCommentInterval_1"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="15dp"
+                android:layout_marginStart="12dp"
                 android:layout_marginTop="20dp"
                 android:fontFamily="@font/rubik_semi_bold"
                 android:textColor="@color/text_color"
                 android:text="@string/interval_1"
-                android:textSize="18sp"/>
+                android:textSize="18sp"
+                app:drawableStartCompat="@drawable/ic_stage1"
+                android:drawablePadding="2dp" />
 
             <TextView
                 android:id="@+id/tvCommentInterval_2"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/tvCommentInterval_1"
-                android:layout_marginStart="15dp"
+                android:layout_marginStart="12dp"
                 android:layout_marginTop="34dp"
                 android:fontFamily="@font/rubik_semi_bold"
                 android:text="@string/interval_2"
                 android:textColor="@color/text_color"
-                android:textSize="18sp"/>
+                android:textSize="18sp"
+                app:drawableStartCompat="@drawable/ic_stage2"
+                android:drawablePadding="2dp" />
 
             <TextView
                 android:id="@+id/tvCommentInterval_3"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/tvCommentInterval_2"
-                android:layout_marginStart="15dp"
+                android:layout_marginStart="12dp"
                 android:layout_marginTop="@dimen/interval_block_to_top"
                 android:fontFamily="@font/rubik_semi_bold"
                 android:textColor="@color/text_color"
                 android:text="@string/interval_3"
-                android:textSize="18sp"/>
+                android:textSize="18sp"
+                app:drawableStartCompat="@drawable/ic_stage3"
+                android:drawablePadding="2dp" />
 
             <Chronometer
                 android:id="@+id/chronometer1"
@@ -250,7 +256,7 @@
                 android:layout_height="wrap_content"
                 android:layout_alignStart="@+id/tvCommentInterval_1"
                 android:layout_alignBaseline="@+id/tvCommentInterval_1"
-                android:layout_marginStart="140dp"
+                android:layout_marginStart="145dp"
                 android:background="@drawable/rounded_chrono_bg"
                 android:fontFamily="@font/rubik_regular"
                 android:paddingStart="10dp"

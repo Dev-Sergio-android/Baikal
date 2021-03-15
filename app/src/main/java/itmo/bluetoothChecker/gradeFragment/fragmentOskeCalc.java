@@ -73,6 +73,8 @@ public class fragmentOskeCalc extends Fragment {
 
             result = (int) good + "/" + len + "\n" + "\n" + String.format(Locale.getDefault(), "%.1f", (good * 100 / len) ) + "%";
 
+            requireActivity().getSharedPreferences("GradeAnswer", MODE_PRIVATE).edit().putString("resultLP", result).apply();
+
             Log.e("Calc", "" + (good * 100 / len));
 
         } else {

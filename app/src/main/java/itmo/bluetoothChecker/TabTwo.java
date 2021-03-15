@@ -54,6 +54,8 @@ public class TabTwo extends Fragment {
     public static boolean flagComplete = true;
     private boolean flagStop = false;
     public static boolean flagPause = false;
+    private boolean flagMute = false;
+
 
     private static TextView answer;
 
@@ -155,7 +157,6 @@ public class TabTwo extends Fragment {
 
                         }else{
                             Log.e(TAG, "started false");
-                            customToast("started false");
                         }
 
                         ///// Запуск таймеров от датчика давления только в автоматическом режиме ////
@@ -267,12 +268,26 @@ public class TabTwo extends Fragment {
                                         "SPO2 = " + jsonObj.getString("sp"));
                             } else {
                                 // TODO check why toast when start operation
-                                customToast("code: 9");
+                                //customToast("code: 9");
                             }
                         } else {
                             //// Во всех режимах прием подтверждения доставки команды ////
                             if (jsonObj.has("ansOK") && jsonObj.getString("ansOK").equals("OK") && !flagComplete) {
                                 customToast("Сообщение доставлено - OK");
+                            }
+                        }
+
+                        if(jsonObj.has("mute")){
+                            if(jsonObj.getString("mute").equals("off")){
+                                if(!flagMute){
+                                    buttonMute.setBackground(ContextCompat.getDrawable(context, R.drawable.rounded_button_sound_off));
+                                    flagMute = true;
+                                }
+                            }else{
+                                if(flagMute) {
+                                    buttonMute.setBackground(ContextCompat.getDrawable(context, R.drawable.rounded_button_sound));
+                                    flagMute = false;
+                                }
                             }
                         }
                     }
@@ -322,7 +337,7 @@ public class TabTwo extends Fragment {
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState2) {
-//        return super.onCreateView(inflater, container, savedInstanceState);
+
         final View view = inflater.inflate(R.layout.tab_pump, container, false);
         FragmentActivity activity = getActivity();
 
@@ -633,7 +648,7 @@ public class TabTwo extends Fragment {
                         } else if (pauseChrono_1 || pauseChrono_2 || pauseChrono_3) {
                             customToast("Действие не требуется");
                         } else {
-                            customToast("code: 11");
+                            //customToast("code: 11");
                         }
                     } else {
                         customToast("Операция не начата");
@@ -654,16 +669,37 @@ public class TabTwo extends Fragment {
                 if (loadState()) {
                     Log.i(TAG, "State" + loadState());
                     JSONObject mesMute = new JSONObject();
-                    try {
-                        mesMute.put("device", "android");
-                        mesMute.put("mute", true);
 
-                        sendMessage(mesMute.toString());
-                    } catch (JSONException e) {
-                        e.printStackTrace();
+                    if(!flagMute){
+                        try {
+                            mesMute.put("device", "android");
+                            mesMute.put("mute", "on");
+                            sendMessage(mesMute.toString());
+
+                            flagMute = true;
+                            buttonMute.setBackground(ContextCompat.getDrawable(requireContext(), R.drawable.rounded_button_sound_off));
+                            customToast("Звук отключен");
+
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+                    }else{
+
+                        try {
+                            mesMute.put("device", "android");
+                            mesMute.put("mute", "off");
+                            sendMessage(mesMute.toString());
+
+                            flagMute = false;
+                            buttonMute.setBackground(ContextCompat.getDrawable(requireContext(), R.drawable.rounded_button_sound));
+                            customToast("Звук включен");
+
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
                     }
 
-                    customToast("Звук отключен");
+
                 } else {
                     Log.e(TAG, "State" + loadState());
                     Log.e(TAG, "flagComplete: " + flagComplete);
@@ -867,9 +903,9 @@ public class TabTwo extends Fragment {
             }
         });
 
-        clickChono(time_1);
+      /*  clickChono(time_1);
         clickChono(time_2);
-        clickChono(time_3);
+        clickChono(time_3);*/
 
         return view;
     }
@@ -1174,7 +1210,7 @@ public class TabTwo extends Fragment {
     }
 
     void saveSeekState() {
-        SharedPreferences.Editor ed = requireActivity().getPreferences(MODE_PRIVATE).edit();
+        SharedPreferences.Editor ed = requireActivity().getSharedPreferences("SeekState", MODE_PRIVATE).edit();
         ed.putInt("bpm", bpmCirSeek.getProgress());
         ed.putInt("ap", pressCirSeek.getProgress());
         ed.putInt("rr", respCirSeek.getProgress());
@@ -1183,7 +1219,7 @@ public class TabTwo extends Fragment {
     }
 
     void loadSeekState() {
-        seekPref = requireActivity().getPreferences(MODE_PRIVATE);
+        seekPref = requireActivity().getSharedPreferences("SeekState", MODE_PRIVATE);
         int savedStateBpm = seekPref.getInt("bpm", 15);
         bpmCirSeek.setProgress(savedStateBpm);
         int savedStateAP = seekPref.getInt("ap", 5);

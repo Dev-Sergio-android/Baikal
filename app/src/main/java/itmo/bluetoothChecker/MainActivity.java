@@ -254,6 +254,7 @@ public class MainActivity extends AppCompatActivity {
                     mChatService.stop();
                     Intent LoginIntent = new Intent(this, LoginActivity.class);
                     startActivityForResult(LoginIntent, REQUEST_SETTINGS);
+                    this.finish();
                 } else {
                     customToast("Недоступно во время операции");
                 }
@@ -462,7 +463,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     void formatDate() {
-        String valid_until = "01-04-2021";
+        String valid_until = "01-05-2021";
         SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy", Locale.US);
         Date date2 = null;
         try {
