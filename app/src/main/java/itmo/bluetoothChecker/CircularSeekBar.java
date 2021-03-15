@@ -18,6 +18,7 @@ import android.graphics.drawable.VectorDrawable;
 import android.os.Bundle;
 import android.os.Parcelable;
 import android.util.AttributeSet;
+import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
 
@@ -62,7 +63,7 @@ public class CircularSeekBar extends View {
     /**
      * Minimum touch target size in DP. 48dp is the Android design recommendation
      */
-    protected final float MIN_TOUCH_TARGET_DP = 90;
+    protected final float MIN_TOUCH_TARGET_DP = 110;
     protected final float correction = 50;
     /**
      * {@code Paint} instance used to draw the inactive circle.
@@ -585,7 +586,7 @@ public class CircularSeekBar extends View {
 
         canvas.translate(this.getWidth() >> 1, this.getHeight() - 184);
 
-        //canvas.scale(0.8f, 0.8f, 0.8f, 0.8f);
+        canvas.scale(0.95f, 0.95f, 0.95f, 0.95f);
 
         //canvas.drawRect(500, 500, 500, 500, titlePaint);
 
@@ -600,6 +601,12 @@ public class CircularSeekBar extends View {
         if (mUserIsMovingPointer) {
             canvas.drawCircle(mPointerPositionXY[0], mPointerPositionXY[1], mPointerRadius + mPointerHaloWidth + (mPointerHaloBorderWidth / 2f), mPointerHaloBorderPaint);
         }
+
+        /*canvas.drawCircle(mPointerPositionXY[0], mPointerPositionXY[1], mPointerRadius + mPointerHaloWidth, mPointerHaloPaint);
+        canvas.drawCircle(mPointerPositionXY[0], mPointerPositionXY[1], mPointerRadius, mPointerPaint);
+        if (mUserIsMovingPointer) {
+            canvas.drawCircle(mPointerPositionXY[0], mPointerPositionXY[1], mPointerRadius + mPointerHaloWidth + (mPointerHaloBorderWidth / 2f), mPointerHaloBorderPaint);
+        }*/
 
 
         if(mAD) {
@@ -769,6 +776,7 @@ public class CircularSeekBar extends View {
         else {
             additionalRadius = mCircleStrokeWidth / 2; // Otherwise use the width
         }
+
         float outerRadius = Math.max(mCircleHeight, mCircleWidth) + additionalRadius; // Max outer radius of the circle, including the minimumTouchTarget or wheel width
         float innerRadius = Math.min(mCircleHeight, mCircleWidth) - additionalRadius; // Min inner radius of the circle, including the minimumTouchTarget or wheel width
 
@@ -795,6 +803,7 @@ public class CircularSeekBar extends View {
                 cwDistanceFromPointer = touchAngle - mPointerPosition;
                 cwDistanceFromPointer = (cwDistanceFromPointer < 0 ? 360f + cwDistanceFromPointer : cwDistanceFromPointer);
                 ccwDistanceFromPointer = 360f - cwDistanceFromPointer;
+
                 // This is for if the first touch is on the actual pointer.
                 if (((touchEventRadius >= innerRadius) && (touchEventRadius <= outerRadius)) && ( (cwDistanceFromPointer <= pointerRadiusDegrees) || (ccwDistanceFromPointer <= pointerRadiusDegrees)) ) {
                     setProgressBasedOnAngle(mPointerPosition);
@@ -811,8 +820,9 @@ public class CircularSeekBar extends View {
                     lockAtEnd = false;
                     lockAtStart = false;
                 } else if (cwDistanceFromStart > mTotalCircleDegrees) { // If the user is touching outside of the start AND end
-                    mUserIsMovingPointer = false;
-                    return false;
+                    // TODO was "false"
+                    mUserIsMovingPointer = true;
+                    return true;
                 } else if ((touchEventRadius >= innerRadius) && (touchEventRadius <= outerRadius)) { // If the user is touching near the circle
                     setProgressBasedOnAngle(touchAngle);
                     lastCWDistanceFromStart = cwDistanceFromStart;

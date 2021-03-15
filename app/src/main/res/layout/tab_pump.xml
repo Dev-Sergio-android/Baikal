@@ -84,7 +84,6 @@
                 app:circle_x_radius="100dp"
                 app:circle_y_radius="100dp"
                 app:drawableSource="@drawable/ic_icon_rate"
-                app:end_angle="-310"
                 app:max="80"
                 app:min="70"
                 app:hint="ЧСС"
@@ -93,7 +92,8 @@
                 app:pointer_halo_color="#550174DF"
                 app:pointer_halo_width="5dp"
                 app:progress="15"
-                app:start_angle="-230"
+                app:end_angle="45"
+                app:start_angle="135"
                 app:use_custom_radius="true" />
 
 
@@ -111,7 +111,6 @@
                 app:circle_x_radius="100dp"
                 app:circle_y_radius="100dp"
                 app:drawableSource="@drawable/ic_blood_pressure_icon_9"
-                app:end_angle="-310"
                 app:hint="АД"
                 app:max="9"
                 app:pointer_alpha_ontouch="100"
@@ -119,7 +118,8 @@
                 app:pointer_halo_color="#880174DF"
                 app:pointer_halo_width="5dp"
                 app:progress="5"
-                app:start_angle="-230"
+                app:end_angle="45"
+                app:start_angle="135"
                 app:use_custom_radius="true" />
 
             <itmo.bluetoothChecker.CircularSeekBar
@@ -134,7 +134,6 @@
                 app:circle_x_radius="100dp"
                 app:circle_y_radius="100dp"
                 app:drawableSource="@drawable/ic_lungs"
-                app:end_angle="-310"
                 app:max="25"
                 app:min="15"
                 app:hint="ЧДД"
@@ -143,7 +142,8 @@
                 app:pointer_halo_color="#880174DF"
                 app:pointer_halo_width="5dp"
                 app:progress="10"
-                app:start_angle="-230"
+                app:end_angle="45"
+                app:start_angle="135"
                 app:use_custom_radius="true" />
 
 
@@ -161,7 +161,6 @@
                 app:circle_y_radius="100dp"
                 app:drawableSource="@drawable/ic_spo2_icon"
                 app:textColor="@color/white"
-                app:end_angle="-310"
                 app:max="19"
                 app:min="80"
                 app:hint="SpO2"
@@ -170,7 +169,8 @@
                 app:pointer_halo_color="#880174DF"
                 app:pointer_halo_width="5dp"
                 app:progress="17"
-                app:start_angle="-230"
+                app:end_angle="45"
+                app:start_angle="135"
                 app:use_custom_radius="true" />
 
         </RelativeLayout>

@@ -479,6 +479,7 @@ public class MainActivity extends AppCompatActivity {
     @Override
     public void onStart() {
         super.onStart();
+
         if (mBluetoothAdapter == null) {
             customToast("main: code: 0");
             //return;
