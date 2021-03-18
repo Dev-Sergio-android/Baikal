@@ -176,9 +176,9 @@
     <string name="interval_3">Закрытие\nраны:</string>
 
     <string name="about_version_title">Версия приложения</string>
-    <string name="about_version">1.5.8</string>
+    <string name="about_version">1.5.10</string>
     <string name="about_build">Сборка</string>
-    <string name="about_build_number">200221</string>
+    <string name="about_build_number">180321</string>
     <string name="about_footer">© MedSimTech LLC, 2021</string>
     <string name="hyperlink"><a href="https://www.medsimtech.com"> <![CDATA[www.medsimtech.com]]></a></string>
 

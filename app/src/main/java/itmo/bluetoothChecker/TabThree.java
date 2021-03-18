@@ -187,7 +187,7 @@ public class TabThree extends Fragment {
         btnNext.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if (!requireActivity().getSharedPreferences(CONNECTION, MODE_PRIVATE).getBoolean("con_state", false)) {
+                if (requireActivity().getSharedPreferences(CONNECTION, MODE_PRIVATE).getBoolean("con_state", false)) {
                     if (flagComplete) {
 
                         switch (spinner.getSelectedItemPosition()) {
@@ -285,7 +285,7 @@ public class TabThree extends Fragment {
         btnPrev.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if (!requireActivity().getSharedPreferences(CONNECTION, MODE_PRIVATE).getBoolean("con_state", false)) {
+                if (requireActivity().getSharedPreferences(CONNECTION, MODE_PRIVATE).getBoolean("con_state", false)) {
                     if (flagComplete) {
 
                         switch (spinner.getSelectedItemPosition()) {

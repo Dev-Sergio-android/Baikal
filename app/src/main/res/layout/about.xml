@@ -79,7 +79,7 @@
         android:layout_marginBottom="10dp"
         android:layout_centerHorizontal="true"
         android:textColorLink="@color/text_color"
-        android:gravity="center"
+        android:gravity="center_horizontal"
         android:drawablePadding="@dimen/kroot_padding_5dp"
         app:drawableStartCompat="@drawable/ic_globe" />
 

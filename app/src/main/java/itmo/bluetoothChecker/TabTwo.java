@@ -357,18 +357,7 @@ public class TabTwo extends Fragment {
         requireActivity().getSharedPreferences("limit", MODE_PRIVATE).edit().putString("time2", limit_2).apply();
         requireActivity().getSharedPreferences("limit", MODE_PRIVATE).edit().putString("time3", limit_3).apply();
 
-        // If the adapter is null, then Bluetooth is not supported
 
-        /*if (mBluetoothAdapter == null) {
-            Toast.makeText(activity, "Bluetooth is not available", Toast.LENGTH_LONG).show();
-            activity.finish();
-        }*/
-
-
-        if (!Objects.requireNonNull(mBluetoothAdapter).isEnabled()) {
-            Intent intent = new Intent(BluetoothAdapter.ACTION_REQUEST_ENABLE);
-            startActivityForResult(intent, REQUEST_ENABLE_BT);
-        }
 
 
         TabLayout tabs = requireActivity().findViewById(R.id.tabs);
@@ -1010,24 +999,6 @@ public class TabTwo extends Fragment {
        Toast.makeText(getContext(), string, Toast.LENGTH_SHORT).show();
     }
 
-    public void onActivityResult(int requestCode, int resultCode, Intent data) {
-        if (requestCode == REQUEST_ENABLE_BT) {// When the request to enable Bluetooth returns
-            if (resultCode == Activity.RESULT_OK) {
-                Toast.makeText(requireActivity(), "Bluetooth включен", Toast.LENGTH_SHORT).show();
-                //customToast("Bluetooth is available.");
-                //bondList();
-            } else {
-                // User did not enable Bluetooth or an error occurred
-                Log.d(TAG, "BT not enabled");
-                FragmentActivity activity = getActivity();
-                if (activity != null) {
-                    customToast("Bluetooth выключен");
-                    activity.finish();
-                }
-            }
-        }
-        super.onActivityResult(requestCode, resultCode, data);
-    }
 
     private void startChrono(Chronometer chronometer) {
         if (time_1.equals(chronometer)) {

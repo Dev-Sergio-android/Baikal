@@ -1,0 +1,394 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:background="@drawable/main_screen"
+    tools:context=".MainActivity">
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <GridLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="10dp"
+            android:layout_marginEnd="10dp"
+            android:orientation="horizontal"
+            android:layout_gravity="center"
+            android:columnCount="5">
+
+
+            <Button
+                android:id="@+id/buttonStart"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:layout_column="0"
+                android:stateListAnimator="@animator/button_state_list_animator"
+                android:layout_margin="@dimen/button_margin"
+                android:background="@drawable/rounded_button_start"/>
+
+            <Button
+                android:id="@+id/buttonPause"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:layout_column="1"
+                android:layout_margin="@dimen/button_margin"
+                android:stateListAnimator="@animator/button_state_list_animator"
+                android:background="@drawable/rounded_button_pause" />
+
+            <Button
+                android:id="@+id/buttonSend"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:layout_column="2"
+                android:layout_margin="@dimen/button_margin"
+                android:stateListAnimator="@animator/button_state_list_animator"
+                android:background="@drawable/rounded_button" />
+
+            <Button
+                android:id="@+id/buttonStop"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:layout_column="3"
+                android:layout_margin="@dimen/button_margin"
+                android:stateListAnimator="@animator/button_state_list_animator"
+                android:background="@drawable/rounded_button_stop"/>
+
+            <Button
+                android:id="@+id/buttonMute"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:layout_column="4"
+                android:layout_margin="@dimen/button_margin"
+                android:stateListAnimator="@animator/button_state_list_animator"
+                android:background="@drawable/rounded_button_sound"/>
+        </GridLayout>
+
+        <RelativeLayout
+            android:id="@+id/rvTimerLayout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingBottom="10dp">
+
+            <itmo.bluetoothChecker.CircularSeekBar
+                android:id="@+id/circularSeekBarBpm"
+                android:layout_width="150dp"
+                android:layout_height="150dp"
+                android:scaleX="0.95"
+                android:scaleY="0.95"
+                android:layout_marginTop="@dimen/button_to_top"
+                android:layout_marginStart="22dp"
+                app:circle_x_radius="100dp"
+                app:circle_y_radius="100dp"
+                app:drawableSource="@drawable/ic_icon_rate"
+                app:max="80"
+                app:min="70"
+                app:hint="ЧСС"
+                app:pointer_alpha_ontouch="100"
+                app:pointer_color="#0174DF"
+                app:pointer_halo_color="#550174DF"
+                app:pointer_halo_width="5dp"
+                app:progress="15"
+                app:end_angle="45"
+                app:start_angle="135"
+                app:use_custom_radius="true" />
+
+
+            <itmo.bluetoothChecker.CircularSeekBar
+                android:id="@+id/circularSeekBarPress"
+                android:layout_width="150dp"
+                android:layout_height="150dp"
+                android:scaleX="0.95"
+                android:scaleY="0.95"
+                android:layout_alignParentEnd="true"
+                android:layout_marginTop="@dimen/button_to_top"
+                android:layout_marginEnd="22dp"
+                android:paddingTop="@dimen/title_to_start"
+                app:AD="true"
+                app:circle_x_radius="100dp"
+                app:circle_y_radius="100dp"
+                app:drawableSource="@drawable/ic_blood_pressure_icon_9"
+                app:hint="АД"
+                app:max="9"
+                app:pointer_alpha_ontouch="100"
+                app:pointer_color="#0174DF"
+                app:pointer_halo_color="#880174DF"
+                app:pointer_halo_width="5dp"
+                app:progress="5"
+                app:end_angle="45"
+                app:start_angle="135"
+                app:use_custom_radius="true" />
+
+            <itmo.bluetoothChecker.CircularSeekBar
+                android:id="@+id/circularSeekBarResp"
+                android:layout_width="150dp"
+                android:layout_height="150dp"
+                android:scaleX="0.95"
+                android:scaleY="0.95"
+                android:layout_below="@+id/circularSeekBarBpm"
+                android:layout_marginTop="@dimen/title_to_seek"
+                android:layout_marginStart="22dp"
+                app:circle_x_radius="100dp"
+                app:circle_y_radius="100dp"
+                app:drawableSource="@drawable/ic_lungs"
+                app:max="25"
+                app:min="15"
+                app:hint="ЧДД"
+                app:pointer_alpha_ontouch="100"
+                app:pointer_color="#0174DF"
+                app:pointer_halo_color="#880174DF"
+                app:pointer_halo_width="5dp"
+                app:progress="10"
+                app:end_angle="45"
+                app:start_angle="135"
+                app:use_custom_radius="true" />
+
+
+            <itmo.bluetoothChecker.CircularSeekBar
+                android:id="@+id/circularSeekBarSat"
+                android:layout_width="150dp"
+                android:layout_height="150dp"
+                android:scaleX="0.95"
+                android:scaleY="0.95"
+                android:layout_below="@+id/circularSeekBarPress"
+                android:layout_marginTop="@dimen/title_to_seek"
+                android:layout_alignParentEnd="true"
+                android:layout_marginEnd="22dp"
+                app:circle_x_radius="100dp"
+                app:circle_y_radius="100dp"
+                app:drawableSource="@drawable/ic_spo2_icon"
+                app:textColor="@color/white"
+                app:max="19"
+                app:min="80"
+                app:hint="SpO2"
+                app:pointer_alpha_ontouch="100"
+                app:pointer_color="#0174DF"
+                app:pointer_halo_color="#880174DF"
+                app:pointer_halo_width="5dp"
+                app:progress="17"
+                app:end_angle="45"
+                app:start_angle="135"
+                app:use_custom_radius="true" />
+
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingBottom="20dp">
+
+
+            <TextView
+                android:id="@+id/tvCommentAnswer"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/tvCommentInterval_3"
+                android:layout_marginStart="25dp"
+                android:layout_marginTop="20dp"
+                android:visibility="gone"
+                android:textStyle="italic"
+                android:fontFamily="sans-serif-light"
+                android:text="@string/tvAnswer"
+                android:textSize="18sp" />
+
+            <TextView
+                android:id="@+id/tvAnswer"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:visibility="gone"
+                android:layout_below="@+id/tvCommentInterval_3"
+                android:layout_alignStart="@+id/chronometer1"
+                android:layout_marginStart="0dp"
+                android:layout_marginTop="20dp"
+                android:textStyle="italic"
+                android:fontFamily="sans-serif-light"
+                android:text="@string/tvEmpty"
+                android:textSize="18sp" />
+
+            <TextView
+                android:id="@+id/tvCommentInterval_1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="12dp"
+                android:layout_marginTop="20dp"
+                android:fontFamily="@font/rubik_semi_bold"
+                android:textColor="@color/text_color"
+                android:text="@string/interval_1"
+                android:textSize="18sp"
+                app:drawableStartCompat="@drawable/ic_stage1"
+                android:drawablePadding="2dp" />
+
+            <TextView
+                android:id="@+id/tvCommentInterval_2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/tvCommentInterval_1"
+                android:layout_marginStart="12dp"
+                android:layout_marginTop="34dp"
+                android:fontFamily="@font/rubik_semi_bold"
+                android:text="@string/interval_2"
+                android:textColor="@color/text_color"
+                android:textSize="18sp"
+                app:drawableStartCompat="@drawable/ic_stage2"
+                android:drawablePadding="2dp" />
+
+            <TextView
+                android:id="@+id/tvCommentInterval_3"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/tvCommentInterval_2"
+                android:layout_marginStart="12dp"
+                android:layout_marginTop="@dimen/interval_block_to_top"
+                android:fontFamily="@font/rubik_semi_bold"
+                android:textColor="@color/text_color"
+                android:text="@string/interval_3"
+                android:textSize="18sp"
+                app:drawableStartCompat="@drawable/ic_stage3"
+                android:drawablePadding="2dp" />
+
+            <Chronometer
+                android:id="@+id/chronometer1"
+                style="@style/Widget.AppCompat.TextView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignStart="@+id/tvCommentInterval_1"
+                android:layout_alignBaseline="@+id/tvCommentInterval_1"
+                android:layout_marginStart="145dp"
+                android:background="@drawable/rounded_chrono_bg"
+                android:fontFamily="@font/rubik_regular"
+                android:paddingStart="10dp"
+                android:paddingTop="5dp"
+                android:paddingEnd="10dp"
+                android:paddingBottom="5dp"
+                android:textColor="@color/text_color"
+                android:textSize="18sp" />
+
+            <Chronometer
+                android:id="@+id/chronometer2"
+                style="@style/Widget.AppCompat.TextView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@drawable/rounded_chrono_bg"
+                android:paddingTop="5dp"
+                android:paddingBottom="5dp"
+                android:paddingStart="10dp"
+                android:paddingEnd="10dp"
+                android:layout_alignStart="@+id/chronometer1"
+                android:layout_alignBaseline="@+id/tvCommentInterval_2"
+                android:layout_marginStart="0dp"
+                android:textColor="@color/text_color"
+                android:fontFamily="@font/rubik_regular"
+                android:textSize="18sp" />
+
+            <Chronometer
+                android:id="@+id/chronometer3"
+                style="@style/Widget.AppCompat.TextView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@drawable/rounded_chrono_bg"
+                android:paddingTop="5dp"
+                android:paddingBottom="5dp"
+                android:paddingStart="10dp"
+                android:paddingEnd="10dp"
+                android:layout_alignStart="@+id/chronometer1"
+                android:layout_alignBottom="@+id/tvCommentInterval_3"
+                android:layout_marginStart="0dp"
+                android:layout_marginBottom="7dp"
+                android:textColor="@color/text_color"
+                android:elevation="10dp"
+                android:fontFamily="@font/rubik_regular"
+                android:textSize="18sp" />
+
+            <TextView
+                android:id="@+id/tvResult_1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@drawable/rounded_chrono_bg"
+                android:paddingTop="5dp"
+                android:paddingBottom="5dp"
+                android:paddingStart="10dp"
+                android:paddingEnd="10dp"
+                android:layout_alignBaseline="@+id/chronometer1"
+                android:layout_marginStart="20dp"
+                android:layout_toEndOf="@+id/chronometer1"
+                android:fontFamily="@font/rubik_regular"
+                android:textColor="@color/text_color"
+                android:text="@string/tvEmpty"
+                android:textSize="18sp"
+                android:visibility="invisible" />
+
+            <TextView
+                android:id="@+id/tvResult_2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@drawable/rounded_chrono_bg"
+                android:paddingTop="5dp"
+                android:paddingBottom="5dp"
+                android:paddingStart="10dp"
+                android:paddingEnd="10dp"
+                android:layout_marginStart="20dp"
+                android:layout_alignBaseline="@+id/chronometer2"
+                android:layout_toEndOf="@+id/chronometer1"
+                android:fontFamily="@font/rubik_regular"
+                android:textColor="@color/text_color"
+                android:text="@string/tvEmpty"
+                android:textSize="18sp"
+                android:visibility="invisible" />
+
+            <TextView
+                android:id="@+id/tvResult_3"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@drawable/rounded_chrono_bg"
+                android:paddingTop="5dp"
+                android:paddingBottom="5dp"
+                android:paddingStart="10dp"
+                android:paddingEnd="10dp"
+                android:layout_alignBaseline="@+id/chronometer3"
+                android:layout_marginStart="20dp"
+                android:layout_toEndOf="@+id/chronometer1"
+                android:fontFamily="@font/rubik_regular"
+                android:textColor="@color/text_color"
+                android:text="@string/tvEmpty"
+                android:textSize="18sp"
+                android:visibility="invisible" />
+
+            <Button
+                android:id="@+id/bt_chrono1_next"
+                android:layout_width="30dp"
+                android:layout_height="20dp"
+                android:layout_alignBaseline="@+id/tvResult_1"
+                android:layout_marginStart="20dp"
+                android:layout_toEndOf="@+id/tvResult_1"
+                android:background="@drawable/ic_fast_forward_black_24dp"
+                android:scaleX="0.9"
+                android:scaleY="0.9" />
+
+            <Button
+                android:id="@+id/bt_chrono2_next"
+                android:layout_width="30dp"
+                android:layout_height="20dp"
+                android:layout_alignBaseline="@+id/tvResult_2"
+                android:layout_alignStart="@+id/bt_chrono1_next"
+                android:layout_marginStart="0dp"
+                android:background="@drawable/ic_fast_forward_black_24dp"
+                android:scaleX="0.9"
+                android:scaleY="0.9" />
+
+            <Button
+                android:id="@+id/bt_chrono3_next"
+                android:layout_width="30dp"
+                android:layout_height="20dp"
+                android:layout_alignBaseline="@+id/tvResult_3"
+                android:layout_alignStart="@+id/bt_chrono1_next"
+                android:layout_marginStart="0dp"
+                android:background="@drawable/ic_fast_forward_black_24dp"
+                android:scaleX="0.9"
+                android:scaleY="0.9" />
+
+        </RelativeLayout>
+    </LinearLayout>
+</ScrollView>

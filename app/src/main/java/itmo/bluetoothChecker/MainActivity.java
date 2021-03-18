@@ -59,7 +59,7 @@ public class MainActivity extends AppCompatActivity {
 
     private final String SEND = "MedSimTech_send_message";
 
-    public BluetoothChatService mChatService = null;
+    public BluetoothChatService mChatService;
     Boolean getMode;
 
     private long back_pressed;
@@ -92,6 +92,10 @@ public class MainActivity extends AppCompatActivity {
                 } else if (intent.getIntExtra(BluetoothAdapter.EXTRA_STATE, -1)
                         == BluetoothAdapter.STATE_OFF) {
                     BluetoothChatService.disconnect();
+
+                    Intent enableIntent = new Intent(BluetoothAdapter.ACTION_REQUEST_ENABLE);
+                    startActivityForResult(enableIntent, REQUEST_ENABLE_BT);
+
                 } else if (intent.getIntExtra(BluetoothAdapter.EXTRA_STATE, -1)
                         == BluetoothAdapter.STATE_CONNECTED) {
                     toolbar.setSubtitle(R.string.statusConnected);
@@ -291,9 +295,11 @@ public class MainActivity extends AppCompatActivity {
                     Log.e("main", "BT enabled");
                 } else {
                     // User did not enable Bluetooth or an error occurred
-                    Log.e("main", "BT not enabled");
-                    customToast(getResources().getString(R.string.bt_not_enabled_leaving));
+                    /*Log.e("main", "BT not enabled");
+                    customToast(getResources().getString(R.string.bt_not_enabled_leaving));*/
                     //finish();
+                    Intent enableIntent = new Intent(BluetoothAdapter.ACTION_REQUEST_ENABLE);
+                    startActivityForResult(enableIntent, REQUEST_ENABLE_BT);
                 }
         }
     }
@@ -483,21 +489,19 @@ public class MainActivity extends AppCompatActivity {
 
         if (mBluetoothAdapter == null) {
             customToast("main: code: 0");
-            //return;
+            return;
         }
         // If BT is not on, request that it be enabled.
         // setupChat() will then be called during onActivityResult
-        //!!!! it change 23/12/2020!!!
-        /*if (!mBluetoothAdapter.isEnabled()) {
+
+        if (!mBluetoothAdapter.isEnabled()) {
             Intent enableIntent = new Intent(BluetoothAdapter.ACTION_REQUEST_ENABLE);
             startActivityForResult(enableIntent, REQUEST_ENABLE_BT);
             Log.e("onStart", "if");
-            customToast("main: code: 1");
             // Otherwise, setup the chat session
         } else if (mChatService == null) {
             Log.e("onStart", "else");
-            customToast("main: code: 2");
-        }*/
+        }
 
     }
 
@@ -523,21 +527,25 @@ public class MainActivity extends AppCompatActivity {
     }
 
     @Override
-    public void onResume() {
+    public synchronized void onResume() {
         super.onResume();
 
         // Performing this check in onResume() covers the case in which BT was
         // not enabled during onStart(), so we were paused to enable it...
         // onResume() will be called when ACTION_REQUEST_ENABLE activity returns.
 
-        if (mChatService != null) {
-            // Only if the state is STATE_NONE, do we know that we haven't started already
-            if (mChatService.getState() == BluetoothChatService.STATE_NONE) {
-                // Start the Bluetooth chat services
-                mChatService.start();
-                Log.e("onResume", "if");
+        // TODO bug
+
+            if (mBluetoothAdapter.isEnabled()){
+                if (mChatService != null) {
+                    // Only if the state is STATE_NONE, do we know that we haven't started already
+                    if (mChatService.getState() == BluetoothChatService.STATE_NONE) {
+                        // Start the Bluetooth chat services
+                        mChatService.start();
+                        Log.e("onResume", "if");
+                    }
+                }
             }
-        }
 
         //customToast(String.valueOf(getMode));
 

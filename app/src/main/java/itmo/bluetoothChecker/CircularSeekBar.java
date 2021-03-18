@@ -635,8 +635,8 @@ public class CircularSeekBar extends View {
         shadowPaint.setAntiAlias(true);
         shadowPaint.setColor(ContextCompat.getColor(getContext(), R.color.colorPrimary));
         shadowPaint.setTextSize(60.0f);
-        shadowPaint.setStrokeWidth(5.0f);
-        shadowPaint.setStyle(Paint.Style.FILL);
+        shadowPaint.setStrokeWidth(4.0f);
+        shadowPaint.setStyle(Paint.Style.STROKE);
         shadowPaint.setShadowLayer(10.0f, 10.0f, 10.0f, ContextCompat.getColor(getContext(), R.color.colorShadow));
         shadowPaint.getTextBounds(mValue, 0, mValue.length(), mTextBoundRect);
         canvas.drawText(mValue, mCircleRectF.centerX() - (mTextBoundRect.width() / 2f),  mCircleRectF.centerY() - getHeight()/1.93f, shadowPaint);
