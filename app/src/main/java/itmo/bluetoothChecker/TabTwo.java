@@ -117,11 +117,11 @@ public class TabTwo extends Fragment {
 
                     if (jsonObj.getString("device").equals("pump")) {
                         Log.e(TAG, "device pump");
-                        Log.e(TAG, "manual mode " + getMode());
+                        Log.e(TAG, "manual mode: " + getMode());
 
                         if(jsonObj.has("started") && jsonObj.getString("started").equals("true")){
                             Log.e(TAG, "started true");
-                            customToast("started true");
+                            flagComplete = false;
                             String ad = (jsonObj.getString("ad").substring(1, jsonObj.getString("ad").length()-1)).replace(",","/");
                             int pos = -1;
                             for(int i = 0; i < getResources().getStringArray(R.array.pressure).length; i++){
@@ -132,25 +132,50 @@ public class TabTwo extends Fragment {
                             }
 
                             try{
-                                bpmCirSeek.setProgress(jsonObj.getInt("hr")-70);
+                                if(jsonObj.getInt("hr") < 70){
+                                    bpmCirSeek.setProgress(0);
+                                }else if(jsonObj.getInt("hr") >150){
+                                    bpmCirSeek.setProgress(80);
+                                }else{
+                                    bpmCirSeek.setProgress(jsonObj.getInt("hr")-70);
+                                }
+                                Log.e(TAG, " BPM:" + (jsonObj.getInt("hr")));
                             }catch (Exception e){
                                 Log.e(TAG, "Receive wrong value of bpm: " + jsonObj.getInt("hr"));
                             }
 
                             try{
-                                pressCirSeek.setProgress(pos);
+                                if(pos != -1){
+                                    pressCirSeek.setProgress(pos);
+                                    Log.e(TAG, " AP: " + getResources().getStringArray(R.array.pressure)[pos*2]);
+                                }else{
+                                    pressCirSeek.setProgress(5);
+                                }
                             }catch (Exception e){
                                 Log.e(TAG, "Receive wrong value of pressure: " + jsonObj.getInt("ad"));
                             }
 
                             try{
-                                respCirSeek.setProgress(jsonObj.getInt("rr")-15);
+                                if(jsonObj.getInt("rr") < 16){
+                                    respCirSeek.setProgress(0);
+                                }else if(jsonObj.getInt("rr") > 40){
+                                    respCirSeek.setProgress(24);
+                                }else{
+                                    respCirSeek.setProgress(jsonObj.getInt("rr") - 15);
+                                }
                             }catch (Exception e){
                                 Log.e(TAG, "Receive wrong value of respiration rate: " + jsonObj.getInt("rr"));
                             }
 
                             try{
-                                satCirSeek.setProgress(jsonObj.getInt("sp"));
+                                if(jsonObj.getInt("sp") < 80){
+                                    satCirSeek.setProgress(0);
+                                }else if(jsonObj.getInt("sp") > 99){
+                                    satCirSeek.setProgress(19);
+                                }else{
+                                    satCirSeek.setProgress(jsonObj.getInt("sp") - 80);
+                                }
+                                Log.e(TAG, " RESP:" + (jsonObj.getInt("sp")));
                             }catch (Exception e){
                                 Log.e(TAG, "Receive wrong value of saturation: " + jsonObj.getInt("sp"));
                             }

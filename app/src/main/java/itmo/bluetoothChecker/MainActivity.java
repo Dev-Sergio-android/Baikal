@@ -84,6 +84,8 @@ public class MainActivity extends AppCompatActivity {
                 toolbar.setSubtitle(R.string.statusConnected);
             } else if (BluetoothDevice.ACTION_ACL_DISCONNECTED.equals(action)) {
                 toolbar.setSubtitle(R.string.title_not_connected);
+                flagComplete = true;
+                customToast("Операция прервана из-за потери связи. Пожалуйста, подключитесь к тренажеру");
             } else if (BluetoothAdapter.ACTION_STATE_CHANGED.equals(action)) {
                 if (intent.getIntExtra(BluetoothAdapter.EXTRA_STATE, -1)
                         == BluetoothAdapter.STATE_ON) {
@@ -518,6 +520,7 @@ public class MainActivity extends AppCompatActivity {
             mChatService.stop();
         }
 
+        flagComplete = true;
         this.getSharedPreferences("KrootTime", MODE_PRIVATE).edit().clear().apply();
     }
 
