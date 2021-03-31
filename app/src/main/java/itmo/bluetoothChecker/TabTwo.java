@@ -121,8 +121,10 @@ public class TabTwo extends Fragment {
 
                         if(jsonObj.has("started") && jsonObj.getString("started").equals("true")){
                             Log.e(TAG, "started true");
-                            flagComplete = false;
                             String ad = (jsonObj.getString("ad").substring(1, jsonObj.getString("ad").length()-1)).replace(",","/");
+
+
+                            //////////////////////   check pressure value for even with array   //////////////////
                             int pos = -1;
                             for(int i = 0; i < getResources().getStringArray(R.array.pressure).length; i++){
                                 if(getResources().getStringArray(R.array.pressure)[i].equals(ad)){
@@ -131,13 +133,30 @@ public class TabTwo extends Fragment {
                                 }
                             }
 
+                            /////////////////////       restore flags state      /////////////////////
+                            flagComplete = false;
+
+                            if(jsonObj.has("status") && jsonObj.getString("status").equals("pause")){
+                                flagPause = true;
+                                customToast("mode: PAUSE");
+
+                                if(jsonObj.has("time") && jsonObj.getString("time").equals("[]")){
+                                    pauseChrono_1 = true;
+                                }else if(jsonObj.has("time") && jsonObj.getString("time").equals("[,]")){
+                                    pauseChrono_2 = true;
+                                }else{
+                                    pauseChrono_3 = true;
+                                }
+                            }
+
+                            /////////////////////       restore seekBar state      /////////////////////
                             try{
                                 if(jsonObj.getInt("hr") < 70){
                                     bpmCirSeek.setProgress(0);
-                                }else if(jsonObj.getInt("hr") >150){
+                                }else if(jsonObj.getInt("hr") > 150){
                                     bpmCirSeek.setProgress(80);
                                 }else{
-                                    bpmCirSeek.setProgress(jsonObj.getInt("hr")-70);
+                                    bpmCirSeek.setProgress(jsonObj.getInt("hr") - 70);
                                 }
                                 Log.e(TAG, " BPM:" + (jsonObj.getInt("hr")));
                             }catch (Exception e){
@@ -183,6 +202,9 @@ public class TabTwo extends Fragment {
                         }else{
                             Log.e(TAG, "started false");
                         }
+
+
+
 
                         ///// Запуск таймеров от датчика давления только в автоматическом режиме ////
                         if (!getMode() && !flagComplete) {
